@@ -5,6 +5,7 @@ export type RootStackParamList = {
   LoginScreen: {} | undefined;
   RegisterScreen: {} | undefined;
   StartedScreen: {} | undefined;
+  CreateAccountScreen: {} | undefined;
 };
 
 const useAppNavigation = () => {

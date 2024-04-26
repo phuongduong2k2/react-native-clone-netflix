@@ -6,6 +6,8 @@ import {
   Image,
   TextInput,
   ScrollView,
+  Button,
+  Modal,
 } from 'react-native';
 import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -23,14 +25,16 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import useAppNavigation from '../../navigation/useAppNavigation';
-import ReactNativeModal from 'react-native-modal';
 import CustomTextInput from '../../components/CustomTextInput';
+import AppButton from '../../components/AppButton';
+import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
 
 const StartedScreen = () => {
   const insets = useSafeAreaInsets();
   const navigation = useAppNavigation();
+  const [email, setEmail] = useState('');
 
-  const [isVisible, setVisible] = useState(false);
+  const actionSheetRef = useRef<ActionSheetRef>(null);
 
   return (
     <MenuProvider>
@@ -156,61 +160,54 @@ const StartedScreen = () => {
               </Text>
             </View>
             <View>
-              <TouchableOpacity
+              <AppButton
+                onPress={() => {
+                  if (actionSheetRef.current) {
+                    actionSheetRef.current.show();
+                  }
+                }}
+                text="GET STARTED"
+                textStyle={{
+                  fontFamily: AppFonts.regular,
+                  fontSize: 20,
+                  color: 'white',
+                }}
                 style={{
                   paddingVertical: AppDimention.secondPadding,
                   width: '100%',
                   borderRadius: 4,
                   backgroundColor: '#e50913',
                   alignItems: 'center',
+                  marginTop: AppDimention.secondPadding,
                 }}
-                onPress={() => {
-                  setVisible(true);
-                }}>
-                <Text
-                  style={{
-                    fontFamily: AppFonts.regular,
-                    fontSize: 20,
-                    color: 'white',
-                  }}>
-                  GET STARTED
-                </Text>
-              </TouchableOpacity>
+              />
             </View>
           </View>
-          <ReactNativeModal
-            isVisible={isVisible}
-            hasBackdrop
-            backdropOpacity={0.5}
-            backdropTransitionOutTiming={0}
-            onBackdropPress={() => {
-              setVisible(false);
-            }}
-            style={{margin: 0, padding: 0}}>
-            <View
+          <ActionSheet
+            ref={actionSheetRef}
+            containerStyle={{
+              height: '100%',
+              borderTopLeftRadius: 30,
+              borderTopRightRadius: 30,
+            }}>
+            <TouchableOpacity
               style={{
-                flex: 1,
-                width: '100%',
-                backgroundColor: 'white',
-                borderTopRightRadius: 30,
-                borderTopLeftRadius: 30,
+                aspectRatio: 1,
+                height: 30,
+                width: undefined,
+                alignSelf: 'flex-end',
+                margin: AppDimention.mainPadding,
+              }}
+              onPress={() => {
+                actionSheetRef.current?.hide();
               }}>
-              <TouchableOpacity
-                style={{
-                  aspectRatio: 1,
-                  height: 30,
-                  width: undefined,
-                  alignSelf: 'flex-end',
-                  margin: AppDimention.mainPadding,
-                }}
-                onPress={() => {
-                  setVisible(false);
-                }}>
-                <AppSvg SvgSrc={AppIcons.close} size={30} color="grey" />
-              </TouchableOpacity>
+              <AppSvg SvgSrc={AppIcons.close} size={30} color="grey" />
+            </TouchableOpacity>
+            <View style={{height: '100%', width: '100%'}}>
               <ScrollView
                 style={{
                   flex: 1,
+                  width: '100%',
                   paddingHorizontal: AppDimention.mainPadding,
                 }}>
                 <Text
@@ -232,8 +229,30 @@ const StartedScreen = () => {
                   }}>
                   Enter your email to create or sign in to your account.
                 </Text>
-                <CustomTextInput />
-                <TouchableOpacity
+                <CustomTextInput
+                  containerStyle={{}}
+                  onChangeText={e => {
+                    setEmail(e);
+                  }}
+                  onEndEditing={e => {
+                    console.log(email);
+                  }}
+                />
+                <AppButton
+                  onPress={() => {
+                    if (actionSheetRef.current) {
+                      actionSheetRef.current.hide();
+                    }
+                    setTimeout(() => {
+                      navigation.navigate('CreateAccountScreen');
+                    }, 200);
+                  }}
+                  text="GET STARTED"
+                  textStyle={{
+                    fontFamily: AppFonts.regular,
+                    fontSize: 20,
+                    color: 'white',
+                  }}
                   style={{
                     paddingVertical: AppDimention.secondPadding,
                     width: '100%',
@@ -242,21 +261,10 @@ const StartedScreen = () => {
                     alignItems: 'center',
                     marginTop: AppDimention.secondPadding,
                   }}
-                  onPress={() => {
-                    setVisible(true);
-                  }}>
-                  <Text
-                    style={{
-                      fontFamily: AppFonts.regular,
-                      fontSize: 20,
-                      color: 'white',
-                    }}>
-                    GET STARTED
-                  </Text>
-                </TouchableOpacity>
+                />
               </ScrollView>
             </View>
-          </ReactNativeModal>
+          </ActionSheet>
         </View>
       </AppContainer>
     </MenuProvider>

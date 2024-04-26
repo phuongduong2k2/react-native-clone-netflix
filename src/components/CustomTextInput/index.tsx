@@ -1,88 +1,160 @@
-import {View, Text, TextInput, Keyboard, Button} from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  Keyboard,
+  Button,
+  ViewStyle,
+  NativeSyntheticEvent,
+  TextInputEndEditingEventData,
+} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
-import {AppDimention} from '../../constants/constants';
+import {AppDimention, AppFonts} from '../../constants/constants';
 import Animated, {
+  interpolate,
   interpolateColor,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useKeyboardEvent} from '../../utils/utils';
 
-const CustomTextInput = () => {
+type Props = {
+  containerStyle?: ViewStyle;
+  onChangeText?: (value: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onEndEditing?: (
+    e: NativeSyntheticEvent<TextInputEndEditingEventData>,
+  ) => void;
+};
+
+const CustomTextInput = (props: Props) => {
+  const {
+    containerStyle = {},
+    onChangeText = () => {},
+    onBlur = () => {},
+    onFocus = () => {},
+    onEndEditing = () => {},
+  } = props;
   const textInputRef = useRef<TextInput>(null);
-  const TextInputAnim = Animated.createAnimatedComponent(TextInput);
 
-  const [isFocused, setFocused] = useState(false);
+  const [height, setHeight] = useState(0);
+  const [heightText, setHeightText] = useState(0);
+  const [text, setText] = useState('');
 
-  const animValue = useSharedValue(1);
+  const animValue = useSharedValue(0);
 
-  const animChanged = useAnimatedStyle(() => ({
-    borderColor: interpolateColor(animValue.value, [0, 1], ['grey', 'blue']),
+  const animBoder = useAnimatedStyle(() => ({
+    borderColor: interpolateColor(animValue.value, [0, 1], ['grey', '#006AFF']),
   }));
 
-  useEffect(() => {
-    animValue.value = withTiming(isFocused ? 1 : 0, {duration: 1000});
-  }, [isFocused]);
+  const animText = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: interpolate(
+          animValue.value,
+          [0, 1],
+          [0, -((AppDimention.secondPadding + 4) * 0.7)],
+        ),
+      },
+      {scale: interpolate(animValue.value, [0, 1], [1, 0.7])},
+    ],
+    top: interpolate(
+      animValue.value,
+      [0, 1],
+      [(height - heightText) / 2, -(heightText / 2)],
+    ),
+  }));
+
+  const keyboardEvent = useKeyboardEvent();
 
   useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-      console.log('Keyboard Shown');
-      setFocused(true);
-    });
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-      console.log('Keyboard Hidden');
-      //   setFocused(false);
-    });
+    if (keyboardEvent === 'didShow') {
+      animValue.value = withTiming(1, {duration: 200});
+    }
+    if (keyboardEvent === 'didHide' && text.length === 0) {
+      animValue.value = withTiming(0, {duration: 200});
+    }
+  }, [keyboardEvent]);
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+  console.log('render');
 
   return (
-    <View style={{justifyContent: 'center', height: 64}}>
-      <Text
-        style={{
-          color: 'blue',
-          position: 'absolute',
-          zIndex: 0,
-          paddingLeft: AppDimention.secondPadding,
-        }}>
-        {isFocused.toString()}
-      </Text>
-      <TextInputAnim
-        ref={textInputRef}
-        onBlur={() => {
-          setFocused(false);
-        }}
-        // onFocus={() => {
-        //   setFocused(true);
-        // }}
-        // placeholder="Email"
+    <View
+      style={{justifyContent: 'center', height: 64, ...containerStyle}}
+      onLayout={e => {
+        if (
+          e.nativeEvent.layout.height > 0 &&
+          height !== e.nativeEvent.layout.height
+        ) {
+          setHeight(e.nativeEvent.layout.height);
+        }
+      }}>
+      <Animated.View
         style={[
           {
-            zIndex: 1,
-            borderWidth: 1,
-            height: '100%',
-            paddingLeft: AppDimention.secondPadding,
-            borderRadius: 4,
+            backgroundColor: 'white',
+            paddingHorizontal: 4,
+            position: 'absolute',
+            marginLeft: AppDimention.secondPadding - 4,
+            alignSelf: 'flex-start',
           },
-          animChanged,
+          animText,
         ]}
-      />
-      <View
+        onLayout={e => {
+          if (
+            e.nativeEvent.layout.height > 0 &&
+            heightText !== e.nativeEvent.layout.height
+          ) {
+            setHeightText(e.nativeEvent.layout.height);
+          }
+        }}>
+        <Text
+          style={[
+            {
+              color: 'grey',
+
+              fontFamily: AppFonts.regular,
+              margin: 0,
+              fontSize: 20,
+            },
+          ]}>
+          Email
+        </Text>
+      </Animated.View>
+      <TextInput
+        ref={textInputRef}
         style={{
-          backgroundColor: 'transparent',
+          zIndex: 1,
           height: '100%',
+          paddingLeft: AppDimention.secondPadding,
           borderRadius: 4,
-          zIndex: -1,
-          position: 'absolute',
-          width: '100%',
         }}
+        onChangeText={e => {
+          setText(e);
+          onChangeText(e);
+        }}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onEndEditing={onEndEditing}
+      />
+      <Animated.View
+        style={[
+          {
+            backgroundColor: 'transparent',
+            height: '100%',
+            borderWidth: 1,
+            borderRadius: 4,
+            zIndex: -1,
+            position: 'absolute',
+            width: '100%',
+          },
+          animBoder,
+        ]}
       />
     </View>
   );
 };
 
-export default CustomTextInput;
+export default React.memo(CustomTextInput);
