@@ -25,9 +25,9 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu';
 import useAppNavigation from '../../navigation/useAppNavigation';
-import CustomTextInput from '../../components/CustomTextInput';
+import CustomTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
-import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
+
 import ReactNativeModal from 'react-native-modal';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -37,8 +37,6 @@ const StartedScreen = () => {
   const [email, setEmail] = useState('');
 
   const [isVisible, setVisible] = useState(false);
-
-  const actionSheetRef = useRef<ActionSheetRef>(null);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -77,14 +75,22 @@ const StartedScreen = () => {
                   PRIVACY
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={{...styles.btn}}>
+              <TouchableOpacity
+                style={{...styles.btn}}
+                onPress={() => {
+                  navigation.navigate('LoginScreen');
+                }}>
                 <Text style={{...styles.text, fontFamily: AppFonts.bold}}>
                   SIGN IN
                 </Text>
               </TouchableOpacity>
               <Menu>
                 <MenuTrigger style={{padding: 8, opacity: 0.5}}>
-                  <AppSvg SvgSrc={AppIcons.threeDots} size={20} color="white" />
+                  <AppSvg
+                    SvgSrc={AppIcons.threeDots}
+                    size={20}
+                    stroke="white"
+                  />
                 </MenuTrigger>
                 <MenuOptions optionsContainerStyle={{padding: 8}}>
                   <MenuOption onSelect={() => {}}>
@@ -180,9 +186,6 @@ const StartedScreen = () => {
             <View>
               <AppButton
                 onPress={() => {
-                  if (actionSheetRef.current) {
-                    actionSheetRef.current.show();
-                  }
                   setVisible(true);
                 }}
                 text="GET STARTED"
@@ -225,10 +228,9 @@ const StartedScreen = () => {
                   margin: AppDimention.mainPadding,
                 }}
                 onPress={() => {
-                  actionSheetRef.current?.hide();
                   setVisible(false);
                 }}>
-                <AppSvg SvgSrc={AppIcons.close} size={30} color="grey" />
+                <AppSvg SvgSrc={AppIcons.close} size={30} stroke="grey" />
               </TouchableOpacity>
               <View style={{height: '100%', width: '100%'}}>
                 <ScrollView
@@ -267,9 +269,6 @@ const StartedScreen = () => {
                   />
                   <AppButton
                     onPress={() => {
-                      if (actionSheetRef.current) {
-                        actionSheetRef.current.hide();
-                      }
                       setTimeout(() => {
                         navigation.navigate('RegisterScreen');
                       }, 200);

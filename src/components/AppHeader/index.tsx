@@ -1,4 +1,4 @@
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, ViewStyle} from 'react-native';
 import React, {memo} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import useAppNavigation from '../../navigation/useAppNavigation';
@@ -7,10 +7,11 @@ import {AppFonts} from '../../constants/constants';
 type Props = {
   children?: React.ReactNode[];
   title?: string;
+  containerStyle?: ViewStyle;
 };
 
 const AppHeader = (props: Props) => {
-  const {children = [], title = 'Title'} = props;
+  const {children = [], title = 'Title', containerStyle = {}} = props;
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -21,6 +22,7 @@ const AppHeader = (props: Props) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
+        ...containerStyle,
       }}>
       <View
         style={{

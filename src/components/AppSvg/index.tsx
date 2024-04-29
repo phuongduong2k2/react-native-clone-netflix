@@ -21,7 +21,8 @@ interface Props {
   /**
    * Màu
    */
-  color?: string;
+  stroke?: string;
+  fill?: string;
   height?: DimensionValue;
   width?: DimensionValue;
   isSquare?: boolean;
@@ -32,7 +33,8 @@ function AppSvg(props: Props) {
     SvgSrc = null,
     size = '100%',
     style = {},
-    color = '',
+    stroke = 'black',
+    // fill = '',
     height,
     width,
     isSquare = true,
@@ -51,7 +53,8 @@ function AppSvg(props: Props) {
         <SvgSrc
           height={isSquare ? size : height}
           width={isSquare ? size : width}
-          fill={color}
+          // fill={fill}
+          stroke={stroke}
         />
       )}
     </View>

@@ -7,6 +7,7 @@ import LoginScreen from '../screens/login';
 import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
 import CreateAccountScreen from '../screens/register/createAccount';
+import HomeScreen from '../screens/home';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ const MainNavigation = () => {
         <Stack.Screen
           name={ScreenNames.CreateAccountScreen}
           component={CreateAccountScreen}
+          options={{headerShown: false, gestureEnabled: false}}
+        />
+        <Stack.Screen
+          name={ScreenNames.HomeScreen}
+          component={HomeScreen}
           options={{headerShown: false, gestureEnabled: false}}
         />
       </Stack.Navigator>

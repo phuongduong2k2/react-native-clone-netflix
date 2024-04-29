@@ -3,6 +3,7 @@ const ScreenNames = {
   LoginScreen: 'LoginScreen',
   StartedScreen: 'StartedScreen',
   CreateAccountScreen: 'CreateAccountScreen',
+  HomeScreen: 'HomeScreen',
 };
 
 export default ScreenNames;

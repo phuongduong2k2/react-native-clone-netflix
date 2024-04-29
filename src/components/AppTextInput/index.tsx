@@ -20,7 +20,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useKeyboardEvent} from '../../utils/utils';
+import AppColors from '../../constants/AppColors';
 
 type Props = {
   containerStyle?: ViewStyle;
@@ -33,9 +33,16 @@ type Props = {
   placeholder?: string;
   textStyle?: TextStyle;
   placeholderStyle?: TextStyle;
+  focusBorderColor?: string;
+  blurBorderColor?: string;
+  borderStyle?: ViewStyle;
+  focusColor?: string;
+  blurColor?: string;
+  focusPlaceholder?: string;
+  blurPlaceholder?: string;
 };
 
-const CustomTextInput = (props: Props) => {
+const AppTextInput = (props: Props) => {
   const {
     containerStyle = {},
     onChangeText = () => {},
@@ -45,11 +52,16 @@ const CustomTextInput = (props: Props) => {
     placeholder = '',
     textStyle = {},
     placeholderStyle = {fontSize: 20},
+    focusBorderColor = '#006AFF',
+    blurBorderColor = 'grey',
+    borderStyle = {},
+    focusColor = 'transparent',
+    blurColor = 'transparent',
+    focusPlaceholder = AppColors.mainText,
+    blurPlaceholder = AppColors.mainText,
   } = props;
   const textInputRef = useRef<TextInput>(null);
 
-  // const [height, setHeight] = useState(0);
-  const [heightText, setHeightText] = useState(0);
   const [text, setText] = useState('');
 
   const [isFocus, setFocus] = useState(false);
@@ -58,11 +70,28 @@ const CustomTextInput = (props: Props) => {
   const height = useSharedValue(0);
 
   const animBoder = useAnimatedStyle(() => ({
-    borderColor: interpolateColor(animValue.value, [0, 1], ['grey', '#006AFF']),
+    borderColor: interpolateColor(
+      animValue.value,
+      [0, 1],
+      [blurBorderColor, focusBorderColor],
+    ),
   }));
 
   const animText = useAnimatedStyle(() => ({
     fontSize: interpolate(animValue.value, [0, 1], [20, 12]),
+    color: interpolateColor(
+      animValue.value,
+      [0, 1],
+      [blurPlaceholder, focusPlaceholder],
+    ),
+  }));
+
+  const animBackgroundColor = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      animValue.value,
+      [0, 1],
+      [blurColor, focusColor],
+    ),
   }));
 
   const animContainer = useAnimatedStyle(
@@ -97,8 +126,11 @@ const CustomTextInput = (props: Props) => {
   console.log('render [CusteomTextInput]', placeholder);
 
   return (
-    <View
-      style={{justifyContent: 'center', height: 64, ...containerStyle}}
+    <Animated.View
+      style={[
+        {justifyContent: 'center', height: 64, ...containerStyle},
+        animBackgroundColor,
+      ]}
       onLayout={e => {
         if (
           e.nativeEvent.layout.height > 0 &&
@@ -118,10 +150,10 @@ const CustomTextInput = (props: Props) => {
         <Animated.Text
           style={[
             {
-              color: 'grey',
               fontFamily: AppFonts.regular,
               margin: 0,
               fontSize: 20,
+              ...placeholderStyle,
             },
             animText,
           ]}>
@@ -157,12 +189,13 @@ const CustomTextInput = (props: Props) => {
             zIndex: -1,
             position: 'absolute',
             width: '100%',
+            ...borderStyle,
           },
           animBoder,
         ]}
       />
-    </View>
+    </Animated.View>
   );
 };
 
-export default memo(CustomTextInput);
+export default memo(AppTextInput);
