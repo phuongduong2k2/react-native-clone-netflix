@@ -6,7 +6,7 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 
 type Props = {
@@ -47,6 +47,4 @@ const AppButton = (props: Props) => {
   );
 };
 
-export default AppButton;
-
-const styles = StyleSheet.create({});
+export default memo(AppButton);

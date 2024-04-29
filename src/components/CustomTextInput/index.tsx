@@ -7,10 +7,13 @@ import {
   ViewStyle,
   NativeSyntheticEvent,
   TextInputEndEditingEventData,
+  TextStyle,
 } from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {memo, useEffect, useRef, useState} from 'react';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import Animated, {
+  Easing,
+  Extrapolation,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
@@ -27,6 +30,9 @@ type Props = {
   onEndEditing?: (
     e: NativeSyntheticEvent<TextInputEndEditingEventData>,
   ) => void;
+  placeholder?: string;
+  textStyle?: TextStyle;
+  placeholderStyle?: TextStyle;
 };
 
 const CustomTextInput = (props: Props) => {
@@ -36,49 +42,59 @@ const CustomTextInput = (props: Props) => {
     onBlur = () => {},
     onFocus = () => {},
     onEndEditing = () => {},
+    placeholder = '',
+    textStyle = {},
+    placeholderStyle = {fontSize: 20},
   } = props;
   const textInputRef = useRef<TextInput>(null);
 
-  const [height, setHeight] = useState(0);
+  // const [height, setHeight] = useState(0);
   const [heightText, setHeightText] = useState(0);
   const [text, setText] = useState('');
 
+  const [isFocus, setFocus] = useState(false);
+
   const animValue = useSharedValue(0);
+  const height = useSharedValue(0);
 
   const animBoder = useAnimatedStyle(() => ({
     borderColor: interpolateColor(animValue.value, [0, 1], ['grey', '#006AFF']),
   }));
 
   const animText = useAnimatedStyle(() => ({
-    transform: [
-      {
-        translateX: interpolate(
-          animValue.value,
-          [0, 1],
-          [0, -((AppDimention.secondPadding + 4) * 0.7)],
-        ),
-      },
-      {scale: interpolate(animValue.value, [0, 1], [1, 0.7])},
-    ],
-    top: interpolate(
-      animValue.value,
-      [0, 1],
-      [(height - heightText) / 2, -(heightText / 2)],
-    ),
+    fontSize: interpolate(animValue.value, [0, 1], [20, 12]),
   }));
 
-  const keyboardEvent = useKeyboardEvent();
+  const animContainer = useAnimatedStyle(
+    () => ({
+      top: interpolate(
+        animValue.value,
+        [0, 1],
+        [(height.value - 20 - 9) / 2, 4],
+      ),
+    }),
+    [height],
+  );
 
   useEffect(() => {
-    if (keyboardEvent === 'didShow') {
+    if (isFocus) {
       animValue.value = withTiming(1, {duration: 200});
-    }
-    if (keyboardEvent === 'didHide' && text.length === 0) {
+    } else if (text.length === 0) {
       animValue.value = withTiming(0, {duration: 200});
     }
-  }, [keyboardEvent]);
+  }, [isFocus]);
 
-  console.log('render');
+  const focus = () => {
+    setFocus(true);
+    onFocus();
+  };
+
+  const blur = () => {
+    setFocus(false);
+    onBlur();
+  };
+
+  console.log('render [CusteomTextInput]', placeholder);
 
   return (
     <View
@@ -86,42 +102,31 @@ const CustomTextInput = (props: Props) => {
       onLayout={e => {
         if (
           e.nativeEvent.layout.height > 0 &&
-          height !== e.nativeEvent.layout.height
+          height.value !== e.nativeEvent.layout.height
         ) {
-          setHeight(e.nativeEvent.layout.height);
+          height.value = e.nativeEvent.layout.height;
         }
       }}>
       <Animated.View
         style={[
           {
-            backgroundColor: 'white',
-            paddingHorizontal: 4,
             position: 'absolute',
-            marginLeft: AppDimention.secondPadding - 4,
-            alignSelf: 'flex-start',
+            left: AppDimention.secondPadding,
           },
-          animText,
-        ]}
-        onLayout={e => {
-          if (
-            e.nativeEvent.layout.height > 0 &&
-            heightText !== e.nativeEvent.layout.height
-          ) {
-            setHeightText(e.nativeEvent.layout.height);
-          }
-        }}>
-        <Text
+          animContainer,
+        ]}>
+        <Animated.Text
           style={[
             {
               color: 'grey',
-
               fontFamily: AppFonts.regular,
               margin: 0,
               fontSize: 20,
             },
+            animText,
           ]}>
-          Email
-        </Text>
+          {placeholder}
+        </Animated.Text>
       </Animated.View>
       <TextInput
         ref={textInputRef}
@@ -130,13 +135,16 @@ const CustomTextInput = (props: Props) => {
           height: '100%',
           paddingLeft: AppDimention.secondPadding,
           borderRadius: 4,
+          fontFamily: AppFonts.regular,
+          fontSize: 16,
+          ...textStyle,
         }}
         onChangeText={e => {
           setText(e);
           onChangeText(e);
         }}
-        onFocus={onFocus}
-        onBlur={onBlur}
+        onFocus={focus}
+        onBlur={blur}
         onEndEditing={onEndEditing}
       />
       <Animated.View
@@ -157,4 +165,4 @@ const CustomTextInput = (props: Props) => {
   );
 };
 
-export default React.memo(CustomTextInput);
+export default memo(CustomTextInput);

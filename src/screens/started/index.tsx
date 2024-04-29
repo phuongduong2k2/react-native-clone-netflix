@@ -28,13 +28,31 @@ import useAppNavigation from '../../navigation/useAppNavigation';
 import CustomTextInput from '../../components/CustomTextInput';
 import AppButton from '../../components/AppButton';
 import ActionSheet, {ActionSheetRef} from 'react-native-actions-sheet';
+import ReactNativeModal from 'react-native-modal';
+import {useFocusEffect} from '@react-navigation/native';
 
 const StartedScreen = () => {
   const insets = useSafeAreaInsets();
   const navigation = useAppNavigation();
   const [email, setEmail] = useState('');
 
+  const [isVisible, setVisible] = useState(false);
+
   const actionSheetRef = useRef<ActionSheetRef>(null);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Do something when the screen is focused
+
+      return () => {
+        setVisible(false);
+      };
+    }, []),
+  );
+
+  const handleChangeText = (e: string) => {
+    setEmail(e);
+  };
 
   return (
     <MenuProvider>
@@ -165,6 +183,7 @@ const StartedScreen = () => {
                   if (actionSheetRef.current) {
                     actionSheetRef.current.show();
                   }
+                  setVisible(true);
                 }}
                 text="GET STARTED"
                 textStyle={{
@@ -183,88 +202,97 @@ const StartedScreen = () => {
               />
             </View>
           </View>
-          <ActionSheet
-            ref={actionSheetRef}
-            containerStyle={{
-              height: '100%',
-              borderTopLeftRadius: 30,
-              borderTopRightRadius: 30,
-            }}>
-            <TouchableOpacity
+          <ReactNativeModal
+            isVisible={isVisible}
+            style={{margin: 0}}
+            animationIn="slideInUp"
+            animationOut="slideOutDown"
+            hideModalContentWhileAnimating={true}
+            backdropTransitionOutTiming={0}>
+            <View
               style={{
-                aspectRatio: 1,
-                height: 30,
-                width: undefined,
-                alignSelf: 'flex-end',
-                margin: AppDimention.mainPadding,
-              }}
-              onPress={() => {
-                actionSheetRef.current?.hide();
+                backgroundColor: 'white',
+                borderTopLeftRadius: 30,
+                borderTopRightRadius: 30,
+                flex: 1,
               }}>
-              <AppSvg SvgSrc={AppIcons.close} size={30} color="grey" />
-            </TouchableOpacity>
-            <View style={{height: '100%', width: '100%'}}>
-              <ScrollView
+              <TouchableOpacity
                 style={{
-                  flex: 1,
-                  width: '100%',
-                  paddingHorizontal: AppDimention.mainPadding,
+                  aspectRatio: 1,
+                  height: 30,
+                  width: undefined,
+                  alignSelf: 'flex-end',
+                  margin: AppDimention.mainPadding,
+                }}
+                onPress={() => {
+                  actionSheetRef.current?.hide();
+                  setVisible(false);
                 }}>
-                <Text
+                <AppSvg SvgSrc={AppIcons.close} size={30} color="grey" />
+              </TouchableOpacity>
+              <View style={{height: '100%', width: '100%'}}>
+                <ScrollView
                   style={{
-                    textAlign: 'center',
-                    fontFamily: AppFonts.medium,
-                    color: 'black',
-                    fontSize: 30,
-                  }}>
-                  Ready to watch?
-                </Text>
-                <Text
-                  style={{
-                    textAlign: 'center',
-                    fontFamily: AppFonts.regular,
-                    color: 'grey',
-                    fontSize: 18,
-                    marginVertical: AppDimention.mainPadding,
-                  }}>
-                  Enter your email to create or sign in to your account.
-                </Text>
-                <CustomTextInput
-                  containerStyle={{}}
-                  onChangeText={e => {
-                    setEmail(e);
-                  }}
-                  onEndEditing={e => {
-                    console.log(email);
-                  }}
-                />
-                <AppButton
-                  onPress={() => {
-                    if (actionSheetRef.current) {
-                      actionSheetRef.current.hide();
-                    }
-                    setTimeout(() => {
-                      navigation.navigate('CreateAccountScreen');
-                    }, 200);
-                  }}
-                  text="GET STARTED"
-                  textStyle={{
-                    fontFamily: AppFonts.regular,
-                    fontSize: 20,
-                    color: 'white',
-                  }}
-                  style={{
-                    paddingVertical: AppDimention.secondPadding,
+                    flex: 1,
                     width: '100%',
-                    borderRadius: 4,
-                    backgroundColor: '#e50913',
-                    alignItems: 'center',
-                    marginTop: AppDimention.secondPadding,
-                  }}
-                />
-              </ScrollView>
+                    paddingHorizontal: AppDimention.mainPadding,
+                  }}>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontFamily: AppFonts.medium,
+                      color: 'black',
+                      fontSize: 30,
+                    }}>
+                    Ready to watch?
+                  </Text>
+                  <Text
+                    style={{
+                      textAlign: 'center',
+                      fontFamily: AppFonts.regular,
+                      color: 'grey',
+                      fontSize: 18,
+                      marginVertical: AppDimention.mainPadding,
+                    }}>
+                    Enter your email to create or sign in to your account.
+                  </Text>
+                  <CustomTextInput
+                    placeholder="Email"
+                    containerStyle={{}}
+                    textStyle={{}}
+                    onChangeText={handleChangeText}
+                    onEndEditing={e => {
+                      console.log(email);
+                    }}
+                  />
+                  <AppButton
+                    onPress={() => {
+                      if (actionSheetRef.current) {
+                        actionSheetRef.current.hide();
+                      }
+                      setTimeout(() => {
+                        navigation.navigate('RegisterScreen');
+                      }, 200);
+                    }}
+                    text="GET STARTED"
+                    textStyle={{
+                      fontFamily: AppFonts.regular,
+                      fontSize: 20,
+                      color: 'white',
+                    }}
+                    style={{
+                      paddingVertical: AppDimention.secondPadding,
+                      width: '100%',
+                      borderRadius: 4,
+                      backgroundColor: '#e50913',
+                      alignItems: 'center',
+                      marginTop: AppDimention.secondPadding,
+                    }}
+                  />
+                </ScrollView>
+              </View>
             </View>
-          </ActionSheet>
+          </ReactNativeModal>
         </View>
       </AppContainer>
     </MenuProvider>

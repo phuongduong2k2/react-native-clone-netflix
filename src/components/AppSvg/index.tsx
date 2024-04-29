@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
   Button,
   DimensionValue,
@@ -58,4 +58,4 @@ function AppSvg(props: Props) {
   );
 }
 
-export default AppSvg;
+export default memo(AppSvg);
