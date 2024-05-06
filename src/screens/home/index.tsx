@@ -18,7 +18,16 @@ import {AppDimention, AppFonts} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
-import {continueWatching} from '../../api/testData';
+import ContiWatchItem from '../components/ContiWatchItem';
+import {
+  dataContiWatch,
+  dataPopular,
+  dataPreviews,
+  dataTrending,
+} from '../../api/testData';
+import PreviewItem from '../components/PreviewItem';
+import MovieCard from '../components/MovieCard';
+import {MovieItemProps} from '../../types';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -172,35 +181,138 @@ const HomeScreen = () => {
     );
   };
 
-  const renderPreviewItem: ListRenderItem<any> = ({item}) => {
+  const renderContiWatchItem: ListRenderItem<MovieItemProps> = ({item}) => {
+    return <ContiWatchItem data={item} />;
+  };
+
+  const renderContiWatch = () => {
     return (
-      <View
-        style={{
-          borderWidth: 1,
-          borderColor: 'white',
-          width: 106,
-          height: 188,
-          borderRadius: 8,
-        }}></View>
+      <View style={{backgroundColor: ''}}>
+        <Text
+          style={{
+            color: 'white',
+            fontFamily: AppFonts.medium,
+            fontSize: 20,
+            marginLeft: 8,
+          }}>
+          Continue Watching for Ellie
+        </Text>
+        <View style={{marginTop: AppDimention.secondPadding}}>
+          <FlashList
+            data={dataContiWatch}
+            keyExtractor={item => item.name}
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+            }}
+            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderContiWatchItem}
+            estimatedItemSize={106}
+          />
+        </View>
+      </View>
     );
+  };
+
+  const renderPreviewItem: ListRenderItem<MovieItemProps> = ({item}) => {
+    return <PreviewItem data={item} />;
   };
 
   const renderPreview = () => {
     return (
+      <View>
+        <Text
+          style={{
+            color: 'white',
+            fontFamily: AppFonts.medium,
+            fontSize: 20,
+            marginLeft: 8,
+          }}>
+          Previews
+        </Text>
+        <View style={{marginTop: AppDimention.secondPadding}}>
+          <FlashList
+            data={dataPreviews}
+            keyExtractor={item => item.name}
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+            }}
+            ItemSeparatorComponent={() => <View style={{width: 16}} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderPreviewItem}
+            estimatedItemSize={106}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  const renderPopularItem: ListRenderItem<MovieItemProps> = ({item}) => {
+    return <MovieCard data={item} />;
+  };
+
+  const renderPopular = () => {
+    return (
       <View style={{backgroundColor: ''}}>
         <Text
-          style={{color: 'white', fontFamily: AppFonts.medium, fontSize: 20}}>
-          Continue Watching for Ellie
+          style={{
+            color: 'white',
+            fontFamily: AppFonts.medium,
+            fontSize: 20,
+            marginLeft: 8,
+          }}>
+          Popular on Netflix
         </Text>
-        <FlashList
-          data={continueWatching}
-          contentContainerStyle={{paddingHorizontal: 8}}
-          ItemSeparatorComponent={() => <View style={{width: 8}} />}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          renderItem={renderPreviewItem}
-          estimatedItemSize={106}
-        />
+        <View style={{marginTop: AppDimention.secondPadding}}>
+          <FlashList
+            data={dataPopular}
+            keyExtractor={item => item.name}
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+            }}
+            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderPopularItem}
+            estimatedItemSize={106}
+          />
+        </View>
+      </View>
+    );
+  };
+
+  const renderTrendingItem: ListRenderItem<MovieItemProps> = ({item}) => {
+    return <MovieCard data={item} />;
+  };
+
+  const renderTrending = () => {
+    return (
+      <View style={{backgroundColor: ''}}>
+        <Text
+          style={{
+            color: 'white',
+            fontFamily: AppFonts.medium,
+            fontSize: 20,
+            marginLeft: 8,
+          }}>
+          Trending Now
+        </Text>
+        <View style={{marginTop: AppDimention.secondPadding}}>
+          <FlashList
+            data={dataTrending}
+            keyExtractor={item => item.name}
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+            }}
+            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            renderItem={renderTrendingItem}
+            estimatedItemSize={106}
+          />
+        </View>
       </View>
     );
   };
@@ -253,22 +365,21 @@ const HomeScreen = () => {
       <View
         style={{
           flex: 1,
-          borderWidth: 1,
-          borderColor: 'white',
           marginTop: StatusBar.currentHeight ?? 0 + insets.top,
         }}>
         {renderHeader()}
         <ScrollView style={{}}>
           {renderMainFilm()}
-          {renderPreview()}
-          <View
-            style={{
-              height: 500,
-              width: '100%',
-              borderWidth: 1,
-              borderColor: 'white',
-            }}
-          />
+          <View>{renderContiWatch()}</View>
+          <View style={{marginTop: AppDimention.mainPadding}}>
+            {renderPreview()}
+          </View>
+          <View style={{marginTop: AppDimention.mainPadding}}>
+            {renderPopular()}
+          </View>
+          <View style={{marginTop: AppDimention.mainPadding}}>
+            {renderTrending()}
+          </View>
         </ScrollView>
       </View>
     </AppContainer>
