@@ -17,19 +17,19 @@ import {
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MainNavigation from './src/navigation/MainNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
-    <GestureHandlerRootView>
-      <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
-      <MainNavigation />
-    </GestureHandlerRootView>
+    <Provider store={store}>
+      <GestureHandlerRootView>
+        <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
+        <MainNavigation />
+      </GestureHandlerRootView>
+    </Provider>
   );
 }
 export default App;

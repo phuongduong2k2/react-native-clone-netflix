@@ -21,7 +21,6 @@ interface Props {
   /**
    * Màu
    */
-  stroke?: string;
   fill?: string;
   height?: DimensionValue;
   width?: DimensionValue;
@@ -33,8 +32,7 @@ function AppSvg(props: Props) {
     SvgSrc = null,
     size = '100%',
     style = {},
-    stroke = 'black',
-    // fill = '',
+    fill = 'white',
     height,
     width,
     isSquare = true,
@@ -53,12 +51,11 @@ function AppSvg(props: Props) {
         <SvgSrc
           height={isSquare ? size : height}
           width={isSquare ? size : width}
-          // fill={fill}
-          stroke={stroke}
+          fill={fill}
         />
       )}
     </View>
   );
 }
 
-export default memo(AppSvg);
+export default AppSvg;

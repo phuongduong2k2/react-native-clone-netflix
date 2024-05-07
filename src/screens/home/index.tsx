@@ -28,61 +28,111 @@ import {
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
+import {useSelector} from 'react-redux';
+import {useAppDispatch, useAppSelector} from '../../hooks';
+import {AppActions} from '../../redux/slice/AppSlice';
+import {Path, Svg} from 'react-native-svg';
+import Cast from '../../../assets/icons/cast.svg';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
+  const dispatch = useAppDispatch();
 
   const renderHeader = () => {
     return (
       <View
         style={{
-          height: 56,
           width: '100%',
-          flexDirection: 'row',
         }}>
         <View
           style={{
-            aspectRatio: 1,
-            height: '100%',
-            width: undefined,
-            paddingVertical: 8,
-          }}>
-          <AppSvg SvgSrc={AppIcons.nnetflix} />
-        </View>
-        <View
-          style={{
-            height: '100%',
-            flex: 1,
+            // borderWidth: 1,
             flexDirection: 'row',
-            justifyContent: 'space-evenly',
-            alignItems: 'center',
+            height: 56,
+            justifyContent: 'space-between',
           }}>
-          <TouchableOpacity
+          <View
+            style={{
+              marginVertical: AppDimention.secondPadding,
+              marginLeft: AppDimention.secondPadding,
+            }}>
+            <Image
+              source={AppImages.nNetflix}
+              style={{
+                resizeMode: 'contain',
+                aspectRatio: 18 / 32,
+                height: '100%',
+                width: undefined,
+              }}
+            />
+          </View>
+          <View
             style={{
               height: '100%',
-              justifyContent: 'center',
+              flexDirection: 'row',
+              alignItems: 'center',
+              marginRight: AppDimention.secondPadding / 2,
             }}>
-            <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
+            <TouchableOpacity
+              style={{
+                padding: AppDimention.secondPadding / 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <AppSvg SvgSrc={AppIcons.cast} fill="white" size={24} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                padding: AppDimention.secondPadding / 2,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Image source={AppImages.users.blue} />
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+          <TouchableOpacity
+            style={{
+              paddingHorizontal: 4,
+              marginHorizontal: AppDimention.secondPadding,
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 32,
+              flexDirection: 'row',
+            }}>
+            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               TV Shows
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              height: '100%',
+              paddingHorizontal: 4,
+              marginHorizontal: AppDimention.secondPadding,
+              alignItems: 'center',
               justifyContent: 'center',
+              height: 32,
+              flexDirection: 'row',
             }}>
-            <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
+            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               Movies
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              height: '100%',
+              paddingHorizontal: 4,
+              marginHorizontal: AppDimention.secondPadding,
+              alignItems: 'center',
               justifyContent: 'center',
+              height: 32,
+              flexDirection: 'row',
             }}>
-            <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
-              My List
+            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
+              Categories
             </Text>
+            <View style={{height: '80%', aspectRatio: 1, width: undefined}}>
+              <AppSvg SvgSrc={AppIcons.dropDown} fill="white" />
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -124,7 +174,6 @@ const HomeScreen = () => {
             <Text
               style={{
                 color: 'white',
-
                 fontFamily: AppFonts.regular,
                 textAlign: 'center',
               }}>
@@ -141,9 +190,13 @@ const HomeScreen = () => {
               | 2h 35m | Sci-Fi
             </Text>
           </View>
-          <View style={{flexDirection: 'row'}}>
-            <TouchableOpacity style={{alignItems: 'center', width: 56}}>
-              <AppSvg SvgSrc={AppIcons.check} size={30} stroke="white" />
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <TouchableOpacity
+              style={{alignItems: 'center', width: 56}}
+              onPress={() => {
+                dispatch(AppActions.decrement());
+              }}>
+              <AppSvg SvgSrc={AppIcons.add} size={30} fill="white" />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 My List
               </Text>
@@ -152,13 +205,14 @@ const HomeScreen = () => {
               style={{
                 flexDirection: 'row',
                 backgroundColor: 'white',
-                marginHorizontal: AppDimention.secondPadding,
+                marginHorizontal: AppDimention.mainPadding,
                 borderRadius: 5,
+                paddingVertical: 4,
                 paddingHorizontal: AppDimention.secondPadding,
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <AppSvg SvgSrc={AppIcons.play} size={30} />
+              <AppSvg SvgSrc={AppIcons.play} size={30} fill="black" />
               <Text
                 style={{
                   fontFamily: AppFonts.medium,
@@ -169,8 +223,12 @@ const HomeScreen = () => {
                 Play
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{alignItems: 'center', width: 56}}>
-              <AppSvg SvgSrc={AppIcons.info} size={30} stroke="white" />
+            <TouchableOpacity
+              style={{alignItems: 'center', width: 56}}
+              onPress={() => {
+                dispatch(AppActions.increment());
+              }}>
+              <AppSvg SvgSrc={AppIcons.info} size={30} fill="white" />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 Info
               </Text>
@@ -377,7 +435,7 @@ const HomeScreen = () => {
           <View style={{marginTop: AppDimention.mainPadding}}>
             {renderPopular()}
           </View>
-          <View style={{marginTop: AppDimention.mainPadding}}>
+          <View style={{marginVertical: AppDimention.mainPadding}}>
             {renderTrending()}
           </View>
         </ScrollView>
