@@ -8,13 +8,19 @@ import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
 import CreateAccountScreen from '../screens/register/createAccount';
 import HomeScreen from '../screens/home';
+import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 
 const Stack = createNativeStackNavigator();
 
 const MainNavigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={ScreenNames.HomeScreen}>
+      <Stack.Navigator initialRouteName={ScreenNames.HomeNavigatorScreen}>
+        <Stack.Screen
+          name={ScreenNames.HomeNavigatorScreen}
+          component={HomeNavigatorScreen}
+          options={{headerShown: false, gestureEnabled: false}}
+        />
         <Stack.Screen
           name={ScreenNames.LoginScreen}
           component={LoginScreen}
@@ -33,11 +39,6 @@ const MainNavigation = () => {
         <Stack.Screen
           name={ScreenNames.CreateAccountScreen}
           component={CreateAccountScreen}
-          options={{headerShown: false, gestureEnabled: false}}
-        />
-        <Stack.Screen
-          name={ScreenNames.HomeScreen}
-          component={HomeScreen}
           options={{headerShown: false, gestureEnabled: false}}
         />
       </Stack.Navigator>

@@ -41,7 +41,7 @@ const ContiWatchItem = (props: Props) => {
               zIndex: 1,
               padding: 8,
             }}>
-            <AppSvg SvgSrc={AppIcons.play} fill="white" />
+            <AppIcons.play height="100%" width="100%" fill="white" />
           </View>
           <View
             style={{
@@ -82,7 +82,7 @@ const ContiWatchItem = (props: Props) => {
             aspectRatio: 1,
             padding: 5,
           }}>
-          <AppSvg SvgSrc={AppIcons.info} fill="#B2B2B2" />
+          <AppIcons.info height={'100%'} width={'100%'} fill="#B2B2B2" />
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -91,7 +91,7 @@ const ContiWatchItem = (props: Props) => {
             aspectRatio: 1,
             padding: 5,
           }}>
-          <AppSvg SvgSrc={AppIcons.more} fill="#B2B2B2" />
+          <AppIcons.more height={'100%'} width={'100%'} fill="#B2B2B2" />
         </TouchableOpacity>
       </View>
     </View>

@@ -3,11 +3,11 @@ const AppImages = {
   backgroundRegister: require('../../assets/images/background_register.png'),
   mainFilmThumbnail: require('../../assets/images/main_film_thumbnail.png'),
   nNetflix: require('../../assets/images/nnetflix/nnetflix.png'),
-  users: {
-    blue: require('../../assets/images/users/blue/blue.png'),
-    pink: require('../../assets/images/users/pink/pink.png'),
-    yellow: require('../../assets/images/users/yellow/yellow.png'),
-    green: require('../../assets/images/users/green/green.png'),
+  profiles: {
+    blue: require('../../assets/images/profiles/blue/blue.png'),
+    pink: require('../../assets/images/profiles/pink/pink.png'),
+    yellow: require('../../assets/images/profiles/yellow/yellow.png'),
+    green: require('../../assets/images/profiles/green/green.png'),
   },
   contiWatch: {
     blasted: require('../../assets/images/thumbnails/blasted/blasted.png'),

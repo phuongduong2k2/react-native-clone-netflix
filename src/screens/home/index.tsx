@@ -79,7 +79,7 @@ const HomeScreen = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <AppSvg SvgSrc={AppIcons.cast} fill="white" size={24} />
+              <AppIcons.cast fill="white" height={24} width={24} />
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -87,7 +87,7 @@ const HomeScreen = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Image source={AppImages.users.blue} />
+              <Image source={AppImages.profiles.blue} />
             </TouchableOpacity>
           </View>
         </View>
@@ -196,7 +196,7 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(AppActions.decrement());
               }}>
-              <AppSvg SvgSrc={AppIcons.add} size={30} fill="white" />
+              <AppIcons.add height={30} width={30} fill="white" />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 My List
               </Text>
@@ -228,7 +228,7 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(AppActions.increment());
               }}>
-              <AppSvg SvgSrc={AppIcons.info} size={30} fill="white" />
+              <AppIcons.info height={30} width={30} fill="white" />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 Info
               </Text>

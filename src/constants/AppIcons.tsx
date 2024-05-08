@@ -8,6 +8,10 @@ import Play from '../../assets/icons/play.svg';
 import Info from '../../assets/icons/info.svg';
 import Cast from '../../assets/icons/cast.svg';
 import DropDown from '../../assets/icons/drop_down.svg';
+import Search from '../../assets/icons/search.svg';
+import ComingSoon from '../../assets/icons/coming_soon.svg';
+import Downloads from '../../assets/icons/downloads.svg';
+import Home from '../../assets/icons/home.svg';
 
 export const AppIcons = {
   netflix: Netflix,
@@ -20,4 +24,8 @@ export const AppIcons = {
   info: Info,
   cast: Cast,
   dropDown: DropDown,
+  home: Home,
+  search: Search,
+  comingSoon: ComingSoon,
+  downloads: Downloads,
 };
