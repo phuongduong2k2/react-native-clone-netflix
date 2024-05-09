@@ -1,6 +1,6 @@
 import Netflix from '../../assets/icons/netflix.svg';
 import NNetflix from '../../assets/icons/nnetflix.svg';
-import More from '../../assets/icons/more.svg';
+import MoreStick from '../../assets/icons/more_stick.svg';
 import Close from '../../assets/icons/close.svg';
 import ArrowLeft from '../../assets/icons/arrow_left.svg';
 import Add from '../../assets/icons/add.svg';
@@ -12,11 +12,12 @@ import Search from '../../assets/icons/search.svg';
 import ComingSoon from '../../assets/icons/coming_soon.svg';
 import Downloads from '../../assets/icons/downloads.svg';
 import Home from '../../assets/icons/home.svg';
+import MoreCircle from '../../assets/icons/more_circle.svg';
 
 export const AppIcons = {
   netflix: Netflix,
   nnetflix: NNetflix,
-  more: More,
+  more_stick: MoreStick,
   close: Close,
   arrow_left: ArrowLeft,
   add: Add,
@@ -28,4 +29,5 @@ export const AppIcons = {
   search: Search,
   comingSoon: ComingSoon,
   downloads: Downloads,
+  more_circle: MoreCircle,
 };

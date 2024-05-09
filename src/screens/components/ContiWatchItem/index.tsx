@@ -91,7 +91,7 @@ const ContiWatchItem = (props: Props) => {
             aspectRatio: 1,
             padding: 5,
           }}>
-          <AppIcons.more height={'100%'} width={'100%'} fill="#B2B2B2" />
+          <AppIcons.more_circle height={'100%'} width={'100%'} fill="#B2B2B2" />
         </TouchableOpacity>
       </View>
     </View>

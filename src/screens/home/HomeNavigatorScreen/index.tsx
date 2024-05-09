@@ -39,7 +39,7 @@ const listTab = [
   {
     id: 4,
     name: 'More',
-    Icon: AppIcons.more,
+    Icon: AppIcons.more_stick,
     component: MoreScreen,
   },
 ];

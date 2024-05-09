@@ -131,7 +131,7 @@ const HomeScreen = () => {
               Categories
             </Text>
             <View style={{height: '80%', aspectRatio: 1, width: undefined}}>
-              <AppSvg SvgSrc={AppIcons.dropDown} fill="white" />
+              <AppIcons.dropDown height={'100%'} width={'100%'} fill="white" />
             </View>
           </TouchableOpacity>
         </View>
