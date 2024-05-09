@@ -59,9 +59,18 @@ const StartedScreen = () => {
           style={{
             flex: 1,
           }}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={{flex: 1}}>
-              <AppSvg SvgSrc={AppIcons.nnetflix} size={50} />
+          <View
+            style={{
+              flexDirection: 'row',
+              height: 56,
+            }}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                paddingLeft: AppDimention.secondPadding,
+              }}>
+              <AppIcons.netflix height={28} style={{aspectRatio: 86 / 22}} />
             </View>
             <View
               style={{
@@ -85,12 +94,8 @@ const StartedScreen = () => {
                 </Text>
               </TouchableOpacity>
               <Menu>
-                <MenuTrigger style={{padding: 8, opacity: 0.5}}>
-                  <AppSvg
-                    SvgSrc={AppIcons.threeDots}
-                    size={20}
-                    stroke="white"
-                  />
+                <MenuTrigger style={{padding: 8}}>
+                  <AppIcons.more_circle height={20} width={20} fill="white" />
                 </MenuTrigger>
                 <MenuOptions optionsContainerStyle={{padding: 8}}>
                   <MenuOption onSelect={() => {}}>
@@ -230,7 +235,7 @@ const StartedScreen = () => {
                 onPress={() => {
                   setVisible(false);
                 }}>
-                <AppSvg SvgSrc={AppIcons.close} size={30} stroke="grey" />
+                <AppIcons.close height={30} width={30} />
               </TouchableOpacity>
               <View style={{height: '100%', width: '100%'}}>
                 <ScrollView

@@ -7,6 +7,7 @@ export type RootStackParamList = {
   StartedScreen: {} | undefined;
   CreateAccountScreen: {} | undefined;
   HomeScreen: {} | undefined;
+  HomeNavigatorScreen: {} | undefined;
 };
 
 const useAppNavigation = () => {

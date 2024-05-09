@@ -13,6 +13,7 @@ import ComingSoon from '../../assets/icons/coming_soon.svg';
 import Downloads from '../../assets/icons/downloads.svg';
 import Home from '../../assets/icons/home.svg';
 import MoreCircle from '../../assets/icons/more_circle.svg';
+import CloseCircle from '../../assets/icons/close_circle.svg';
 
 export const AppIcons = {
   netflix: Netflix,
@@ -30,4 +31,5 @@ export const AppIcons = {
   comingSoon: ComingSoon,
   downloads: Downloads,
   more_circle: MoreCircle,
+  closeCircle: CloseCircle,
 };

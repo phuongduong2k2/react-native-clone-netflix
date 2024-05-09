@@ -31,12 +31,18 @@ import {MovieItemProps} from '../../types';
 import {useSelector} from 'react-redux';
 import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppActions} from '../../redux/slice/AppSlice';
-import {Path, Svg} from 'react-native-svg';
-import Cast from '../../../assets/icons/cast.svg';
+import Animated, {
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from 'react-native-reanimated';
+import {AnimatedScrollView} from 'react-native-reanimated/lib/typescript/reanimated2/component/ScrollView';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+
+  const mainFilmPoster = AppImages.posters.dune;
 
   const renderHeader = () => {
     return (
@@ -375,6 +381,20 @@ const HomeScreen = () => {
     );
   };
 
+  const animPoster = useSharedValue(0);
+
+  const animPosterStyle = useAnimatedStyle(() => {
+    return animPoster.value >= 0
+      ? {
+          transform: [{translateY: (-animPoster.value * 2) / 3}],
+        }
+      : {};
+  });
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    animPoster.value = event.contentOffset.y;
+  });
+
   return (
     <AppContainer>
       <StatusBar translucent backgroundColor={'transparent'} />
@@ -393,40 +413,41 @@ const HomeScreen = () => {
             }}
           />
         </View>
-        <Image
-          source={AppImages.mainFilmThumbnail}
-          style={{
-            resizeMode: 'contain',
-            width: '100%',
-            aspectRatio: 760 / 1080,
-            height: undefined,
-            zIndex: 0,
-          }}
-        />
-        <View
-          style={{
-            height: '25%',
-            bottom: 0,
-            position: 'absolute',
-            width: '100%',
-            zIndex: 1,
-          }}>
-          <LinearGradient
-            colors={['#00000000', '#000000']}
+        <Animated.View style={animPosterStyle}>
+          <Image
+            source={mainFilmPoster}
             style={{
-              height: '100%',
+              resizeMode: 'contain',
+              width: '100%',
+              aspectRatio: 760 / 1080,
+              height: undefined,
+              zIndex: 0,
             }}
           />
-        </View>
+          <View
+            style={{
+              height: '25%',
+              bottom: 0,
+              position: 'absolute',
+              width: '100%',
+              zIndex: 1,
+            }}>
+            <LinearGradient
+              colors={['#00000000', '#000000']}
+              style={{
+                height: '100%',
+              }}
+            />
+          </View>
+        </Animated.View>
       </View>
-
       <View
         style={{
           flex: 1,
           marginTop: StatusBar.currentHeight ?? 0 + insets.top,
         }}>
         {renderHeader()}
-        <ScrollView style={{}}>
+        <Animated.ScrollView style={{}} onScroll={scrollHandler}>
           {renderMainFilm()}
           <View>{renderContiWatch()}</View>
           <View style={{marginTop: AppDimention.mainPadding}}>
@@ -438,7 +459,7 @@ const HomeScreen = () => {
           <View style={{marginVertical: AppDimention.mainPadding}}>
             {renderTrending()}
           </View>
-        </ScrollView>
+        </Animated.ScrollView>
       </View>
     </AppContainer>
   );

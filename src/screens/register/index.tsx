@@ -151,7 +151,7 @@ const RegisterScreen = () => {
                 alignItems: 'center',
               }}
               onPress={() => {
-                navigation.replace('HomeScreen');
+                navigation.replace('HomeNavigatorScreen');
               }}
             />
           </ScrollView>

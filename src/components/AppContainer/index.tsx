@@ -4,13 +4,14 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 type Props = {
   children?: React.ReactNode;
+  backgroundColor?: string;
 };
 
 const AppContainer = (props: Props) => {
-  const {children} = props;
+  const {children, backgroundColor = 'black'} = props;
   return (
     <SafeAreaProvider>
-      <View style={{flex: 1, backgroundColor: 'black'}}>{children}</View>
+      <View style={{flex: 1, backgroundColor}}>{children}</View>
     </SafeAreaProvider>
   );
 };

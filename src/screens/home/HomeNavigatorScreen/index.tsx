@@ -1,6 +1,9 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Button, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {
+  BottomTabBarProps,
+  createBottomTabNavigator,
+} from '@react-navigation/bottom-tabs';
 import HomeScreen from '..';
 import SearchScreen from '../../search';
 import ComingSoonScreen from '../../coming';
@@ -8,8 +11,10 @@ import DownloadsScreen from '../../downloads';
 import MoreScreen from '../../more';
 import ScreenNames from '../../../constants/ScreenNames';
 import {AppIcons} from '../../../constants/AppIcons';
-import AppSvg from '../../../components/AppSvg';
+
 import {AppFonts} from '../../../constants/constants';
+import {getTabBarHeight} from '@react-navigation/bottom-tabs/lib/typescript/src/views/BottomTabBar';
+import LinearGradient from 'react-native-linear-gradient';
 
 const listTab = [
   {
@@ -47,19 +52,77 @@ const listTab = [
 const Tab = createBottomTabNavigator();
 
 const HomeNavigatorScreen = () => {
+  const customTabBar = (props: BottomTabBarProps) => {
+    const {navigation, state} = props;
+    return (
+      <View {...props} style={{height: 50, backgroundColor: 'black'}}>
+        <View
+          style={{
+            height: 10,
+            width: '100%',
+            position: 'absolute',
+            borderColor: 'orange',
+            top: -10,
+          }}>
+          <LinearGradient
+            colors={['#00000000', '#000000']}
+            style={{
+              height: '100%',
+            }}
+          />
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            width: '100%',
+            flex: 1,
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+          }}>
+          {state.routes.map((route, index) => {
+            const Icon = listTab[index].Icon;
+            return (
+              <TouchableOpacity
+                activeOpacity={1}
+                style={{
+                  alignItems: 'center',
+                  width: '20%',
+                }}
+                key={route.key}
+                onPress={() => {
+                  navigation.navigate(route.name);
+                }}>
+                <Icon fill={state.index === index ? 'white' : '#737373'} />
+                <Text
+                  style={{
+                    fontSize: 12,
+                    fontFamily: AppFonts.regular,
+                    color: state.index === index ? 'white' : '#737373',
+                  }}>
+                  {route.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+    );
+  };
+
   return (
     <Tab.Navigator
+      tabBar={customTabBar}
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {backgroundColor: 'green'},
+        tabBarStyle: {backgroundColor: '#010101', borderColor: 'black'},
         // tabBarButton: props => (
         //   <TouchableOpacity>
         //     <Text>asd</Text>
         //   </TouchableOpacity>
         // ),
-        tabBarIcon: () => <View />,
         tabBarLabelStyle: {fontFamily: AppFonts.regular},
         tabBarActiveTintColor: 'white',
+        tabBarInactiveTintColor: '#737373',
       }}
       initialRouteName={ScreenNames.HomeScreen}>
       {listTab.map(item => {
@@ -70,7 +133,7 @@ const HomeNavigatorScreen = () => {
             component={item.component}
             options={{
               tabBarIcon: ({focused}) => {
-                return <item.Icon fill={focused ? 'white' : 'black'} />;
+                return <item.Icon fill={focused ? 'white' : '#737373'} />;
               },
             }}
           />

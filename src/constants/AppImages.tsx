@@ -1,7 +1,9 @@
 const AppImages = {
   background: require('../../assets/images/background.png'),
   backgroundRegister: require('../../assets/images/background_register.png'),
-  mainFilmThumbnail: require('../../assets/images/main_film_thumbnail.png'),
+  posters: {
+    dune: require('../../assets/images/posters/dune.png'),
+  },
   nNetflix: require('../../assets/images/nnetflix/nnetflix.png'),
   profiles: {
     blue: require('../../assets/images/profiles/blue/blue.png'),

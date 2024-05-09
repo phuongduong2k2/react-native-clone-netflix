@@ -5,7 +5,7 @@
  * @format
  */
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   SafeAreaView,
   StatusBar,
@@ -19,9 +19,22 @@ import MainNavigation from './src/navigation/MainNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
+import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+
+  const onChangeColoNavigationBar = async () => {
+    try {
+      changeNavigationBarColor('black');
+    } catch (error) {
+      console.log('[change color navigation]', error);
+    }
+  };
+
+  useEffect(() => {
+    onChangeColoNavigationBar();
+  }, []);
 
   return (
     <Provider store={store}>
