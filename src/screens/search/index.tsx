@@ -1,15 +1,119 @@
-import {View, Text, StatusBar, TouchableOpacity, TextInput} from 'react-native';
-import React, {useRef} from 'react';
+import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import AppTextInput from '../../components/AppTextInput';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
+import AppImages from '../../constants/AppImages';
+import {FlashList, ListRenderItem} from '@shopify/flash-list';
+import {MovieItemProps} from '../../types';
+
+const listFilmDefault = [
+  {
+    id: 0,
+    name: 'The Sea Beat',
+    thumbnail: AppImages.landscape_thumbnails.theSeaBeast,
+  },
+  {
+    id: 1,
+    name: 'Peaky Blinders',
+    thumbnail: AppImages.landscape_thumbnails.peakyBlinders,
+  },
+  {
+    id: 2,
+    name: 'The Umbrella Academy',
+    thumbnail: AppImages.landscape_thumbnails.theUmbrellaAcademy,
+  },
+  {
+    id: 3,
+    name: 'KeepSweet, Pray, AndObey',
+    thumbnail: AppImages.landscape_thumbnails.keepSweetPrayAndObey,
+  },
+  {
+    id: 4,
+    name: 'Attack On Pearl Harbour',
+    thumbnail: AppImages.landscape_thumbnails.attackOnPearlHarbour,
+  },
+  {
+    id: 5,
+    name: 'The King Of Staten Island',
+    thumbnail: AppImages.landscape_thumbnails.theKingOfStatenIsland,
+  },
+  {
+    id: 6,
+    name: 'Blonde',
+    thumbnail: AppImages.landscape_thumbnails.blonde,
+  },
+  {
+    id: 7,
+    name: 'Dangerous Liasons',
+    thumbnail: AppImages.landscape_thumbnails.dangerousLiasons,
+  },
+  {
+    id: 8,
+    name: 'Halftime',
+    thumbnail: AppImages.landscape_thumbnails.halftime,
+  },
+  {
+    id: 9,
+    name: 'Heat',
+    thumbnail: AppImages.landscape_thumbnails.heat,
+  },
+  {
+    id: 10,
+    name: 'Hustle',
+    thumbnail: AppImages.landscape_thumbnails.hustle,
+  },
+  {
+    id: 11,
+    name: 'The Art Of Incarceration',
+    thumbnail: AppImages.landscape_thumbnails.theArtOfIncarceration,
+  },
+  {
+    id: 12,
+    name: 'The Girl In The Picture',
+    thumbnail: AppImages.landscape_thumbnails.theGirlInThePicture,
+  },
+  {
+    id: 13,
+    name: 'The Gray Man',
+    thumbnail: AppImages.landscape_thumbnails.theGrayMan,
+  },
+];
 
 const SearchScreen = () => {
   const insets = useSafeAreaInsets();
 
   const searchRef = useRef<TextInput>(null);
+  const [search, setSearch] = useState('');
+  const [listFilmFilter, setListFilmFilter] = useState(listFilmDefault);
+
+  const onChangeTextSearch = (text: string) => {
+    setSearch(text);
+  };
+
+  const onFilterFilm = () => {
+    if (search) {
+      const newList = listFilmDefault.filter(item =>
+        item.name.toLowerCase().includes(search.toLowerCase()),
+      );
+      setListFilmFilter(newList);
+    } else {
+      setListFilmFilter(listFilmDefault);
+    }
+  };
+
+  const onClearSearching = () => {
+    if (searchRef.current) {
+      searchRef.current.blur();
+      searchRef.current.clear();
+    }
+    setSearch('');
+  };
+
+  useEffect(() => {
+    onFilterFilm();
+  }, [search]);
 
   const renderSearch = () => {
     return (
@@ -19,6 +123,7 @@ const SearchScreen = () => {
           flexDirection: 'row',
           width: '100%',
           alignItems: 'center',
+          paddingHorizontal: 8,
         }}>
         <View
           style={{
@@ -29,7 +134,6 @@ const SearchScreen = () => {
             backgroundColor: '#292929',
             borderRadius: 4,
             flex: 1,
-            marginLeft: 8,
           }}>
           <TouchableOpacity
             onPress={() => {
@@ -55,6 +159,9 @@ const SearchScreen = () => {
               />
             </View>
             <TextInput
+              placeholder="Search for a show, movie, genre, e.t.c."
+              placeholderTextColor={'#737373'}
+              onChangeText={onChangeTextSearch}
               ref={searchRef}
               style={{
                 height: '100%',
@@ -66,51 +173,83 @@ const SearchScreen = () => {
               }}
             />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              aspectRatio: 1,
-              height: '100%',
-              paddingVertical: 4,
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: undefined,
-              marginHorizontal: AppDimention.secondPadding / 2,
-            }}
-            onPress={() => {
-              if (searchRef.current) {
-                searchRef.current.blur();
-                searchRef.current.clear();
-              }
-            }}>
-            <AppIcons.closeCircle
-              height={'100%'}
-              width={undefined}
+          {search && (
+            <TouchableOpacity
               style={{
                 aspectRatio: 1,
+                height: '100%',
+                paddingVertical: 4,
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: undefined,
+                marginHorizontal: AppDimention.secondPadding / 2,
               }}
-              fill="#737373"
-            />
-          </TouchableOpacity>
+              onPress={onClearSearching}>
+              <AppIcons.closeCircle
+                height={'100%'}
+                width={undefined}
+                style={{
+                  aspectRatio: 1,
+                }}
+                fill="#737373"
+              />
+            </TouchableOpacity>
+          )}
         </View>
+      </View>
+    );
+  };
+
+  const renderFilmItem: ListRenderItem<MovieItemProps> = ({item}) => {
+    return (
+      <View
+        style={{
+          height: 68,
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}>
         <TouchableOpacity
-          onPress={() => {
-            if (searchRef.current) {
-              searchRef.current.blur();
-              searchRef.current.clear();
-            }
-          }}
           style={{
-            marginHorizontal: AppDimention.secondPadding,
-            paddingVertical: 2,
+            flexDirection: 'row',
+            alignItems: 'center',
+            flex: 1,
           }}>
+          <Image
+            source={item.thumbnail}
+            style={{
+              resizeMode: 'contain',
+              height: '100%',
+              aspectRatio: 96 / 54,
+              width: undefined,
+              borderRadius: 8,
+            }}
+          />
           <Text
             style={{
-              color: 'white',
-              fontFamily: AppFonts.light,
-              fontSize: 16,
+              flex: 1,
+              color: '#8C8C8C',
+              fontFamily: AppFonts.bold,
+              marginLeft: AppDimention.secondPadding,
             }}>
-            Cancel
+            {item.name}
           </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            borderRadius: 100,
+            borderWidth: 4,
+            borderColor: 'white',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginRight: AppDimention.secondPadding,
+          }}>
+          <AppIcons.play
+            fill="white"
+            height={'30%'}
+            width={undefined}
+            style={{aspectRatio: 1, margin: 4}}
+          />
         </TouchableOpacity>
       </View>
     );
@@ -123,8 +262,6 @@ const SearchScreen = () => {
         <View
           style={{
             flex: 1,
-            borderWidth: 1,
-            borderColor: 'white',
             marginTop: AppDimention.secondPadding,
           }}>
           <Text
@@ -136,6 +273,19 @@ const SearchScreen = () => {
             }}>
             Movies & TV
           </Text>
+          <FlashList
+            data={listFilmFilter}
+            contentContainerStyle={{
+              paddingHorizontal: 8,
+              paddingTop: AppDimention.mainPadding,
+            }}
+            renderItem={renderFilmItem}
+            ItemSeparatorComponent={() => (
+              <View style={{height: AppDimention.secondPadding}} />
+            )}
+            ListFooterComponent={() => <View style={{height: 24}} />}
+            estimatedItemSize={68}
+          />
         </View>
       </View>
     </AppContainer>
