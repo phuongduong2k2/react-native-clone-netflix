@@ -1,11 +1,4 @@
-import {
-  StyleSheet,
-  Text,
-  TextStyle,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {Text, TextStyle, TouchableOpacity, View, ViewStyle} from 'react-native';
 import React, {memo} from 'react';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
 

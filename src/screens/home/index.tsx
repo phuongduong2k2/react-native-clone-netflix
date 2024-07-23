@@ -1,17 +1,8 @@
-import {
-  Image,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
-import AppHeader from '../../components/AppHeader';
 import AppSvg from '../../components/AppSvg';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
@@ -28,15 +19,13 @@ import {
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
-import {useSelector} from 'react-redux';
-import {useAppDispatch, useAppSelector} from '../../hooks';
+import {useAppDispatch} from '../../hooks';
 import {AppActions} from '../../redux/slice/AppSlice';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import {AnimatedScrollView} from 'react-native-reanimated/lib/typescript/reanimated2/component/ScrollView';
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -467,4 +456,4 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({});
+// const styles = StyleSheet.create({});
