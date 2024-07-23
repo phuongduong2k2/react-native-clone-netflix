@@ -1,4 +1,11 @@
-import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -26,12 +33,21 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
+import useAppNavigation from '../../navigation/useAppNavigation';
+
+const SpaceLine = () => <View style={{width: 8}} />;
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const navigation = useAppNavigation();
 
   const mainFilmPoster = AppImages.posters.dune;
+
+  const onPressMovie = (data: MovieItemProps) => {
+    console.log(data);
+    navigation.navigate('WatchingScreen', data);
+  };
 
   const renderHeader = () => {
     return (
@@ -257,7 +273,7 @@ const HomeScreen = () => {
             contentContainerStyle={{
               paddingHorizontal: 8,
             }}
-            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            ItemSeparatorComponent={SpaceLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderContiWatchItem}
@@ -303,7 +319,7 @@ const HomeScreen = () => {
   };
 
   const renderPopularItem: ListRenderItem<MovieItemProps> = ({item}) => {
-    return <MovieCard data={item} />;
+    return <MovieCard data={item} onPress={onPressMovie} />;
   };
 
   const renderPopular = () => {
@@ -325,7 +341,7 @@ const HomeScreen = () => {
             contentContainerStyle={{
               paddingHorizontal: 8,
             }}
-            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            ItemSeparatorComponent={SpaceLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderPopularItem}
@@ -359,7 +375,7 @@ const HomeScreen = () => {
             contentContainerStyle={{
               paddingHorizontal: 8,
             }}
-            ItemSeparatorComponent={() => <View style={{width: 8}} />}
+            ItemSeparatorComponent={SpaceLine}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderTrendingItem}
@@ -387,7 +403,7 @@ const HomeScreen = () => {
   return (
     <AppContainer>
       <StatusBar translucent backgroundColor={'transparent'} />
-      <View style={{width: '100%', position: 'absolute', zIndex: 0}}>
+      <View style={styles.container}>
         <View
           style={{
             height: '25%',
@@ -436,7 +452,10 @@ const HomeScreen = () => {
           marginTop: StatusBar.currentHeight ?? 0 + insets.top,
         }}>
         {renderHeader()}
-        <Animated.ScrollView style={{}} onScroll={scrollHandler}>
+        <Animated.ScrollView
+          style={{}}
+          onScroll={scrollHandler}
+          showsVerticalScrollIndicator={false}>
           {renderMainFilm()}
           <View>{renderContiWatch()}</View>
           <View style={{marginTop: AppDimention.mainPadding}}>
@@ -456,4 +475,6 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-// const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {width: '100%', position: 'absolute', zIndex: 0},
+});

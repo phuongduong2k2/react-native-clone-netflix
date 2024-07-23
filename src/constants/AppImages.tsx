@@ -30,7 +30,6 @@ const AppImages = {
   },
   portrait_thumbnails: {
     blasted: require('../../assets/images/portrait_thumbnails/blasted/blasted.png'),
-    denOfThieves: require('../../assets/images/portrait_thumbnails/den_of_thieves/den_of_thieves.png'),
     hustle: require('../../assets/images/portrait_thumbnails/hustle/hustle.png'),
     ironChef: require('../../assets/images/portrait_thumbnails/iron_chef/iron_chef.png'),
     loveAndGelato: require('../../assets/images/portrait_thumbnails/love_and_gelato/love_and_gelato.png'),
@@ -40,13 +39,12 @@ const AppImages = {
     snowflakeMountain: require('../../assets/images/portrait_thumbnails/snowflake_mountain/snowflake_mountain.png'),
     spiderhead: require('../../assets/images/portrait_thumbnails/spiderhead/spiderhead.png'),
     strangerThings: require('../../assets/images/portrait_thumbnails/stranger_things/stranger_things.png'),
-    swatFirefight: require('../../assets/images/portrait_thumbnails/swat_firefight/swat_firefight.png'),
-    theAvengers: require('../../assets/images/portrait_thumbnails/the_avengers/the_avengers.png'),
-    theHiddenLifeOfPets: require('../../assets/images/portrait_thumbnails/the_hidden_life_of_pets/the_hidden_life_of_pets.png'),
+    theSecretLifeOfPets: require('../../assets/images/portrait_thumbnails/the_secret_life_of_pets/the_secret_life_of_pets.png'),
     theLincolnLawyer: require('../../assets/images/portrait_thumbnails/the_lincoln_lawyer/the_lincoln_lawyer.png'),
     theManFromToronto: require('../../assets/images/portrait_thumbnails/the_man_from_toronto/the_man_from_toronto.png'),
     theUmbrellaAcademy: require('../../assets/images/portrait_thumbnails/the_umbrella_academy/the_umbrella_academy.png'),
-    webOfMakeBelieve: require('../../assets/images/portrait_thumbnails/web_of_make_believe/web_of_make_believe.png'),
+    madameWeb: require('../../assets/images/portrait_thumbnails/madame_web/madame_web.png'),
+    ourBelovedSummer: require('../../assets/images/portrait_thumbnails/our_beloved_summer/our_beloved_summer.png'),
   },
 };
 

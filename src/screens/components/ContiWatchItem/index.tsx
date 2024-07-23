@@ -1,7 +1,7 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import * as Progress from 'react-native-progress';
-import AppSvg from '../../../components/AppSvg';
+
 import {AppIcons} from '../../../constants/AppIcons';
 import {MovieItemProps} from '../../../types';
 

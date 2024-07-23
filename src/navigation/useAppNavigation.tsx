@@ -1,5 +1,6 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {MovieItemProps} from '../types';
 
 export type RootStackParamList = {
   LoginScreen: {} | undefined;
@@ -8,6 +9,7 @@ export type RootStackParamList = {
   CreateAccountScreen: {} | undefined;
   HomeScreen: {} | undefined;
   HomeNavigatorScreen: {} | undefined;
+  WatchingScreen: MovieItemProps;
 };
 
 const useAppNavigation = () => {

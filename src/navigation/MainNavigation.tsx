@@ -1,18 +1,17 @@
-import {View, Text} from 'react-native';
 import React from 'react';
-import {NavigationContainer, StackActions} from '@react-navigation/native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ScreenNames from '../constants/ScreenNames';
 import LoginScreen from '../screens/login';
 import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
 
-import HomeScreen from '../screens/home';
 import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
+import WatchingScreen from '../screens/watching/WatchingScreen';
 
 const Stack = createNativeStackNavigator();
 
-const MainNavigation = () => {
+const MainNavigation: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={ScreenNames.HomeNavigatorScreen}>
@@ -34,6 +33,11 @@ const MainNavigation = () => {
         <Stack.Screen
           name={ScreenNames.StartedScreen}
           component={StartedScreen}
+          options={{headerShown: false, gestureEnabled: false}}
+        />
+        <Stack.Screen
+          name={ScreenNames.WatchingScreen}
+          component={WatchingScreen}
           options={{headerShown: false, gestureEnabled: false}}
         />
       </Stack.Navigator>

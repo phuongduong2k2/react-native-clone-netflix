@@ -9,6 +9,7 @@ const ScreenNames = {
   ComingSoonScreen: 'ComingSoonScreen',
   DownloadsScreen: 'DownloadsScreen',
   MoreScreen: 'MoreScreen',
+  WatchingScreen: 'WatchingScreen',
 };
 
 export default ScreenNames;

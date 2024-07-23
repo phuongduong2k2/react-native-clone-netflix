@@ -268,9 +268,9 @@ const StartedScreen = () => {
                     containerStyle={{}}
                     textStyle={{}}
                     onChangeText={handleChangeText}
-                    onEndEditing={e => {
-                      console.log(email);
-                    }}
+                    // onEndEditing={e => {
+                    //   console.log(email);
+                    // }}
                   />
                   <AppButton
                     onPress={() => {

@@ -23,8 +23,8 @@ const dataContiWatch = [
   },
   {
     id: 4,
-    name: 'The Avengers',
-    thumbnail: AppImages.portrait_thumbnails.theAvengers,
+    name: 'Our Beloved Summer',
+    thumbnail: AppImages.portrait_thumbnails.ourBelovedSummer,
   },
 ];
 
@@ -36,8 +36,8 @@ const dataPreviews = [
   },
   {
     id: 1,
-    name: 'Den Of Thieves',
-    thumbnail: AppImages.portrait_thumbnails.denOfThieves,
+    name: 'The Secret Life Of Pets',
+    thumbnail: AppImages.portrait_thumbnails.theSecretLifeOfPets,
   },
   {
     id: 2,
@@ -59,28 +59,33 @@ const dataPreviews = [
 const dataPopular = [
   {
     id: 0,
-    name: 'Love And Gelato',
-    thumbnail: AppImages.portrait_thumbnails.loveAndGelato,
+    name: 'Our Beloved Summer',
+    thumbnail: AppImages.portrait_thumbnails.ourBelovedSummer,
+    trailerVideoId: 'wpW6aVWgvMc',
   },
   {
     id: 1,
     name: 'Money Heist',
     thumbnail: AppImages.portrait_thumbnails.moneyHeist,
+    trailerVideoId: '_InqQJRqGW4',
   },
   {
     id: 2,
-    name: 'Swat Firefight',
-    thumbnail: AppImages.portrait_thumbnails.swatFirefight,
+    name: 'Peaky Blinders',
+    thumbnail: AppImages.portrait_thumbnails.peakyBlinders,
+    trailerVideoId: 'Ruyl8_PT_y8',
   },
   {
     id: 3,
-    name: 'The Hidden Life Of Pets',
-    thumbnail: AppImages.portrait_thumbnails.theHiddenLifeOfPets,
+    name: 'The Secret Life Of Pets',
+    thumbnail: AppImages.portrait_thumbnails.theSecretLifeOfPets,
+    trailerVideoId: 'i-80SGWfEjM',
   },
   {
     id: 4,
     name: 'The Man From Toronto',
     thumbnail: AppImages.portrait_thumbnails.theManFromToronto,
+    trailerVideoId: 'urqy8DrcGBs',
   },
 ];
 
@@ -102,13 +107,13 @@ const dataTrending = [
   },
   {
     id: 3,
-    name: 'Web Of Make Believe',
-    thumbnail: AppImages.portrait_thumbnails.webOfMakeBelieve,
+    name: 'Madame Web',
+    thumbnail: AppImages.portrait_thumbnails.madameWeb,
   },
   {
     id: 4,
-    name: 'The Avengers',
-    thumbnail: AppImages.portrait_thumbnails.theAvengers,
+    name: 'Our Beloved Summer',
+    thumbnail: AppImages.portrait_thumbnails.ourBelovedSummer,
   },
 ];
 
