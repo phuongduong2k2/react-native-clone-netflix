@@ -4,6 +4,7 @@ import * as Progress from 'react-native-progress';
 
 import {AppIcons} from '../../../constants/AppIcons';
 import {MovieItemProps} from '../../../types';
+import ImgPortraitTag from '../../../components/ImgPortraitTag/ImgPortraitTag';
 
 type Props = {
   data: MovieItemProps;
@@ -20,8 +21,13 @@ const ContiWatchItem = (props: Props) => {
         borderRadius: 8,
         overflow: 'hidden',
       }}>
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <Image source={data.thumbnail} />
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          flex: 1,
+        }}>
+        <ImgPortraitTag source={data.thumbnail} />
         <TouchableOpacity
           activeOpacity={0.5}
           style={{
@@ -70,7 +76,7 @@ const ContiWatchItem = (props: Props) => {
       />
       <View
         style={{
-          flex: 1,
+          height: 32,
           width: '100%',
           flexDirection: 'row',
           justifyContent: 'space-between',

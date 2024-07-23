@@ -1,18 +1,22 @@
-import {View, Text, Button, ViewStyle} from 'react-native';
+import {View, Text, ViewStyle, TextStyle} from 'react-native';
 import React, {memo} from 'react';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import useAppNavigation from '../../navigation/useAppNavigation';
-import {AppFonts} from '../../constants/constants';
+import {AppDimention, AppFonts} from '../../constants/constants';
 
 type Props = {
   children?: React.ReactNode[];
   title?: string;
   containerStyle?: ViewStyle;
+  textStyles?: TextStyle;
 };
 
 const AppHeader = (props: Props) => {
-  const {children = [], title = 'Title', containerStyle = {}} = props;
-  const insets = useSafeAreaInsets();
+  const {
+    children = [],
+    title = 'Title',
+    containerStyle = {},
+    textStyles = {},
+  } = props;
+
   return (
     <View
       style={{
@@ -29,7 +33,8 @@ const AppHeader = (props: Props) => {
           height: '100%',
           width: '50%',
           position: 'absolute',
-          left: 0,
+          left: AppDimention.mainPadding,
+          justifyContent: 'center',
         }}>
         {children[0]}
       </View>
@@ -37,7 +42,8 @@ const AppHeader = (props: Props) => {
         style={{
           fontFamily: AppFonts.regular,
           color: 'black',
-          fontWeight: '700',
+
+          ...textStyles,
         }}>
         {title}
       </Text>
@@ -46,7 +52,9 @@ const AppHeader = (props: Props) => {
           height: '100%',
           width: '50%',
           position: 'absolute',
-          right: 0,
+          justifyContent: 'center',
+          right: AppDimention.mainPadding,
+          alignItems: 'flex-end',
         }}>
         {children[1]}
       </View>

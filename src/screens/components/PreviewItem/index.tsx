@@ -1,17 +1,22 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {PreviewItemProps} from '../../../types';
+import {MovieItemProps} from '../../../types';
 import {AppFonts} from '../../../constants/constants';
 
 type Props = {
-  data: PreviewItemProps;
+  data: MovieItemProps;
   onPress?: () => void;
 };
 
 const PreviewItem = (props: Props) => {
-  const {data} = props;
+  const {data, onPress} = props;
+
+  const onPressing = () => (onPress ? onPress : null);
+
   return (
-    <TouchableOpacity style={{width: 102, height: 102 + 11}} onPress={() => {}}>
+    <TouchableOpacity
+      style={{width: 102, height: 102 + 11}}
+      onPress={onPressing}>
       <View
         style={{
           height: 102,

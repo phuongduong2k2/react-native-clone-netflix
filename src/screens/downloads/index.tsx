@@ -83,7 +83,6 @@ const DownloadsScreen = () => {
           style={{
             marginTop: AppDimention.mainPadding,
             paddingHorizontal: AppDimention.secondPadding,
-            alignSelf: 'center',
             height: 48,
             backgroundColor: '#424242',
             borderRadius: 4,
