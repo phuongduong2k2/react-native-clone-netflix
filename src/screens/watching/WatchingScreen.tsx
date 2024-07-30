@@ -1,5 +1,5 @@
 import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import useAppNavigation, {
@@ -13,6 +13,8 @@ import AppHeader from '../../components/AppHeader';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import AppImages from '../../constants/AppImages';
+import {MotiView} from 'moti';
+import {Skeleton} from 'moti/skeleton';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
@@ -25,7 +27,13 @@ const WatchingScreen = (props: Props) => {
   const {name, trailerVideoId} = route.params;
   const navigation = useAppNavigation();
 
+  const [isTrailerReady, setTrailerReady] = useState(false);
+
   const insets = useSafeAreaInsets();
+
+  const onChangeStateTrailer = () => {
+    setTrailerReady(true);
+  };
 
   const goBack = () => {
     if (navigation.canGoBack()) {
@@ -46,21 +54,34 @@ const WatchingScreen = (props: Props) => {
             </TouchableOpacity>
           </>
         </AppHeader>
-        <View
+        <MotiView
+          transition={{
+            type: 'timing',
+            duration: 100,
+          }}
           style={{
             width: '100%',
             borderTopLeftRadius: 20,
             borderTopRightRadius: 20,
             overflow: 'hidden',
-            backgroundColor: '#292929',
+            // borderWidth: 1,
+            // borderColor: 'white',
+            height: (widthScreen * 9) / 16,
           }}>
-          <YoutubePlayer
-            height={(widthScreen * 9) / 16}
-            play={false}
-            videoId={trailerVideoId ?? ''}
-            onChangeState={() => {}}
-          />
-        </View>
+          <Skeleton
+            colorMode="dark"
+            height={'100%'}
+            width={'100%'}
+            show={!isTrailerReady}>
+            <YoutubePlayer
+              height={(widthScreen * 9) / 16}
+              play={false}
+              onReady={onChangeStateTrailer}
+              videoId={trailerVideoId ?? ''}
+              onChangeState={() => {}}
+            />
+          </Skeleton>
+        </MotiView>
         <View
           style={{
             flex: 1,

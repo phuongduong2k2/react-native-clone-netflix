@@ -1,6 +1,6 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+// import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ScreenNames from '../constants/ScreenNames';
 import LoginScreen from '../screens/login';
 import RegisterScreen from '../screens/register';
@@ -8,12 +8,21 @@ import StartedScreen from '../screens/started';
 
 import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 import WatchingScreen from '../screens/watching/WatchingScreen';
+import {createStackNavigator} from '@react-navigation/stack';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
+
+const themeColor = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'black',
+  },
+};
 
 const MainNavigation: React.FC = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={themeColor}>
       <Stack.Navigator initialRouteName={ScreenNames.HomeNavigatorScreen}>
         <Stack.Screen
           name={ScreenNames.HomeNavigatorScreen}
@@ -38,7 +47,11 @@ const MainNavigation: React.FC = () => {
         <Stack.Screen
           name={ScreenNames.WatchingScreen}
           component={WatchingScreen}
-          options={{headerShown: false, gestureEnabled: false}}
+          options={{
+            headerShown: false,
+            gestureEnabled: false,
+            presentation: 'transparentModal',
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

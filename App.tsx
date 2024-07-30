@@ -1,20 +1,8 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
+import 'react-native-reanimated';
+import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {StatusBar} from 'react-native';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MainNavigation from './src/navigation/MainNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
@@ -22,8 +10,6 @@ import store from './src/redux/store';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 
 function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
   const onChangeColoNavigationBar = async () => {
     try {
       changeNavigationBarColor('black');

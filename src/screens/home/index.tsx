@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
@@ -17,12 +17,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
 import ContiWatchItem from '../components/ContiWatchItem';
-import {
-  dataContiWatch,
-  dataPopular,
-  dataPreviews,
-  dataTrending,
-} from '../../api/testData';
+import {dataContiWatch, dataPreviews, dataTrending} from '../../api/testData';
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
@@ -34,6 +29,7 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import useAppNavigation from '../../navigation/useAppNavigation';
+import {API} from '../../api';
 
 const SpaceLine = () => <View style={{width: 8}} />;
 
@@ -41,6 +37,7 @@ const HomeScreen = () => {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
+  const [popularMovies, setPopularMovies] = useState<MovieItemProps[]>([]);
 
   const mainFilmPoster = AppImages.posters.dune;
 
@@ -48,6 +45,15 @@ const HomeScreen = () => {
     console.log(data);
     navigation.navigate('WatchingScreen', data);
   };
+
+  const getAllPopularMovies = async () => {
+    const res = await API.getAllPopularMovies();
+    setPopularMovies(res.data);
+  };
+
+  useEffect(() => {
+    getAllPopularMovies();
+  }, []);
 
   const renderHeader = () => {
     return (
@@ -268,7 +274,7 @@ const HomeScreen = () => {
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
           <FlashList
-            data={dataContiWatch}
+            data={[]}
             keyExtractor={item => item.name}
             contentContainerStyle={{
               paddingHorizontal: 8,
@@ -302,7 +308,7 @@ const HomeScreen = () => {
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
           <FlashList
-            data={dataPreviews}
+            data={[]}
             keyExtractor={item => item.name}
             contentContainerStyle={{
               paddingHorizontal: 8,
@@ -336,7 +342,7 @@ const HomeScreen = () => {
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
           <FlashList
-            data={dataPopular}
+            data={popularMovies}
             keyExtractor={item => item.name}
             contentContainerStyle={{
               paddingHorizontal: 8,
@@ -370,7 +376,7 @@ const HomeScreen = () => {
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
           <FlashList
-            data={dataTrending}
+            data={popularMovies}
             keyExtractor={item => item.name}
             contentContainerStyle={{
               paddingHorizontal: 8,
@@ -457,10 +463,10 @@ const HomeScreen = () => {
           onScroll={scrollHandler}
           showsVerticalScrollIndicator={false}>
           {renderMainFilm()}
-          <View>{renderContiWatch()}</View>
+          {/* <View>{renderContiWatch()}</View>
           <View style={{marginTop: AppDimention.mainPadding}}>
             {renderPreview()}
-          </View>
+          </View> */}
           <View style={{marginTop: AppDimention.mainPadding}}>
             {renderPopular()}
           </View>

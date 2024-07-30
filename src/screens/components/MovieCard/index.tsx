@@ -1,8 +1,7 @@
-import {Image, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import React from 'react';
 import {MovieItemProps} from '../../../types';
-import AppImages from '../../../constants/AppImages';
-import ImgPortraitTag from '../../../components/ImgPortraitTag/ImgPortraitTag';
+import LazyImage from '../../../components/LazyImage/LazyImage';
 
 type Props = {
   data: MovieItemProps;
@@ -25,7 +24,10 @@ const MovieCard = (props: Props) => {
       onPress={() => {
         onPress(data);
       }}>
-      <ImgPortraitTag source={data.thumbnail} />
+      <LazyImage
+        source={data.portrait}
+        styles={{height: '100%', width: undefined, aspectRatio: 0.7}}
+      />
     </TouchableOpacity>
   );
 };
