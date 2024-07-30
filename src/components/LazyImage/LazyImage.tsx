@@ -20,9 +20,7 @@ const LazyImage = (props: Props) => {
   const [loading, setLoading] = useState(true);
 
   const onLoadDone = () => {
-    setTimeout(() => {
-      setLoading(false);
-    }, 5000);
+    setLoading(false);
   };
 
   const opacity = useSharedValue(0);

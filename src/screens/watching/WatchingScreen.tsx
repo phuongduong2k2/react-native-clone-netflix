@@ -1,5 +1,5 @@
 import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
 import AppContainer from '../../components/AppContainer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import useAppNavigation, {
@@ -13,8 +13,14 @@ import AppHeader from '../../components/AppHeader';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import AppImages from '../../constants/AppImages';
-import {MotiView} from 'moti';
-import {Skeleton} from 'moti/skeleton';
+import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import Animated, {
+  Easing,
+  ReduceMotion,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
@@ -27,19 +33,28 @@ const WatchingScreen = (props: Props) => {
   const {name, trailerVideoId} = route.params;
   const navigation = useAppNavigation();
 
-  const [isTrailerReady, setTrailerReady] = useState(false);
-
   const insets = useSafeAreaInsets();
-
-  const onChangeStateTrailer = () => {
-    setTrailerReady(true);
-  };
 
   const goBack = () => {
     if (navigation.canGoBack()) {
       navigation.goBack();
     }
   };
+
+  // animation
+  const opacity = useSharedValue(1);
+  const animatedStyles = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
+  const onChangeStateTrailer = () => {
+    opacity.value = withTiming(0, {
+      duration: 500,
+      easing: Easing.inOut(Easing.ease),
+      reduceMotion: ReduceMotion.System,
+    });
+  };
+
   return (
     <AppContainer>
       <View style={{flex: 1, marginTop: insets.top}}>
@@ -54,34 +69,45 @@ const WatchingScreen = (props: Props) => {
             </TouchableOpacity>
           </>
         </AppHeader>
-        <MotiView
-          transition={{
-            type: 'timing',
-            duration: 100,
-          }}
-          style={{
-            width: '100%',
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            overflow: 'hidden',
-            // borderWidth: 1,
-            // borderColor: 'white',
-            height: (widthScreen * 9) / 16,
-          }}>
-          <Skeleton
-            colorMode="dark"
-            height={'100%'}
-            width={'100%'}
-            show={!isTrailerReady}>
+        <View>
+          <Animated.View
+            style={[
+              {
+                height: (widthScreen * 9) / 16,
+                width: '100%',
+                position: 'absolute',
+                zIndex: 1,
+              },
+              animatedStyles,
+            ]}>
+            <SkeletonPlaceholder
+              backgroundColor="rgb(65, 65, 65)"
+              highlightColor="rgb(134, 134, 134)"
+              borderRadius={4}
+              speed={1500}>
+              <SkeletonPlaceholder.Item
+                height={'100%'}
+                width={'100%'}
+                borderTopLeftRadius={20}
+                borderTopRightRadius={20}
+                overflow="hidden"
+              />
+            </SkeletonPlaceholder>
+          </Animated.View>
+          <Animated.View
+            style={{
+              borderTopLeftRadius: 20,
+              borderTopRightRadius: 20,
+              overflow: 'hidden',
+            }}>
             <YoutubePlayer
               height={(widthScreen * 9) / 16}
               play={false}
               onReady={onChangeStateTrailer}
               videoId={trailerVideoId ?? ''}
-              onChangeState={() => {}}
             />
-          </Skeleton>
-        </MotiView>
+          </Animated.View>
+        </View>
         <View
           style={{
             flex: 1,

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const HOST = 'http://192.168.1.6:3000';
+const HOST = 'http://192.168.1.14:3000';
 const apiUrl = `${HOST}/api`;
 const headers = {
   'Content-Type': 'application/json',
