@@ -23,6 +23,10 @@ const LazyImage = (props: Props) => {
     setLoading(false);
   };
 
+  const onLoadStart = () => {
+    setLoading(true);
+  };
+
   const opacity = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => ({
@@ -58,6 +62,7 @@ const LazyImage = (props: Props) => {
           ]}>
           <FastImage
             onLoadEnd={onLoadDone}
+            onLoadStart={onLoadStart}
             style={{height: '100%', width: '100%'}}
             source={{
               uri: source,

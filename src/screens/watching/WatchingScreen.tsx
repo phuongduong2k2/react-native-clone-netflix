@@ -1,5 +1,5 @@
 import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {RouteProp, useRoute} from '@react-navigation/native';
 import useAppNavigation, {
@@ -27,11 +27,14 @@ type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
 
 const widthScreen = Dimensions.get('screen').width;
 
+let timeout: null | NodeJS.Timeout = null;
+
 const WatchingScreen = (props: Props) => {
   const {} = props;
   const route = useRoute<WatchingScreenProps>();
   const {name, trailerVideoId} = route.params;
   const navigation = useAppNavigation();
+  const [displayLoading, setDisplayLoading] = useState(true);
 
   const insets = useSafeAreaInsets();
 
@@ -53,7 +56,16 @@ const WatchingScreen = (props: Props) => {
       easing: Easing.inOut(Easing.ease),
       reduceMotion: ReduceMotion.System,
     });
+    timeout = setTimeout(() => {
+      setDisplayLoading(false);
+    }, 500);
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(Number(timeout));
+    };
+  }, []);
 
   return (
     <AppContainer>
@@ -70,31 +82,33 @@ const WatchingScreen = (props: Props) => {
           </>
         </AppHeader>
         <View>
-          <Animated.View
-            style={[
-              {
-                height: (widthScreen * 9) / 16,
-                width: '100%',
-                position: 'absolute',
-                zIndex: 1,
-              },
-              animatedStyles,
-            ]}>
-            <SkeletonPlaceholder
-              backgroundColor="rgb(65, 65, 65)"
-              highlightColor="rgb(134, 134, 134)"
-              borderRadius={4}
-              speed={1500}>
-              <SkeletonPlaceholder.Item
-                height={'100%'}
-                width={'100%'}
-                borderTopLeftRadius={20}
-                borderTopRightRadius={20}
-                overflow="hidden"
-              />
-            </SkeletonPlaceholder>
-          </Animated.View>
-          <Animated.View
+          {displayLoading && (
+            <Animated.View
+              style={[
+                {
+                  height: (widthScreen * 9) / 16,
+                  width: '100%',
+                  position: 'absolute',
+                  zIndex: 1,
+                },
+                animatedStyles,
+              ]}>
+              <SkeletonPlaceholder
+                backgroundColor="rgb(65, 65, 65)"
+                highlightColor="rgb(134, 134, 134)"
+                borderRadius={4}
+                speed={1500}>
+                <SkeletonPlaceholder.Item
+                  height={'100%'}
+                  width={'100%'}
+                  borderTopLeftRadius={20}
+                  borderTopRightRadius={20}
+                  overflow="hidden"
+                />
+              </SkeletonPlaceholder>
+            </Animated.View>
+          )}
+          <View
             style={{
               borderTopLeftRadius: 20,
               borderTopRightRadius: 20,
@@ -106,7 +120,7 @@ const WatchingScreen = (props: Props) => {
               onReady={onChangeStateTrailer}
               videoId={trailerVideoId ?? ''}
             />
-          </Animated.View>
+          </View>
         </View>
         <View
           style={{

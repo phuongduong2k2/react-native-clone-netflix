@@ -6,9 +6,19 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const getAllPopularMovies = async () => {
+const getPopularMovies = async () => {
   try {
-    const res = await axios.get(`${apiUrl}/movies/popularMovies`, {headers});
+    const res = await axios.get(`${apiUrl}/movies/popular`, {headers});
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return error;
+  }
+};
+
+const getTrendingMovies = async () => {
+  try {
+    const res = await axios.get(`${apiUrl}/movies/trending`, {headers});
     return res.data;
   } catch (error) {
     console.log(error);
@@ -17,5 +27,6 @@ const getAllPopularMovies = async () => {
 };
 
 export const API = {
-  getAllPopularMovies,
+  getPopularMovies,
+  getTrendingMovies,
 };

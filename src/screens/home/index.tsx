@@ -38,6 +38,7 @@ const HomeScreen = () => {
   const dispatch = useAppDispatch();
   const navigation = useAppNavigation();
   const [popularMovies, setPopularMovies] = useState<MovieItemProps[]>([]);
+  const [trendingMovies, setTrendingMovies] = useState<MovieItemProps[]>([]);
 
   const mainFilmPoster = AppImages.posters.dune;
 
@@ -46,13 +47,19 @@ const HomeScreen = () => {
     navigation.navigate('WatchingScreen', data);
   };
 
-  const getAllPopularMovies = async () => {
-    const res = await API.getAllPopularMovies();
+  const getPopularMovies = async () => {
+    const res = await API.getPopularMovies();
     setPopularMovies(res.data);
   };
 
+  const getTrendingMovies = async () => {
+    const res = await API.getTrendingMovies();
+    setTrendingMovies(res.data);
+  };
+
   useEffect(() => {
-    getAllPopularMovies();
+    getPopularMovies();
+    getTrendingMovies();
   }, []);
 
   const renderHeader = () => {
@@ -359,36 +366,41 @@ const HomeScreen = () => {
   };
 
   const renderTrendingItem: ListRenderItem<MovieItemProps> = ({item}) => {
-    return <MovieCard data={item} />;
+    return <MovieCard data={item} onPress={onPressMovie} />;
   };
 
   const renderTrending = () => {
     return (
-      <View style={{backgroundColor: ''}}>
-        <Text
-          style={{
-            color: 'white',
-            fontFamily: AppFonts.medium,
-            fontSize: 20,
-            marginLeft: 8,
-          }}>
-          Trending Now
-        </Text>
-        <View style={{marginTop: AppDimention.secondPadding}}>
-          <FlashList
-            data={popularMovies}
-            keyExtractor={item => item.name}
-            contentContainerStyle={{
-              paddingHorizontal: 8,
-            }}
-            ItemSeparatorComponent={SpaceLine}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderTrendingItem}
-            estimatedItemSize={106}
-          />
+      trendingMovies.length > 0 && (
+        <View style={{backgroundColor: ''}}>
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: AppFonts.medium,
+              fontSize: 20,
+              marginLeft: 8,
+            }}>
+            Trending Now
+          </Text>
+          <View
+            style={{
+              marginTop: AppDimention.secondPadding,
+            }}>
+            <FlashList
+              data={trendingMovies}
+              keyExtractor={item => item.name}
+              contentContainerStyle={{
+                paddingHorizontal: 8,
+              }}
+              ItemSeparatorComponent={SpaceLine}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={renderTrendingItem}
+              estimatedItemSize={106}
+            />
+          </View>
         </View>
-      </View>
+      )
     );
   };
 
