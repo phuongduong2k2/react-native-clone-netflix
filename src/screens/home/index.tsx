@@ -17,7 +17,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
 import ContiWatchItem from '../components/ContiWatchItem';
-import {dataContiWatch, dataPreviews, dataTrending} from '../../api/testData';
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
@@ -32,6 +31,7 @@ import useAppNavigation from '../../navigation/useAppNavigation';
 import {API} from '../../api';
 
 const SpaceLine = () => <View style={{width: 8}} />;
+const SeparatorWidth = () => <View style={{width: 16}} />;
 
 const HomeScreen = () => {
   const insets = useSafeAreaInsets();
@@ -320,7 +320,7 @@ const HomeScreen = () => {
             contentContainerStyle={{
               paddingHorizontal: 8,
             }}
-            ItemSeparatorComponent={() => <View style={{width: 16}} />}
+            ItemSeparatorComponent={SeparatorWidth}
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderPreviewItem}
@@ -371,7 +371,7 @@ const HomeScreen = () => {
 
   const renderTrending = () => {
     return (
-      trendingMovies.length > 0 && (
+      trendingMovies?.length > 0 && (
         <View style={{backgroundColor: ''}}>
           <Text
             style={{

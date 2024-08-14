@@ -32,7 +32,7 @@ let timeout: null | NodeJS.Timeout = null;
 const WatchingScreen = (props: Props) => {
   const {} = props;
   const route = useRoute<WatchingScreenProps>();
-  const {name, trailerVideoId} = route.params;
+  const {name, trailerId} = route.params;
   const navigation = useAppNavigation();
   const [displayLoading, setDisplayLoading] = useState(true);
 
@@ -118,7 +118,7 @@ const WatchingScreen = (props: Props) => {
               height={(widthScreen * 9) / 16}
               play={false}
               onReady={onChangeStateTrailer}
-              videoId={trailerVideoId ?? ''}
+              videoId={trailerId ?? ''}
             />
           </View>
         </View>

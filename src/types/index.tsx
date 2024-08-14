@@ -1,14 +1,12 @@
-import {ImageSourcePropType} from 'react-native';
-
 type MovieItemProps = {
   id: number;
   name: string;
   description: string;
-  cast: string;
+  starring: string;
   portrait: string;
   landscape: string;
   releasedYear: string;
-  trailerVideoId: string;
+  trailerId: string;
 };
 
 export type {MovieItemProps};

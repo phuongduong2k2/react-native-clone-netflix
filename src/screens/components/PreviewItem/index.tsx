@@ -26,7 +26,7 @@ const PreviewItem = (props: Props) => {
           borderRadius: 1000,
           overflow: 'hidden',
         }}>
-        <Image source={data.thumbnail} style={{resizeMode: 'contain'}} />
+        <Image source={{uri: data.landscape}} style={{resizeMode: 'contain'}} />
       </View>
       <View
         style={{
