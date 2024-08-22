@@ -9,6 +9,7 @@ import StartedScreen from '../screens/started';
 import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 import WatchingScreen from '../screens/watching/WatchingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
+import ProfileScreen from '../screens/profile';
 
 const Stack = createStackNavigator();
 
@@ -52,6 +53,11 @@ const MainNavigation: React.FC = () => {
             gestureEnabled: false,
             presentation: 'transparentModal',
           }}
+        />
+        <Stack.Screen
+          name={ScreenNames.ProfileScreen}
+          component={ProfileScreen}
+          options={{headerShown: false, gestureEnabled: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

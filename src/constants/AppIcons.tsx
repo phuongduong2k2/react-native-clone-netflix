@@ -14,6 +14,7 @@ import Downloads from '../../assets/icons/downloads.svg';
 import Home from '../../assets/icons/home.svg';
 import MoreCircle from '../../assets/icons/more_circle.svg';
 import CloseCircle from '../../assets/icons/close_circle.svg';
+import Edit from '../../assets/icons/edit.svg';
 
 export const AppIcons = {
   netflix: Netflix,
@@ -32,4 +33,5 @@ export const AppIcons = {
   downloads: Downloads,
   more_circle: MoreCircle,
   closeCircle: CloseCircle,
+  edit: Edit,
 };

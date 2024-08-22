@@ -1,4 +1,4 @@
-import {Button, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {
   BottomTabBarProps,
@@ -13,7 +13,6 @@ import ScreenNames from '../../../constants/ScreenNames';
 import {AppIcons} from '../../../constants/AppIcons';
 
 import {AppFonts} from '../../../constants/constants';
-import {getTabBarHeight} from '@react-navigation/bottom-tabs/lib/typescript/src/views/BottomTabBar';
 import LinearGradient from 'react-native-linear-gradient';
 
 const listTab = [
@@ -50,6 +49,12 @@ const listTab = [
 ];
 
 const Tab = createBottomTabNavigator();
+
+// interface TabBarIconProps {
+//   focused: boolean;
+//   color: string;
+//   size: number;
+// }
 
 const HomeNavigatorScreen = () => {
   const customTabBar = (props: BottomTabBarProps) => {
@@ -109,6 +114,10 @@ const HomeNavigatorScreen = () => {
     );
   };
 
+  const renderTabBarIcon = ({focused, data}: any) => {
+    return <data.Icon fill={focused ? 'white' : '#737373'} />;
+  };
+
   return (
     <Tab.Navigator
       tabBar={customTabBar}
@@ -132,8 +141,8 @@ const HomeNavigatorScreen = () => {
             key={item.id}
             component={item.component}
             options={{
-              tabBarIcon: ({focused}) => {
-                return <item.Icon fill={focused ? 'white' : '#737373'} />;
+              tabBarIcon: props => {
+                return renderTabBarIcon({...props, data: item});
               },
             }}
           />

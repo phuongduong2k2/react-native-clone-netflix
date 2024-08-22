@@ -10,6 +10,7 @@ export type RootStackParamList = {
   HomeScreen: {} | undefined;
   HomeNavigatorScreen: {} | undefined;
   WatchingScreen: MovieItemProps;
+  ProfileScreen: {} | undefined;
 };
 
 const useAppNavigation = () => {

@@ -10,6 +10,7 @@ const ScreenNames = {
   DownloadsScreen: 'DownloadsScreen',
   MoreScreen: 'MoreScreen',
   WatchingScreen: 'WatchingScreen',
+  ProfileScreen: 'ProfileScreen',
 };
 
 export default ScreenNames;

@@ -4,6 +4,8 @@ const AppSlice = createSlice({
   name: 'app',
   initialState: {
     value: 0,
+    userInfo: null,
+    token: null,
   },
   reducers: {
     increment: state => {
@@ -11,6 +13,12 @@ const AppSlice = createSlice({
     },
     decrement: state => {
       state.value -= 1;
+    },
+    setUserInfo: (state, actions) => {
+      state.userInfo = actions.payload;
+    },
+    setToken: (state, actions) => {
+      state.token = actions.payload;
     },
   },
 });

@@ -20,7 +20,7 @@ import ContiWatchItem from '../components/ContiWatchItem';
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
-import {useAppDispatch} from '../../hooks';
+import {useAppDispatch, useAppSelector} from '../../hooks';
 import {AppActions} from '../../redux/slice/AppSlice';
 import Animated, {
   useAnimatedScrollHandler,
@@ -29,6 +29,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import useAppNavigation from '../../navigation/useAppNavigation';
 import {API} from '../../api';
+import {useSelector} from 'react-redux';
+import FastImage from 'react-native-fast-image';
 
 const SpaceLine = () => <View style={{width: 8}} />;
 const SeparatorWidth = () => <View style={{width: 16}} />;
@@ -39,6 +41,7 @@ const HomeScreen = () => {
   const navigation = useAppNavigation();
   const [popularMovies, setPopularMovies] = useState<MovieItemProps[]>([]);
   const [trendingMovies, setTrendingMovies] = useState<MovieItemProps[]>([]);
+  const {userInfo, token} = useAppSelector(state => state.app);
 
   const mainFilmPoster = AppImages.posters.dune;
 
@@ -48,19 +51,25 @@ const HomeScreen = () => {
   };
 
   const getPopularMovies = async () => {
-    const res = await API.getPopularMovies();
-    setPopularMovies(res.data);
+    const res: any = await API.getPopularMovies(token ?? '');
+    console.log('[popular] : ', res);
+    if (res?.status === 200) {
+      setPopularMovies(res?.data?.data);
+    }
   };
 
   const getTrendingMovies = async () => {
-    const res = await API.getTrendingMovies();
-    setTrendingMovies(res.data);
+    const res: any = await API.getTrendingMovies(token ?? '');
+    console.log('[trending] : ', res);
+    if (res?.status === 200) {
+      setTrendingMovies(res?.data?.data);
+    }
   };
 
   useEffect(() => {
     getPopularMovies();
     getTrendingMovies();
-  }, []);
+  }, [userInfo, token]);
 
   const renderHeader = () => {
     return (
@@ -102,6 +111,9 @@ const HomeScreen = () => {
                 padding: AppDimention.secondPadding / 2,
                 alignItems: 'center',
                 justifyContent: 'center',
+              }}
+              onPress={() => {
+                console.log(userInfo);
               }}>
               <AppIcons.cast fill="white" height={24} width={24} />
             </TouchableOpacity>
@@ -110,8 +122,19 @@ const HomeScreen = () => {
                 padding: AppDimention.secondPadding / 2,
                 alignItems: 'center',
                 justifyContent: 'center',
+              }}
+              onPress={() => {
+                navigation.navigate('ProfileScreen');
               }}>
-              <Image source={AppImages.profiles.blue} />
+              <FastImage
+                source={{
+                  uri: userInfo
+                    ? userInfo?.avatar
+                    : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png',
+                }}
+                style={{height: '90%', width: undefined, aspectRatio: 1}}
+                resizeMode="contain"
+              />
             </TouchableOpacity>
           </View>
         </View>
@@ -337,31 +360,33 @@ const HomeScreen = () => {
 
   const renderPopular = () => {
     return (
-      <View style={{backgroundColor: ''}}>
-        <Text
-          style={{
-            color: 'white',
-            fontFamily: AppFonts.medium,
-            fontSize: 20,
-            marginLeft: 8,
-          }}>
-          Popular on Netflix
-        </Text>
-        <View style={{marginTop: AppDimention.secondPadding}}>
-          <FlashList
-            data={popularMovies}
-            keyExtractor={item => item.name}
-            contentContainerStyle={{
-              paddingHorizontal: 8,
-            }}
-            ItemSeparatorComponent={SpaceLine}
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            renderItem={renderPopularItem}
-            estimatedItemSize={106}
-          />
+      popularMovies?.length > 0 && (
+        <View style={{backgroundColor: ''}}>
+          <Text
+            style={{
+              color: 'white',
+              fontFamily: AppFonts.medium,
+              fontSize: 20,
+              marginLeft: 8,
+            }}>
+            Popular on Netflix
+          </Text>
+          <View style={{marginTop: AppDimention.secondPadding}}>
+            <FlashList
+              data={popularMovies}
+              keyExtractor={item => item.name}
+              contentContainerStyle={{
+                paddingHorizontal: 8,
+              }}
+              ItemSeparatorComponent={SpaceLine}
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              renderItem={renderPopularItem}
+              estimatedItemSize={106}
+            />
+          </View>
         </View>
-      </View>
+      )
     );
   };
 

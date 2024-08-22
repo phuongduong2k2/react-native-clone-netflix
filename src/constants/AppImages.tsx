@@ -4,7 +4,8 @@ const AppImages = {
   posters: {
     dune: require('../../assets/images/posters/dune.png'),
   },
-
+  addProfile: require('../../assets/images/add/add.png'),
+  logoNetflix: require('../../assets/images/logo_netflix.png'),
   nNetflix: require('../../assets/images/nnetflix/nnetflix.png'),
   profiles: {
     blue: require('../../assets/images/profiles/blue/blue.png'),
