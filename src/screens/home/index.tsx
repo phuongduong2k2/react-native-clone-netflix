@@ -31,6 +31,7 @@ import useAppNavigation from '../../navigation/useAppNavigation';
 import {API} from '../../api';
 import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
+import LazyImage from '../../components/LazyImage/LazyImage';
 
 const SpaceLine = () => <View style={{width: 8}} />;
 const SeparatorWidth = () => <View style={{width: 16}} />;
@@ -46,13 +47,11 @@ const HomeScreen = () => {
   const mainFilmPoster = AppImages.posters.dune;
 
   const onPressMovie = (data: MovieItemProps) => {
-    console.log(data);
     navigation.navigate('WatchingScreen', data);
   };
 
   const getPopularMovies = async () => {
     const res: any = await API.getPopularMovies(token ?? '');
-    console.log('[popular] : ', res);
     if (res?.status === 200) {
       setPopularMovies(res?.data?.data);
     }
@@ -60,7 +59,6 @@ const HomeScreen = () => {
 
   const getTrendingMovies = async () => {
     const res: any = await API.getTrendingMovies(token ?? '');
-    console.log('[trending] : ', res);
     if (res?.status === 200) {
       setTrendingMovies(res?.data?.data);
     }
@@ -126,14 +124,13 @@ const HomeScreen = () => {
               onPress={() => {
                 navigation.navigate('ProfileScreen');
               }}>
-              <FastImage
-                source={{
-                  uri: userInfo
+              <LazyImage
+                source={
+                  userInfo
                     ? userInfo?.avatar
-                    : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png',
-                }}
-                style={{height: '90%', width: undefined, aspectRatio: 1}}
-                resizeMode="contain"
+                    : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'
+                }
+                styles={{height: '90%', width: undefined, aspectRatio: 1}}
               />
             </TouchableOpacity>
           </View>

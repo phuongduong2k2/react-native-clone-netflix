@@ -10,14 +10,16 @@ import {FlashList} from '@shopify/flash-list';
 import LazyImage from '../../components/LazyImage/LazyImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginModal from './components/LoginModal';
+import ProfileItem from './components/ProfileItem';
 
 type Props = {};
 
 const ProfileScreen = (props: Props) => {
   const {} = props;
   const insets = useSafeAreaInsets();
-  const [listUser, setListUser] = useState([10]);
+  const [listUser, setListUser] = useState([-1]);
   const [isVisible, setVisible] = useState(false);
+  const [selectedEmail, setSelectedEmail] = useState('');
 
   const getUser = () => {};
 
@@ -25,7 +27,7 @@ const ProfileScreen = (props: Props) => {
     const data = await AsyncStorage.getItem('userId');
     if (data) {
       const dataPar = JSON.parse(data);
-      console.log('[dataPar] : ', dataPar);
+      setListUser([...dataPar, ...listUser]);
     }
   };
 
@@ -34,63 +36,29 @@ const ProfileScreen = (props: Props) => {
   }, []);
 
   const renderItem = ({item}: any) => {
-    const type = typeof item === 'number';
     return (
-      <View
-        style={{
-          height: undefined,
-          aspectRatio: 0.8,
-          width: '100%',
-          borderWidth: 1,
-          borderColor: 'white',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <TouchableOpacity
-          style={{
-            height: undefined,
-            aspectRatio: 1,
-            width: '90%',
-            borderRadius: 4,
-            overflow: 'hidden',
-          }}
-          onPress={() => {
-            if (type) {
-              // add
-              setVisible(true);
-            } else {
-            }
-          }}>
-          {type ? (
-            <Image
-              source={AppImages.addProfile}
-              style={{
-                resizeMode: 'contain',
-                width: '100%',
-                height: undefined,
-                aspectRatio: 1,
-              }}
-            />
-          ) : (
-            <LazyImage
-              source={'https://i.postimg.cc/wBHjBrSv/profile2.png'}
-              styles={{height: '100%', width: '100%'}}
-            />
-          )}
-        </TouchableOpacity>
-        <Text style={{color: 'white'}}>
-          {type ? 'Add Profile' : item?.name}
-        </Text>
-      </View>
+      <ProfileItem
+        type={item < 0}
+        id={Number(item)}
+        onPress={data => {
+          console.log(data);
+          if (data?.id >= 0) {
+            setSelectedEmail(data.email);
+          }
+          setVisible(true);
+        }}
+      />
     );
   };
 
   return (
     <AppContainer>
       <LoginModal
+        selectedEmail={selectedEmail}
         isVisible={isVisible}
         onClose={() => {
           setVisible(false);
+          setSelectedEmail('');
         }}
       />
       <View

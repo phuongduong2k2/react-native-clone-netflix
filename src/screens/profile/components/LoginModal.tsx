@@ -6,21 +6,23 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactNativeModal from 'react-native-modal';
 import {AppDimention} from '../../../constants/constants';
 import {API} from '../../../api';
 import {useDispatch} from 'react-redux';
 import {AppActions} from '../../../redux/slice/AppSlice';
 import useAppNavigation from '../../../navigation/useAppNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {
   isVisible?: boolean;
-  onClose?: () => {};
+  onClose?: () => void;
+  selectedEmail?: string;
 };
 
 const LoginModal = (props: Props) => {
-  const {isVisible = false, onClose = () => {}} = props;
+  const {isVisible = false, onClose = () => {}, selectedEmail = ''} = props;
   const [mode, setMode] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,12 +35,32 @@ const LoginModal = (props: Props) => {
     setMode(!mode);
   };
 
+  useEffect(() => {
+    if (selectedEmail.length > 0) {
+      setEmail(selectedEmail);
+    }
+  }, [selectedEmail]);
+
   const handleClose = () => {
     onClose();
     setEmail('');
     setPassword('');
     setRePassword('');
     setMode(false);
+  };
+
+  const saveUserId = async (id: number) => {
+    const userId = await AsyncStorage.getItem('userId');
+    if (userId) {
+      const newUserId = JSON.parse(userId);
+      console.log(typeof newUserId, newUserId);
+      if (!newUserId.includes(id)) {
+        newUserId.push(id);
+      }
+      await AsyncStorage.setItem('userId', JSON.stringify(newUserId));
+    } else {
+      await AsyncStorage.setItem('userId', JSON.stringify([id]));
+    }
   };
 
   const onSubmit = async () => {
@@ -52,6 +74,7 @@ const LoginModal = (props: Props) => {
       if (res?.status === 200) {
         dispatch(AppActions.setUserInfo(res.data.userInfo[0]));
         dispatch(AppActions.setToken(res.data.accessToken));
+        saveUserId(res.data.userInfo[0].id);
         if (navigation.canGoBack()) {
           navigation.goBack();
         } else {
@@ -62,9 +85,13 @@ const LoginModal = (props: Props) => {
       }
     } else {
       // register
-
       const res = await API.register(data);
-      console.log(res);
+      if (res?.status === 200) {
+        Alert.alert('Register success', 'Please login now');
+        setMode(false);
+      } else {
+        Alert.alert('Something wrong!', 'Please try again');
+      }
     }
   };
 
