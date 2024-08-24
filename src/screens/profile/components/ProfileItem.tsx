@@ -3,11 +3,13 @@ import React, {useEffect, useState} from 'react';
 import LazyImage from '../../../components/LazyImage/LazyImage';
 import AppImages from '../../../constants/AppImages';
 import {API} from '../../../api';
+import {AppIcons} from '../../../constants/AppIcons';
 
 type Props = {
   type?: boolean;
   id?: number;
   onPress?: (data: any) => void;
+  editMode?: boolean;
 };
 
 type DataProps = {
@@ -18,7 +20,7 @@ type DataProps = {
 };
 
 const ProfileItem = (props: Props) => {
-  const {type, onPress = () => {}, id = null} = props;
+  const {type, onPress = () => {}, id = null, editMode = false} = props;
 
   const [data, setData] = useState<DataProps>();
 
@@ -30,6 +32,7 @@ const ProfileItem = (props: Props) => {
       if (res.status === 200) {
         setData(res.data.data);
       }
+      console.log(res);
     }
   };
   useEffect(() => {
@@ -42,8 +45,6 @@ const ProfileItem = (props: Props) => {
         height: undefined,
         aspectRatio: 0.8,
         width: '100%',
-        borderWidth: 1,
-        borderColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
       }}>
@@ -58,6 +59,21 @@ const ProfileItem = (props: Props) => {
         onPress={() => {
           onPress(data);
         }}>
+        {editMode && !type && (
+          <View
+            style={{
+              position: 'absolute',
+              zIndex: 1000,
+              height: '100%',
+              width: '100%',
+              backgroundColor: 'black',
+              opacity: 0.5,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <AppIcons.close fill="white" height={50} width={50} />
+          </View>
+        )}
         {type ? (
           <Image
             source={AppImages.addProfile}

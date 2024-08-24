@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, TouchableOpacity} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import AppImages from '../../constants/AppImages';
@@ -7,7 +7,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention} from '../../constants/constants';
 import {FlashList} from '@shopify/flash-list';
-import LazyImage from '../../components/LazyImage/LazyImage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginModal from './components/LoginModal';
 import ProfileItem from './components/ProfileItem';
@@ -20,13 +19,14 @@ const ProfileScreen = (props: Props) => {
   const [listUser, setListUser] = useState([-1]);
   const [isVisible, setVisible] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState('');
-
-  const getUser = () => {};
+  const [editMode, setEditMode] = useState(false);
 
   const getUserLogged = async () => {
     const data = await AsyncStorage.getItem('userId');
     if (data) {
       const dataPar = JSON.parse(data);
+      console.log(dataPar);
+
       setListUser([...dataPar, ...listUser]);
     }
   };
@@ -35,17 +35,33 @@ const ProfileScreen = (props: Props) => {
     getUserLogged();
   }, []);
 
+  const toggleEditMode = () => {
+    setEditMode(!editMode);
+  };
+
   const renderItem = ({item}: any) => {
     return (
       <ProfileItem
         type={item < 0}
+        editMode={editMode}
         id={Number(item)}
-        onPress={data => {
+        onPress={async data => {
           console.log(data);
-          if (data?.id >= 0) {
-            setSelectedEmail(data.email);
+          if (editMode) {
+            const userId = await AsyncStorage.getItem('userId');
+            if (userId) {
+              const newUserId = JSON.parse(userId).filter(
+                ite => Number(ite) !== data.id,
+              );
+              AsyncStorage.setItem('userId', JSON.stringify(newUserId));
+              setListUser([...newUserId, -1]);
+            }
+          } else {
+            if (data?.id >= 0) {
+              setSelectedEmail(data.email);
+            }
+            setVisible(true);
           }
-          setVisible(true);
         }}
       />
     );
@@ -65,8 +81,6 @@ const ProfileScreen = (props: Props) => {
         style={{
           flex: 1,
           marginTop: insets.top,
-          borderWidth: 1,
-          borderColor: 'green',
         }}>
         <View
           style={{
@@ -87,14 +101,13 @@ const ProfileScreen = (props: Props) => {
             style={{
               position: 'absolute',
               right: AppDimention.mainPadding,
-            }}>
+            }}
+            onPress={toggleEditMode}>
             <AppIcons.edit />
           </TouchableOpacity>
         </View>
         <View
           style={{
-            borderWidth: 1,
-            borderColor: 'white',
             flex: 1,
             alignItems: 'center',
             justifyContent: 'center',
@@ -103,15 +116,13 @@ const ProfileScreen = (props: Props) => {
             style={{
               width: '60%',
               height: 440,
-              //   borderWidth: 1,
-              borderColor: 'white',
             }}>
             <FlashList
               data={listUser}
               numColumns={2}
+              key={editMode.toString()}
               renderItem={renderItem}
               estimatedItemSize={100}
-              //   ItemSeparatorComponent={() => <View style={{height: 10}} />}
             />
           </View>
         </View>

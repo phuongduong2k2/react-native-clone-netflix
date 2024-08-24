@@ -21,6 +21,21 @@ type Props = {
   selectedEmail?: string;
 };
 
+const listAvatar = [
+  {
+    url: 'https://i.postimg.cc/9QyfC2gK/profile1.png',
+  },
+  {
+    url: 'https://i.postimg.cc/wBHjBrSv/profile2.png',
+  },
+  {
+    url: 'https://i.postimg.cc/DZwfrXf3/profile3.png',
+  },
+  {
+    url: 'https://i.postimg.cc/mrw21wsS/profile4.png',
+  },
+];
+
 const LoginModal = (props: Props) => {
   const {isVisible = false, onClose = () => {}, selectedEmail = ''} = props;
   const [mode, setMode] = useState(false);
@@ -33,6 +48,20 @@ const LoginModal = (props: Props) => {
 
   const toggleMode = () => {
     setMode(!mode);
+  };
+
+  const getRandomAvatar = () => {
+    const listRandom = [
+      ...listAvatar,
+      ...listAvatar,
+      listAvatar[0],
+      listAvatar[1],
+    ];
+    let random = 10;
+    while (random === 10) {
+      random = Math.round(Math.random() * 10);
+    }
+    return listRandom[random].url;
   };
 
   useEffect(() => {
@@ -85,6 +114,7 @@ const LoginModal = (props: Props) => {
       }
     } else {
       // register
+      data.avatar = getRandomAvatar();
       const res = await API.register(data);
       if (res?.status === 200) {
         Alert.alert('Register success', 'Please login now');
