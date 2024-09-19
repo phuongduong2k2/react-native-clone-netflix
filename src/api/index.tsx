@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const HOST = 'http://192.168.1.6:8000';
+const HOST = 'http://192.168.1.4:8000';
 const apiUrl = `${HOST}/api`;
 
 const getPopularMovies = async (token: string) => {

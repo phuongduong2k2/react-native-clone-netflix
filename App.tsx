@@ -1,13 +1,14 @@
 import 'react-native-reanimated';
 import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
-import {StatusBar} from 'react-native';
+import {SafeAreaView, StatusBar} from 'react-native';
 
 import MainNavigation from './src/navigation/MainNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
 import store from './src/redux/store';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
+import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 function App(): React.JSX.Element {
   const onChangeColoNavigationBar = async () => {
@@ -24,10 +25,12 @@ function App(): React.JSX.Element {
 
   return (
     <Provider store={store}>
-      <GestureHandlerRootView>
-        <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
-        <MainNavigation />
-      </GestureHandlerRootView>
+      <SafeAreaProvider style={{backgroundColor: 'black'}}>
+        <GestureHandlerRootView>
+          <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
+          <MainNavigation />
+        </GestureHandlerRootView>
+      </SafeAreaProvider>
     </Provider>
   );
 }

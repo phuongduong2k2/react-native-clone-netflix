@@ -1,4 +1,12 @@
-import {View, Text, Image, Dimensions, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {RouteProp, useRoute} from '@react-navigation/native';
@@ -21,6 +29,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import moment from 'moment';
+import Space from '../../components/Space';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
@@ -29,10 +39,116 @@ const widthScreen = Dimensions.get('screen').width;
 
 let timeout: null | NodeJS.Timeout = null;
 
+const styles = StyleSheet.create({
+  viewAnim: {
+    height: (widthScreen * 9) / 16,
+    width: '100%',
+    position: 'absolute',
+    zIndex: 1,
+  },
+  containYoutubePlayer: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
+  },
+  containBody: {
+    flex: 1,
+    paddingHorizontal: AppDimention.secondPadding,
+  },
+  containNetflixSeries: {
+    alignSelf: 'flex-start',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: AppDimention.secondPadding,
+  },
+  nNetflix: {
+    resizeMode: 'contain',
+    width: 12,
+    height: undefined,
+    aspectRatio: 54 / 96,
+    marginRight: AppDimention.secondPadding / 2,
+  },
+  series: {
+    fontFamily: AppFonts.bold,
+    color: '#B7B7B7',
+    fontSize: 13,
+  },
+  nameMovie: {
+    fontFamily: AppFonts.medium,
+    color: 'white',
+    fontSize: 16,
+  },
+
+  btn: {
+    backgroundColor: 'white',
+    height: 48,
+    borderRadius: 5,
+  },
+  textPlay: {
+    fontFamily: AppFonts.medium,
+    color: 'black',
+    fontSize: 18,
+  },
+  textDownload: {
+    fontFamily: AppFonts.medium,
+    color: 'black',
+    fontSize: 18,
+  },
+  iconBtn: {height: 25, width: 25},
+  releaseDate: {
+    color: 'white',
+    fontSize: 11,
+    fontFamily: AppFonts.medium,
+  },
+  descriptionMovie: {
+    color: 'white',
+    fontSize: 12,
+    marginTop: 4,
+  },
+  summary: {
+    fontSize: 14,
+    color: 'white',
+    fontFamily: AppFonts.bold,
+  },
+  containInspectMovie: {flexDirection: 'row', alignItems: 'center'},
+});
+
+const CustomSpace = () => <Space height={AppDimention.secondPadding} />;
+
+type FuncBtnProps = {
+  icon?: () => JSX.Element;
+  title?: string;
+  onPress?: () => {};
+};
+
+const FuncBtn = (props: FuncBtnProps): JSX.Element => {
+  const {icon = () => <></>, onPress = () => {}, title = ''} = props;
+  return (
+    <TouchableOpacity
+      style={{
+        width: 40,
+        alignItems: 'center',
+      }}
+      onPress={onPress}>
+      {icon()}
+      <Space height={4} />
+      <Text
+        style={{
+          color: 'white',
+          fontSize: 10,
+          fontFamily: AppFonts.light,
+        }}
+        numberOfLines={1}>
+        {title}
+      </Text>
+    </TouchableOpacity>
+  );
+};
+
 const WatchingScreen = (props: Props) => {
   const {} = props;
   const route = useRoute<WatchingScreenProps>();
-  const {name, trailerId} = route.params;
+  const movie = route.params;
   const navigation = useAppNavigation();
   const [displayLoading, setDisplayLoading] = useState(true);
 
@@ -81,120 +197,99 @@ const WatchingScreen = (props: Props) => {
             </TouchableOpacity>
           </>
         </AppHeader>
-        <View>
-          {displayLoading && (
-            <Animated.View
-              style={[
-                {
-                  height: (widthScreen * 9) / 16,
-                  width: '100%',
-                  position: 'absolute',
-                  zIndex: 1,
-                },
-                animatedStyles,
-              ]}>
-              <SkeletonPlaceholder
-                backgroundColor="rgb(65, 65, 65)"
-                highlightColor="rgb(134, 134, 134)"
-                borderRadius={4}
-                speed={1500}>
-                <SkeletonPlaceholder.Item
-                  height={'100%'}
-                  width={'100%'}
-                  borderTopLeftRadius={20}
-                  borderTopRightRadius={20}
-                  overflow="hidden"
-                />
-              </SkeletonPlaceholder>
-            </Animated.View>
-          )}
-          <View
-            style={{
-              borderTopLeftRadius: 20,
-              borderTopRightRadius: 20,
-              overflow: 'hidden',
-            }}>
-            <YoutubePlayer
-              height={(widthScreen * 9) / 16}
-              play={false}
-              onReady={onChangeStateTrailer}
-              videoId={trailerId ?? ''}
-            />
+        <ScrollView>
+          <View>
+            {displayLoading && (
+              <Animated.View style={[styles.viewAnim, animatedStyles]}>
+                <SkeletonPlaceholder
+                  backgroundColor="rgb(65, 65, 65)"
+                  highlightColor="rgb(134, 134, 134)"
+                  borderRadius={4}
+                  speed={1500}>
+                  <SkeletonPlaceholder.Item
+                    height={'100%'}
+                    width={'100%'}
+                    borderTopLeftRadius={20}
+                    borderTopRightRadius={20}
+                    overflow="hidden"
+                  />
+                </SkeletonPlaceholder>
+              </Animated.View>
+            )}
+            <View style={styles.containYoutubePlayer}>
+              <YoutubePlayer
+                height={(widthScreen * 9) / 16}
+                play={false}
+                onReady={onChangeStateTrailer}
+                videoId={movie.trailerId ?? ''}
+              />
+            </View>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            paddingHorizontal: AppDimention.secondPadding,
-            marginTop: AppDimention.secondPadding,
-          }}>
-          <View
-            style={{
-              alignSelf: 'flex-start',
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}>
-            <Image
-              source={AppImages.nNetflix}
-              style={{
-                resizeMode: 'contain',
-                width: 15,
-                height: undefined,
-                aspectRatio: 54 / 96,
-                marginRight: AppDimention.secondPadding / 2,
-              }}
+          <View style={styles.containBody}>
+            <View style={styles.containNetflixSeries}>
+              <Image source={AppImages.nNetflix} style={styles.nNetflix} />
+              <Text style={styles.series}>SERIES</Text>
+            </View>
+            <Text style={styles.nameMovie}>{movie.name}</Text>
+            <View style={styles.containInspectMovie}>
+              <Text style={styles.releaseDate}>
+                {moment(movie.releasedYear).format('MMM YYYY')}
+              </Text>
+              <Space width={4} />
+              <AppIcons.badge_vision />
+              <Space width={4} />
+              <AppIcons.badge_hd />
+              <Space width={4} />
+              <AppIcons.badge_ad />
+            </View>
+            <CustomSpace />
+            <AppButton
+              style={styles.btn}
+              Icon={AppIcons.play}
+              iconStyles={{...styles.iconBtn, fill: 'black'}}
+              text={'Play'}
+              textStyle={styles.textPlay}
             />
-            <Text
+            <CustomSpace />
+            <AppButton
+              style={styles.btn}
+              Icon={AppIcons.downloads}
+              iconStyles={{...styles.iconBtn, fill: 'black'}}
+              text={'Download'}
+              disable={true}
+              textStyle={styles.textDownload}
+            />
+            <CustomSpace />
+            <Text style={styles.summary}>Summary</Text>
+            <Text style={styles.descriptionMovie}>{movie.description}</Text>
+            <View
               style={{
-                fontFamily: AppFonts.bold,
-                color: '#B7B7B7',
-                fontSize: 13,
+                marginTop: AppDimention.mainPadding,
+                flexDirection: 'row',
               }}>
-              SERIES
-            </Text>
+              <FuncBtn
+                icon={() => (
+                  <AppIcons.add fill="white" width={24} height={24} />
+                )}
+                title="My List"
+              />
+              <Space width={AppDimention.mainPadding * 2} />
+              <FuncBtn
+                icon={() => (
+                  <AppIcons.thumb_up fill="white" width={24} height={24} />
+                )}
+                title="Rate"
+              />
+              <Space width={AppDimention.mainPadding * 2} />
+              <FuncBtn
+                icon={() => (
+                  <AppIcons.share fill="white" width={24} height={24} />
+                )}
+                title="Share"
+              />
+            </View>
           </View>
-          <Text
-            style={{
-              fontFamily: AppFonts.medium,
-              color: 'white',
-              fontSize: 16,
-            }}>
-            {name}
-          </Text>
-          <AppButton
-            style={{
-              backgroundColor: 'white',
-              height: 48,
-              borderRadius: 5,
-              marginVertical: AppDimention.secondPadding,
-            }}
-            Icon={AppIcons.play}
-            iconStyles={{height: 25, width: 25, fill: 'black'}}
-            text={'Play'}
-            // disable={true}
-            textStyle={{
-              fontFamily: AppFonts.medium,
-              color: 'black',
-              fontSize: 18,
-            }}
-          />
-          <AppButton
-            style={{
-              backgroundColor: 'white',
-              height: 48,
-              borderRadius: 5,
-            }}
-            Icon={AppIcons.downloads}
-            iconStyles={{height: 25, width: 25, fill: 'black'}}
-            text={'Download'}
-            disable={true}
-            textStyle={{
-              fontFamily: AppFonts.medium,
-              color: 'black',
-              fontSize: 18,
-            }}
-          />
-        </View>
+        </ScrollView>
       </View>
     </AppContainer>
   );

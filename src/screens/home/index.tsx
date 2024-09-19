@@ -33,6 +33,53 @@ import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import LazyImage from '../../components/LazyImage/LazyImage';
 
+const styles = StyleSheet.create({
+  container: {width: '100%', position: 'absolute', zIndex: 0},
+  containHeader: {
+    flexDirection: 'row',
+    height: 56,
+    justifyContent: 'space-between',
+  },
+  containNNetflix: {
+    marginVertical: AppDimention.secondPadding,
+    marginLeft: AppDimention.secondPadding,
+  },
+  imgNNetflix: {
+    resizeMode: 'contain',
+    aspectRatio: 18 / 32,
+    height: '100%',
+    width: undefined,
+  },
+  touchCategory: {
+    paddingHorizontal: 4,
+    marginHorizontal: AppDimention.secondPadding,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 32,
+    flexDirection: 'row',
+  },
+  linearHeaderPoster: {
+    height: '25%',
+    position: 'absolute',
+    width: '100%',
+    zIndex: 1,
+  },
+  imgMoviesPoster: {
+    resizeMode: 'contain',
+    width: '100%',
+    aspectRatio: 760 / 1080,
+    height: undefined,
+    zIndex: 0,
+  },
+  linearFooterPoster: {
+    height: '25%',
+    bottom: 0,
+    position: 'absolute',
+    width: '100%',
+    zIndex: 1,
+  },
+});
+
 const SpaceLine = () => <View style={{width: 8}} />;
 const SeparatorWidth = () => <View style={{width: 16}} />;
 
@@ -75,27 +122,9 @@ const HomeScreen = () => {
         style={{
           width: '100%',
         }}>
-        <View
-          style={{
-            // borderWidth: 1,
-            flexDirection: 'row',
-            height: 56,
-            justifyContent: 'space-between',
-          }}>
-          <View
-            style={{
-              marginVertical: AppDimention.secondPadding,
-              marginLeft: AppDimention.secondPadding,
-            }}>
-            <Image
-              source={AppImages.nNetflix}
-              style={{
-                resizeMode: 'contain',
-                aspectRatio: 18 / 32,
-                height: '100%',
-                width: undefined,
-              }}
-            />
+        <View style={styles.containHeader}>
+          <View style={styles.containNNetflix}>
+            <Image source={AppImages.nNetflix} style={styles.imgNNetflix} />
           </View>
           <View
             style={{
@@ -135,42 +164,19 @@ const HomeScreen = () => {
             </TouchableOpacity>
           </View>
         </View>
-        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 4,
-              marginHorizontal: AppDimention.secondPadding,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 32,
-              flexDirection: 'row',
-            }}>
+        <View
+          style={{flexDirection: 'row', alignSelf: 'center', borderWidth: 1}}>
+          <TouchableOpacity style={styles.touchCategory}>
             <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               TV Shows
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 4,
-              marginHorizontal: AppDimention.secondPadding,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 32,
-              flexDirection: 'row',
-            }}>
+          <TouchableOpacity style={styles.touchCategory}>
             <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               Movies
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              paddingHorizontal: 4,
-              marginHorizontal: AppDimention.secondPadding,
-              alignItems: 'center',
-              justifyContent: 'center',
-              height: 32,
-              flexDirection: 'row',
-            }}>
+          <TouchableOpacity style={styles.touchCategory}>
             <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               Categories
             </Text>
@@ -444,13 +450,7 @@ const HomeScreen = () => {
     <AppContainer>
       <StatusBar translucent backgroundColor={'transparent'} />
       <View style={styles.container}>
-        <View
-          style={{
-            height: '25%',
-            position: 'absolute',
-            width: '100%',
-            zIndex: 1,
-          }}>
+        <View style={styles.linearHeaderPoster}>
           <LinearGradient
             colors={['#000000', '#00000000']}
             style={{
@@ -459,24 +459,8 @@ const HomeScreen = () => {
           />
         </View>
         <Animated.View style={animPosterStyle}>
-          <Image
-            source={mainFilmPoster}
-            style={{
-              resizeMode: 'contain',
-              width: '100%',
-              aspectRatio: 760 / 1080,
-              height: undefined,
-              zIndex: 0,
-            }}
-          />
-          <View
-            style={{
-              height: '25%',
-              bottom: 0,
-              position: 'absolute',
-              width: '100%',
-              zIndex: 1,
-            }}>
+          <Image source={mainFilmPoster} style={styles.imgMoviesPoster} />
+          <View style={styles.linearFooterPoster}>
             <LinearGradient
               colors={['#00000000', '#000000']}
               style={{
@@ -489,7 +473,7 @@ const HomeScreen = () => {
       <View
         style={{
           flex: 1,
-          marginTop: StatusBar.currentHeight ?? 0 + insets.top,
+          marginTop: insets.top,
         }}>
         {renderHeader()}
         <Animated.ScrollView
@@ -514,7 +498,3 @@ const HomeScreen = () => {
 };
 
 export default HomeScreen;
-
-const styles = StyleSheet.create({
-  container: {width: '100%', position: 'absolute', zIndex: 0},
-});

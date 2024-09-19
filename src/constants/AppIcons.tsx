@@ -15,6 +15,11 @@ import Home from '../../assets/icons/home.svg';
 import MoreCircle from '../../assets/icons/more_circle.svg';
 import CloseCircle from '../../assets/icons/close_circle.svg';
 import Edit from '../../assets/icons/edit.svg';
+import BadgeHd from '../../assets/icons/badge_hd.svg';
+import BadgeVision from '../../assets/icons/badge_vision.svg';
+import BadgeAd from '../../assets/icons/badge_ad.svg';
+import ThumbUp from '../../assets/icons/thumb_up.svg';
+import Share from '../../assets/icons/share.svg';
 
 export const AppIcons = {
   netflix: Netflix,
@@ -34,4 +39,9 @@ export const AppIcons = {
   more_circle: MoreCircle,
   closeCircle: CloseCircle,
   edit: Edit,
+  badge_hd: BadgeHd,
+  badge_ad: BadgeAd,
+  badge_vision: BadgeVision,
+  thumb_up: ThumbUp,
+  share: Share,
 };
