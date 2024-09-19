@@ -9,7 +9,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import ReactNativeModal from 'react-native-modal';
 import {AppDimention} from '../../../constants/constants';
-import {API} from '../../../api';
+import {API} from '../../../api/api';
 import {useDispatch} from 'react-redux';
 import {AppActions} from '../../../redux/slice/AppSlice';
 import useAppNavigation from '../../../navigation/useAppNavigation';

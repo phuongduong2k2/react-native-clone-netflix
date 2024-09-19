@@ -1,6 +1,6 @@
 import {View, Text} from 'react-native';
 import React from 'react';
-import {AppFonts} from '../../constants/constants';
+import {AppFonts} from '../constants/constants';
 
 const TagAge = () => {
   return (

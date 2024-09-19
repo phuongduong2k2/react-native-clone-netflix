@@ -1,6 +1,6 @@
 import {View, Text, ViewStyle, TextStyle} from 'react-native';
 import React, {memo} from 'react';
-import {AppDimention, AppFonts} from '../../constants/constants';
+import {AppDimention, AppFonts} from '../constants/constants';
 
 type Props = {
   children?: React.ReactNode[];

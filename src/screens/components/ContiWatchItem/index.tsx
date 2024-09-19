@@ -4,7 +4,7 @@ import * as Progress from 'react-native-progress';
 
 import {AppIcons} from '../../../constants/AppIcons';
 import {MovieItemProps} from '../../../types';
-import ImgPortraitTag from '../../../components/LazyImage/LazyImage';
+import ImgPortraitTag from '../../../components/LazyImage';
 
 type Props = {
   data: MovieItemProps;

@@ -28,10 +28,10 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import useAppNavigation from '../../navigation/useAppNavigation';
-import {API} from '../../api';
+import {API} from '../../api/api';
 import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
-import LazyImage from '../../components/LazyImage/LazyImage';
+import LazyImage from '../../components/LazyImage';
 
 const styles = StyleSheet.create({
   container: {width: '100%', position: 'absolute', zIndex: 0},
@@ -197,7 +197,6 @@ const HomeScreen = () => {
           width: '100%',
           height: undefined,
           flexDirection: 'row',
-          // backgroundColor: 'white',
         }}>
         <View
           style={{

@@ -1,8 +1,8 @@
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import LazyImage from '../../../components/LazyImage/LazyImage';
+import LazyImage from '../../../components/LazyImage';
 import AppImages from '../../../constants/AppImages';
-import {API} from '../../../api';
+import {API} from '../../../api/api';
 import {AppIcons} from '../../../constants/AppIcons';
 
 type Props = {

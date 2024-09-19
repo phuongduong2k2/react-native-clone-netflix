@@ -10,7 +10,7 @@ import {
   TextStyle,
 } from 'react-native';
 import React, {memo, useEffect, useRef, useState} from 'react';
-import {AppDimention, AppFonts} from '../../constants/constants';
+import {AppDimention, AppFonts} from '../constants/constants';
 import Animated, {
   Easing,
   Extrapolation,
@@ -20,7 +20,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import AppColors from '../../constants/AppColors';
+import AppColors from '../constants/AppColors';
 
 type Props = {
   containerStyle?: ViewStyle;

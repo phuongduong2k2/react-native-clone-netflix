@@ -4,7 +4,7 @@ import {
   BottomTabBarProps,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import HomeScreen from '..';
+import HomeScreen from '../HomeScreen';
 import SearchScreen from '../../search';
 import ComingSoonScreen from '../../coming';
 import DownloadsScreen from '../../downloads';
