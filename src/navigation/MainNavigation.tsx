@@ -5,12 +5,12 @@ import LoginScreen from '../screens/login';
 import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
 
-import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 import WatchingScreen from '../screens/watching/WatchingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProfileScreen from '../screens/profile';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
+import HomeNavigatorScreen from '../screens/home/homeNavigation/HomeNavigatorScreen';
 
 const Stack = createStackNavigator();
 

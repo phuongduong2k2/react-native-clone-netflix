@@ -14,7 +14,7 @@ import AppSvg from '../../components/AppSvg';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
-import TagAge from '../../components/TagAge';
+
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
 import ContiWatchItem from '../components/ContiWatchItem';
 import PreviewItem from '../components/PreviewItem';
@@ -32,6 +32,7 @@ import {API} from '../../api/api';
 import {useSelector} from 'react-redux';
 import FastImage from 'react-native-fast-image';
 import LazyImage from '../../components/LazyImage';
+import TagAge from '../../components/TagAge';
 
 const styles = StyleSheet.create({
   container: {width: '100%', position: 'absolute', zIndex: 0},
@@ -159,13 +160,17 @@ const HomeScreen = () => {
                     ? userInfo?.avatar
                     : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'
                 }
-                styles={{height: '90%', width: undefined, aspectRatio: 1}}
+                styles={{
+                  height: '60%',
+                  width: undefined,
+                  aspectRatio: 1,
+                  borderRadius: 8,
+                }}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{flexDirection: 'row', alignSelf: 'center', borderWidth: 1}}>
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
           <TouchableOpacity style={styles.touchCategory}>
             <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               TV Shows
@@ -451,7 +456,7 @@ const HomeScreen = () => {
       <View style={styles.container}>
         <View style={styles.linearHeaderPoster}>
           <LinearGradient
-            colors={['#000000', '#00000000']}
+            colors={['#000000', 'rgba(1,1,1,0.6)', '#00000000']}
             style={{
               height: '100%',
             }}

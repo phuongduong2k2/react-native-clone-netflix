@@ -264,7 +264,7 @@ const WatchingScreen = (props: Props) => {
             <Text style={styles.descriptionMovie}>{movie.description}</Text>
             <View
               style={{
-                marginTop: AppDimention.mainPadding,
+                marginVertical: AppDimention.mainPadding,
                 flexDirection: 'row',
               }}>
               <FuncBtn
