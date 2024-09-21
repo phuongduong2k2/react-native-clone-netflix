@@ -11,7 +11,6 @@ import ProfileScreen from '../screens/profile';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
 import HomeNavigatorScreen from '../screens/home/homeNavigation/HomeNavigatorScreen';
-import SplashScreen from '../screens/splash/SplashScreen';
 
 const Stack = createStackNavigator();
 
@@ -28,15 +27,7 @@ const MainNavigation: React.FC = () => {
   return (
     <View style={{flex: 1, paddingBottom: insets.bottom}}>
       <NavigationContainer theme={themeColor}>
-        <Stack.Navigator initialRouteName={ScreenNames.SplashScreen}>
-          <Stack.Screen
-            name={ScreenNames.SplashScreen}
-            component={SplashScreen}
-            options={{
-              headerShown: false,
-              gestureEnabled: false,
-            }}
-          />
+        <Stack.Navigator initialRouteName={ScreenNames.HomeNavigatorScreen}>
           <Stack.Screen
             name={ScreenNames.HomeNavigatorScreen}
             component={HomeNavigatorScreen}
