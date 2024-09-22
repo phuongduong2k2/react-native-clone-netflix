@@ -11,6 +11,7 @@ const ScreenNames = {
   MoreScreen: 'MoreScreen',
   WatchingScreen: 'WatchingScreen',
   ProfileScreen: 'ProfileScreen',
+  SplashScreen: 'SplashScreen',
 };
 
 export default ScreenNames;

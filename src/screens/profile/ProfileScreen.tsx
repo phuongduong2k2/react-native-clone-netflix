@@ -10,6 +10,8 @@ import {FlashList} from '@shopify/flash-list';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginModal from './components/LoginModal';
 import ProfileItem from './components/ProfileItem';
+import {useNavigation} from '@react-navigation/native';
+import useAppNavigation from '../../navigation/useAppNavigation';
 
 type Props = {};
 
@@ -20,6 +22,8 @@ const ProfileScreen = (props: Props) => {
   const [isVisible, setVisible] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState('');
   const [editMode, setEditMode] = useState(false);
+
+  const navigation = useAppNavigation();
 
   const getUserLogged = async () => {
     const data = await AsyncStorage.getItem('userId');
@@ -51,7 +55,7 @@ const ProfileScreen = (props: Props) => {
             const userId = await AsyncStorage.getItem('userId');
             if (userId) {
               const newUserId = JSON.parse(userId).filter(
-                ite => Number(ite) !== data.id,
+                (ite: any) => Number(ite) !== data.id,
               );
               AsyncStorage.setItem('userId', JSON.stringify(newUserId));
               setListUser([...newUserId, -1]);
@@ -88,6 +92,18 @@ const ProfileScreen = (props: Props) => {
             justifyContent: 'center',
             marginTop: AppDimention.mainPadding,
           }}>
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              left: AppDimention.mainPadding,
+            }}
+            onPress={() => {
+              if (navigation.canGoBack()) {
+                navigation.goBack();
+              } else navigation.navigate('HomeNavigatorScreen');
+            }}>
+            <AppIcons.arrow_left fill="red" />
+          </TouchableOpacity>
           <FastImage
             source={AppImages.logoNetflix}
             style={{

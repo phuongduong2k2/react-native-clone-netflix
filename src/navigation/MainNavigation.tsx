@@ -8,9 +8,14 @@ import StartedScreen from '../screens/started';
 import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 import WatchingScreen from '../screens/watching/WatchingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import ProfileScreen from '../screens/profile';
+import ProfileScreen from '../screens/profile/ProfileScreen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
+import SplashScreen from '../screens/splash/SplashScreen';
+import {
+  StackCardStyleInterpolator,
+  TransitionSpec,
+} from '@react-navigation/stack/lib/typescript/src/types';
 
 const Stack = createStackNavigator();
 
@@ -22,16 +27,34 @@ const themeColor = {
   },
 };
 
+const forFade: StackCardStyleInterpolator = ({current}) => ({
+  cardStyle: {
+    opacity: current.progress,
+  },
+});
+
 const MainNavigation: React.FC = () => {
   const insets = useSafeAreaInsets();
   return (
     <View style={{flex: 1, paddingBottom: insets.bottom}}>
       <NavigationContainer theme={themeColor}>
-        <Stack.Navigator initialRouteName={ScreenNames.HomeNavigatorScreen}>
+        <Stack.Navigator initialRouteName={ScreenNames.SplashScreen}>
+          <Stack.Screen
+            name={ScreenNames.SplashScreen}
+            component={SplashScreen}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+            }}
+          />
           <Stack.Screen
             name={ScreenNames.HomeNavigatorScreen}
             component={HomeNavigatorScreen}
-            options={{headerShown: false, gestureEnabled: false}}
+            options={{
+              headerShown: false,
+              gestureEnabled: false,
+              cardStyleInterpolator: forFade,
+            }}
           />
           <Stack.Screen
             name={ScreenNames.LoginScreen}

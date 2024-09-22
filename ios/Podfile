@@ -23,6 +23,13 @@ target 'CloneNetflix' do
     :app_path => "#{Pod::Config.instance.installation_root}/.."
   )
 
+  if ENV['RNV_SAMPLE_ENABLE_ADS']
+    $RNVideoUseGoogleIMA = true
+  end
+  if ENV['RNV_SAMPLE_VIDEO_CACHING']
+    $RNVideoUseVideoCaching = true
+  end
+
   target 'CloneNetflixTests' do
     inherit! :complete
     # Pods for testing
