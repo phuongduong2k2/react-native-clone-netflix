@@ -71,7 +71,7 @@ const ProfileItem = (props: Props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <AppIcons.close fill="white" height={50} width={50} />
+            <AppIconsSVG.close fill="white" height={50} width={50} />
           </View>
         )}
         {type ? (

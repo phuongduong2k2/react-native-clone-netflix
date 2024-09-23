@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import AppHeader from '../../components/AppHeader';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons} from '../../constants/AppIcons';
+import {AppIconsSVG} from '../../constants/AppIcons';
 import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 import {AppDimention, AppFonts} from '../../constants/constants';
@@ -34,14 +34,14 @@ const LoginScreen = () => {
                 navigation.goBack();
               }
             }}>
-            <AppSvg SvgSrc={AppIcons.arrow_left} stroke="white" size={28} />
+            {/* <AppSvg SvgSrc={AppIconsSVG.arrow_left} stroke="white" size={28} /> */}
           </TouchableOpacity>
-          <AppSvg
-            SvgSrc={AppIcons.netflix}
+          {/* <AppSvg
+            SvgSrc={AppIconsSVG.netflix}
             isSquare={false}
             height={'100%'}
             width={100}
-          />
+          /> */}
         </View>
         <></>
       </AppHeader>

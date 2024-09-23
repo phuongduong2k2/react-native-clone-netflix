@@ -2,7 +2,7 @@ import {View, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import * as Progress from 'react-native-progress';
 
-import {AppIcons} from '../../../constants/AppIcons';
+import {AppIconsSVG} from '../../../constants/AppIcons';
 import {MovieItemProps} from '../../../types';
 import ImgPortraitTag from '../../../components/LazyImage';
 
@@ -47,7 +47,7 @@ const ContiWatchItem = (props: Props) => {
               zIndex: 1,
               padding: 8,
             }}>
-            <AppIcons.play height="100%" width="100%" fill="white" />
+            {/* <AppIconsSVG.play height="100%" width="100%" fill="white" /> */}
           </View>
           <View
             style={{
@@ -88,7 +88,7 @@ const ContiWatchItem = (props: Props) => {
             aspectRatio: 1,
             padding: 5,
           }}>
-          <AppIcons.info height={'100%'} width={'100%'} fill="#B2B2B2" />
+          {/* <AppIconsSVG.info height={'100%'} width={'100%'} fill="#B2B2B2" /> */}
         </TouchableOpacity>
         <TouchableOpacity
           style={{
@@ -97,7 +97,7 @@ const ContiWatchItem = (props: Props) => {
             aspectRatio: 1,
             padding: 5,
           }}>
-          <AppIcons.more_circle height={'100%'} width={'100%'} fill="#B2B2B2" />
+          {/* <AppIconsSVG.more_circle height={'100%'} width={'100%'} fill="#B2B2B2" /> */}
         </TouchableOpacity>
       </View>
     </View>

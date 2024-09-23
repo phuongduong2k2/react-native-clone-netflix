@@ -2,91 +2,91 @@ import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {AppIcons} from '../../constants/AppIcons';
+import {AppIconsSVG} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import AppImages from '../../constants/AppImages';
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
 import {MovieItemProps} from '../../types';
 
-const listFilmDefault = [
-  {
-    id: 0,
-    name: 'The Sea Beat',
-    thumbnail: AppImages.landscape_thumbnails.theSeaBeast,
-  },
-  {
-    id: 1,
-    name: 'Peaky Blinders',
-    thumbnail: AppImages.landscape_thumbnails.peakyBlinders,
-  },
-  {
-    id: 2,
-    name: 'The Umbrella Academy',
-    thumbnail: AppImages.landscape_thumbnails.theUmbrellaAcademy,
-  },
-  {
-    id: 3,
-    name: 'KeepSweet, Pray, AndObey',
-    thumbnail: AppImages.landscape_thumbnails.keepSweetPrayAndObey,
-  },
-  {
-    id: 4,
-    name: 'Attack On Pearl Harbour',
-    thumbnail: AppImages.landscape_thumbnails.attackOnPearlHarbour,
-  },
-  {
-    id: 5,
-    name: 'The King Of Staten Island',
-    thumbnail: AppImages.landscape_thumbnails.theKingOfStatenIsland,
-  },
-  {
-    id: 6,
-    name: 'Blonde',
-    thumbnail: AppImages.landscape_thumbnails.blonde,
-  },
-  {
-    id: 7,
-    name: 'Dangerous Liasons',
-    thumbnail: AppImages.landscape_thumbnails.dangerousLiasons,
-  },
-  {
-    id: 8,
-    name: 'Halftime',
-    thumbnail: AppImages.landscape_thumbnails.halftime,
-  },
-  {
-    id: 9,
-    name: 'Heat',
-    thumbnail: AppImages.landscape_thumbnails.heat,
-  },
-  {
-    id: 10,
-    name: 'Hustle',
-    thumbnail: AppImages.landscape_thumbnails.hustle,
-  },
-  {
-    id: 11,
-    name: 'The Art Of Incarceration',
-    thumbnail: AppImages.landscape_thumbnails.theArtOfIncarceration,
-  },
-  {
-    id: 12,
-    name: 'The Girl In The Picture',
-    thumbnail: AppImages.landscape_thumbnails.theGirlInThePicture,
-  },
-  {
-    id: 13,
-    name: 'The Gray Man',
-    thumbnail: AppImages.landscape_thumbnails.theGrayMan,
-  },
-];
+// const listFilmDefault = [
+//   {
+//     id: 0,
+//     name: 'The Sea Beat',
+//     thumbnail: AppImages.landscape_thumbnails.theSeaBeast,
+//   },
+//   {
+//     id: 1,
+//     name: 'Peaky Blinders',
+//     thumbnail: AppImages.landscape_thumbnails.peakyBlinders,
+//   },
+//   {
+//     id: 2,
+//     name: 'The Umbrella Academy',
+//     thumbnail: AppImages.landscape_thumbnails.theUmbrellaAcademy,
+//   },
+//   {
+//     id: 3,
+//     name: 'KeepSweet, Pray, AndObey',
+//     thumbnail: AppImages.landscape_thumbnails.keepSweetPrayAndObey,
+//   },
+//   {
+//     id: 4,
+//     name: 'Attack On Pearl Harbour',
+//     thumbnail: AppImages.landscape_thumbnails.attackOnPearlHarbour,
+//   },
+//   {
+//     id: 5,
+//     name: 'The King Of Staten Island',
+//     thumbnail: AppImages.landscape_thumbnails.theKingOfStatenIsland,
+//   },
+//   {
+//     id: 6,
+//     name: 'Blonde',
+//     thumbnail: AppImages.landscape_thumbnails.blonde,
+//   },
+//   {
+//     id: 7,
+//     name: 'Dangerous Liasons',
+//     thumbnail: AppImages.landscape_thumbnails.dangerousLiasons,
+//   },
+//   {
+//     id: 8,
+//     name: 'Halftime',
+//     thumbnail: AppImages.landscape_thumbnails.halftime,
+//   },
+//   {
+//     id: 9,
+//     name: 'Heat',
+//     thumbnail: AppImages.landscape_thumbnails.heat,
+//   },
+//   {
+//     id: 10,
+//     name: 'Hustle',
+//     thumbnail: AppImages.landscape_thumbnails.hustle,
+//   },
+//   {
+//     id: 11,
+//     name: 'The Art Of Incarceration',
+//     thumbnail: AppImages.landscape_thumbnails.theArtOfIncarceration,
+//   },
+//   {
+//     id: 12,
+//     name: 'The Girl In The Picture',
+//     thumbnail: AppImages.landscape_thumbnails.theGirlInThePicture,
+//   },
+//   {
+//     id: 13,
+//     name: 'The Gray Man',
+//     thumbnail: AppImages.landscape_thumbnails.theGrayMan,
+//   },
+// ];
 
 const SearchScreen = () => {
   const insets = useSafeAreaInsets();
 
   const searchRef = useRef<TextInput>(null);
   const [search, setSearch] = useState('');
-  const [listFilmFilter, setListFilmFilter] = useState(listFilmDefault);
+  // const [listFilmFilter, setListFilmFilter] = useState(listFilmDefault);
 
   const onChangeTextSearch = (text: string) => {
     setSearch(text);
@@ -94,12 +94,12 @@ const SearchScreen = () => {
 
   const onFilterFilm = () => {
     if (search) {
-      const newList = listFilmDefault.filter(item =>
-        item.name.toLowerCase().includes(search.toLowerCase()),
-      );
-      setListFilmFilter(newList);
+      // const newList = listFilmDefault.filter(item =>
+      //   item.name.toLowerCase().includes(search.toLowerCase()),
+      // );
+      // setListFilmFilter(newList);
     } else {
-      setListFilmFilter(listFilmDefault);
+      // setListFilmFilter(listFilmDefault);
     }
   };
 
@@ -148,7 +148,7 @@ const SearchScreen = () => {
               flexDirection: 'row',
             }}>
             <View style={{height: '100%', paddingVertical: 4}}>
-              <AppIcons.search
+              <AppIconsSVG.search
                 height={'100%'}
                 width={undefined}
                 style={{
@@ -185,7 +185,7 @@ const SearchScreen = () => {
                 marginHorizontal: AppDimention.secondPadding / 2,
               }}
               onPress={onClearSearching}>
-              <AppIcons.closeCircle
+              <AppIconsSVG.closeCircle
                 height={'100%'}
                 width={undefined}
                 style={{
@@ -215,7 +215,7 @@ const SearchScreen = () => {
             alignItems: 'center',
             flex: 1,
           }}>
-          <Image
+          {/* <Image
             source={item.thumbnail}
             style={{
               resizeMode: 'contain',
@@ -224,7 +224,7 @@ const SearchScreen = () => {
               width: undefined,
               borderRadius: 8,
             }}
-          />
+          /> */}
           <Text
             style={{
               flex: 1,
@@ -244,7 +244,7 @@ const SearchScreen = () => {
             alignItems: 'center',
             marginRight: AppDimention.secondPadding,
           }}>
-          <AppIcons.play
+          <AppIconsSVG.play
             fill="white"
             height={'30%'}
             width={undefined}
@@ -273,7 +273,7 @@ const SearchScreen = () => {
             }}>
             Movies & TV
           </Text>
-          <FlashList
+          {/* <FlashList
             data={listFilmFilter}
             contentContainerStyle={{
               paddingHorizontal: 8,
@@ -285,7 +285,7 @@ const SearchScreen = () => {
             )}
             ListFooterComponent={() => <View style={{height: 24}} />}
             estimatedItemSize={68}
-          />
+          /> */}
         </View>
       </View>
     </AppContainer>

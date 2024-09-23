@@ -70,7 +70,7 @@ const StartedScreen = () => {
                 justifyContent: 'center',
                 paddingLeft: AppDimention.secondPadding,
               }}>
-              <AppIcons.netflix height={28} style={{aspectRatio: 86 / 22}} />
+              <AppIconsSVG.netflix height={28} style={{aspectRatio: 86 / 22}} />
             </View>
             <View
               style={{
@@ -95,7 +95,11 @@ const StartedScreen = () => {
               </TouchableOpacity>
               <Menu>
                 <MenuTrigger style={{padding: 8}}>
-                  <AppIcons.more_circle height={20} width={20} fill="white" />
+                  <AppIconsSVG.more_circle
+                    height={20}
+                    width={20}
+                    fill="white"
+                  />
                 </MenuTrigger>
                 <MenuOptions optionsContainerStyle={{padding: 8}}>
                   <MenuOption onSelect={() => {}}>
@@ -235,7 +239,7 @@ const StartedScreen = () => {
                 onPress={() => {
                   setVisible(false);
                 }}>
-                <AppIcons.close height={30} width={30} />
+                <AppIconsSVG.close height={30} width={30} />
               </TouchableOpacity>
               <View style={{height: '100%', width: '100%'}}>
                 <ScrollView

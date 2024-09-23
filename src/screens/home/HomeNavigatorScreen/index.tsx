@@ -1,7 +1,8 @@
 import {Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {
   BottomTabBarProps,
+  BottomTabNavigationEventMap,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../HomeScreen';
@@ -10,40 +11,73 @@ import ComingSoonScreen from '../../coming';
 import DownloadsScreen from '../../downloads';
 import MoreScreen from '../../more';
 import ScreenNames from '../../../constants/ScreenNames';
-import {AppIcons} from '../../../constants/AppIcons';
+import {AppIcons, AppIconsSVG} from '../../../constants/AppIcons';
 
 import {AppFonts} from '../../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
+import {
+  NavigationHelpers,
+  ParamListBase,
+  TabNavigationState,
+} from '@react-navigation/native';
+import ImageIcon from '../../../components/ImageIcon';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+  interpolate,
+  interpolateColor,
+} from 'react-native-reanimated';
 
 const listTab = [
   {
     id: 0,
     name: 'Home',
-    Icon: AppIcons.home,
+    icon: {
+      active: AppIcons.home_active,
+      inactive: AppIcons.home,
+    },
+    color: '#E50914',
     component: HomeScreen,
   },
   {
     id: 1,
     name: 'Search',
-    Icon: AppIcons.search,
+    icon: {
+      active: AppIcons.search_active,
+      inactive: AppIcons.search,
+    },
+    color: '#0E7ADD',
     component: SearchScreen,
   },
   {
     id: 2,
-    name: 'Coming Soon',
-    Icon: AppIcons.comingSoon,
+    name: 'Hot & New',
+    icon: {
+      active: AppIcons.media_active,
+      inactive: AppIcons.media,
+    },
+    color: '#00FF0A',
     component: ComingSoonScreen,
   },
   {
     id: 3,
     name: 'Downloads',
-    Icon: AppIcons.downloads,
+    icon: {
+      active: AppIcons.download_active,
+      inactive: AppIcons.download,
+    },
+    color: '#AC09E5',
     component: DownloadsScreen,
   },
   {
     id: 4,
     name: 'More',
-    Icon: AppIcons.more_stick,
+    icon: {
+      active: AppIcons.more_active,
+      inactive: AppIcons.more,
+    },
+    color: '#E5A709',
     component: MoreScreen,
   },
 ];
@@ -55,6 +89,76 @@ const Tab = createBottomTabNavigator();
 //   color: string;
 //   size: number;
 // }
+
+type ItemTabAnimProps = {
+  route: any;
+  index: number;
+  state: TabNavigationState<ParamListBase>;
+  navigation: NavigationHelpers<ParamListBase, BottomTabNavigationEventMap>;
+};
+
+const ItemTabAnim = (props: ItemTabAnimProps) => {
+  const {route, index, state, navigation} = props;
+  const anim = useSharedValue(0);
+  const animActiveStyles = useAnimatedStyle(() => ({
+    opacity: anim.value,
+    zIndex: 1,
+  }));
+
+  const animName = useAnimatedStyle(() => ({
+    opacity: interpolate(anim.value, [0, 1], [0.3, 1]),
+  }));
+
+  useEffect(() => {
+    if (state.index === index) {
+      console.log(state.index);
+      anim.value = withTiming(1);
+    } else {
+      anim.value = withTiming(0);
+    }
+  }, [state]);
+
+  return (
+    <TouchableOpacity
+      activeOpacity={1}
+      style={{
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '20%',
+        height: '100%',
+      }}
+      onPress={() => {
+        navigation.navigate(route.name);
+      }}>
+      <View style={{height: 30, width: 30}}>
+        <Animated.View
+          style={[
+            animActiveStyles,
+            {
+              height: 30,
+              width: 30,
+            },
+          ]}>
+          <ImageIcon source={listTab[index].icon.active} />
+        </Animated.View>
+        <View style={{position: 'absolute', opacity: 0.3}}>
+          <ImageIcon source={listTab[index].icon.inactive} />
+        </View>
+      </View>
+      <Animated.Text
+        style={[
+          {
+            fontSize: 12,
+            fontFamily: AppFonts.bold,
+            color: 'white',
+          },
+          animName,
+        ]}>
+        {route.name}
+      </Animated.Text>
+    </TouchableOpacity>
+  );
+};
 
 const HomeNavigatorScreen = () => {
   const customTabBar = (props: BottomTabBarProps) => {
@@ -85,28 +189,14 @@ const HomeNavigatorScreen = () => {
             alignItems: 'center',
           }}>
           {state.routes.map((route, index) => {
-            const Icon = listTab[index].Icon;
             return (
-              <TouchableOpacity
-                activeOpacity={1}
-                style={{
-                  alignItems: 'center',
-                  width: '20%',
-                }}
+              <ItemTabAnim
+                navigation={navigation}
+                state={state}
+                route={route}
+                index={index}
                 key={route.key}
-                onPress={() => {
-                  navigation.navigate(route.name);
-                }}>
-                <Icon fill={state.index === index ? 'white' : '#737373'} />
-                <Text
-                  style={{
-                    fontSize: 12,
-                    fontFamily: AppFonts.regular,
-                    color: state.index === index ? 'white' : '#737373',
-                  }}>
-                  {route.name}
-                </Text>
-              </TouchableOpacity>
+              />
             );
           })}
         </View>

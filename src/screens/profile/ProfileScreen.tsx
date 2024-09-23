@@ -4,7 +4,7 @@ import AppContainer from '../../components/AppContainer';
 import AppImages from '../../constants/AppImages';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {AppIcons} from '../../constants/AppIcons';
+import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
 import {AppDimention} from '../../constants/constants';
 import {FlashList} from '@shopify/flash-list';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -12,6 +12,7 @@ import LoginModal from './components/LoginModal';
 import ProfileItem from './components/ProfileItem';
 import {useNavigation} from '@react-navigation/native';
 import useAppNavigation from '../../navigation/useAppNavigation';
+import ImageIcon from '../../components/ImageIcon';
 
 type Props = {};
 
@@ -102,7 +103,7 @@ const ProfileScreen = (props: Props) => {
                 navigation.goBack();
               } else navigation.navigate('HomeNavigatorScreen');
             }}>
-            <AppIcons.arrow_left fill="red" />
+            <ImageIcon source={AppIcons.arrow_left} />
           </TouchableOpacity>
           <FastImage
             source={AppImages.logoNetflix}
@@ -119,7 +120,7 @@ const ProfileScreen = (props: Props) => {
               right: AppDimention.mainPadding,
             }}
             onPress={toggleEditMode}>
-            <AppIcons.edit />
+            <ImageIcon source={AppIcons.pen} />
           </TouchableOpacity>
         </View>
         <View

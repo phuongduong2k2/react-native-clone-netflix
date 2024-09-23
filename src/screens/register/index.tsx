@@ -40,7 +40,7 @@ const RegisterScreen = () => {
               width: 100,
               paddingHorizontal: AppDimention.secondPadding,
             }}>
-            <AppSvg SvgSrc={AppIcons.netflix} />
+            {/* <AppSvg SvgSrc={AppIconsSVG.netflix} /> */}
           </View>
           <View
             style={{

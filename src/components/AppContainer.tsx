@@ -1,6 +1,7 @@
-import {ActivityIndicator, InteractionManager, View} from 'react-native';
+import {InteractionManager, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
+import Indicator from './Indicator';
 
 type Props = {
   children?: React.ReactNode;
@@ -29,7 +30,7 @@ const AppContainer = (props: Props) => {
           children
         ) : (
           <View style={{flex: 1, justifyContent: 'center'}}>
-            <ActivityIndicator color={'white'} size={'large'} />
+            <Indicator />
           </View>
         )}
       </View>

@@ -18,7 +18,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import YoutubePlayer from 'react-native-youtube-iframe';
 import AppHeader from '../../components/AppHeader';
-import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import AppImages from '../../constants/AppImages';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
@@ -31,6 +30,9 @@ import Animated, {
 } from 'react-native-reanimated';
 import moment from 'moment';
 import Space from '../../components/Space';
+import {Source} from 'react-native-fast-image';
+import ImageIcon from '../../components/ImageIcon';
+import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
@@ -116,13 +118,13 @@ const styles = StyleSheet.create({
 const CustomSpace = () => <Space height={AppDimention.secondPadding} />;
 
 type FuncBtnProps = {
-  icon?: () => JSX.Element;
+  icon?: number | Source | undefined;
   title?: string;
   onPress?: () => {};
 };
 
 const FuncBtn = (props: FuncBtnProps): JSX.Element => {
-  const {icon = () => <></>, onPress = () => {}, title = ''} = props;
+  const {icon, onPress = () => {}, title = ''} = props;
   return (
     <TouchableOpacity
       style={{
@@ -130,7 +132,7 @@ const FuncBtn = (props: FuncBtnProps): JSX.Element => {
         alignItems: 'center',
       }}
       onPress={onPress}>
-      {icon()}
+      <ImageIcon source={icon} />
       <Space height={4} />
       <Text
         style={{
@@ -193,7 +195,7 @@ const WatchingScreen = (props: Props) => {
           <></>
           <>
             <TouchableOpacity onPress={goBack}>
-              <AppIcons.close fill="white" />
+              <ImageIcon source={AppIcons.x} />
             </TouchableOpacity>
           </>
         </AppHeader>
@@ -236,29 +238,29 @@ const WatchingScreen = (props: Props) => {
                 {moment(movie.releasedYear).format('MMM YYYY')}
               </Text>
               <Space width={4} />
-              <AppIcons.badge_vision />
+              <AppIconsSVG.badge_vision />
               <Space width={4} />
-              <AppIcons.badge_hd />
+              <AppIconsSVG.badge_hd />
               <Space width={4} />
-              <AppIcons.badge_ad />
+              <AppIconsSVG.badge_ad />
             </View>
             <CustomSpace />
-            <AppButton
+            {/* <AppButton
               style={styles.btn}
-              Icon={AppIcons.play}
+              Icon={AppIconsSVG.play}
               iconStyles={{...styles.iconBtn, fill: 'black'}}
               text={'Play'}
               textStyle={styles.textPlay}
-            />
+            /> */}
             <CustomSpace />
-            <AppButton
+            {/* <AppButton
               style={styles.btn}
-              Icon={AppIcons.downloads}
+              Icon={AppIconsSVG.downloads}
               iconStyles={{...styles.iconBtn, fill: 'black'}}
               text={'Download'}
               disable={true}
               textStyle={styles.textDownload}
-            />
+            /> */}
             <CustomSpace />
             <Text style={styles.summary}>Summary</Text>
             <Text style={styles.descriptionMovie}>{movie.description}</Text>
@@ -267,26 +269,11 @@ const WatchingScreen = (props: Props) => {
                 marginTop: AppDimention.mainPadding,
                 flexDirection: 'row',
               }}>
-              <FuncBtn
-                icon={() => (
-                  <AppIcons.add fill="white" width={24} height={24} />
-                )}
-                title="My List"
-              />
+              <FuncBtn icon={AppIcons.plus} title="My List" />
               <Space width={AppDimention.mainPadding * 2} />
-              <FuncBtn
-                icon={() => (
-                  <AppIcons.thumb_up fill="white" width={24} height={24} />
-                )}
-                title="Rate"
-              />
+              <FuncBtn icon={AppIcons.thumbs_up} title="Rate" />
               <Space width={AppDimention.mainPadding * 2} />
-              <FuncBtn
-                icon={() => (
-                  <AppIcons.share fill="white" width={24} height={24} />
-                )}
-                title="Share"
-              />
+              <FuncBtn icon={AppIcons.paper_plane_tilt} title="Share" />
             </View>
           </View>
         </ScrollView>

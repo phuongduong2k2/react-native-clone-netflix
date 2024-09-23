@@ -11,7 +11,7 @@ import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons} from '../../constants/AppIcons';
+import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
@@ -30,8 +30,8 @@ import Animated, {
 import useAppNavigation from '../../navigation/useAppNavigation';
 import {API} from '../../api/api';
 import {useSelector} from 'react-redux';
-import FastImage from 'react-native-fast-image';
 import LazyImage from '../../components/LazyImage';
+import ImageIcon from '../../components/ImageIcon';
 
 const styles = StyleSheet.create({
   container: {width: '100%', position: 'absolute', zIndex: 0},
@@ -142,7 +142,7 @@ const HomeScreen = () => {
               onPress={() => {
                 console.log(userInfo);
               }}>
-              <AppIcons.cast fill="white" height={24} width={24} />
+              <ImageIcon source={AppIcons.screen_cast} />
             </TouchableOpacity>
             <TouchableOpacity
               style={{
@@ -159,13 +159,12 @@ const HomeScreen = () => {
                     ? userInfo?.avatar
                     : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'
                 }
-                styles={{height: '90%', width: undefined, aspectRatio: 1}}
+                styles={{height: '60%', width: undefined, aspectRatio: 1}}
               />
             </TouchableOpacity>
           </View>
         </View>
-        <View
-          style={{flexDirection: 'row', alignSelf: 'center', borderWidth: 1}}>
+        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
           <TouchableOpacity style={styles.touchCategory}>
             <Text style={{color: 'white', fontFamily: AppFonts.light}}>
               TV Shows
@@ -181,7 +180,10 @@ const HomeScreen = () => {
               Categories
             </Text>
             <View style={{height: '80%', aspectRatio: 1, width: undefined}}>
-              <AppIcons.dropDown height={'100%'} width={'100%'} fill="white" />
+              <ImageIcon
+                source={AppIcons.caret_down}
+                style={{height: '100%', width: undefined, aspectRatio: 1}}
+              />
             </View>
           </TouchableOpacity>
         </View>
@@ -245,7 +247,7 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(AppActions.decrement());
               }}>
-              <AppIcons.add height={30} width={30} fill="white" />
+              <ImageIcon source={AppIcons.plus} />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 My List
               </Text>
@@ -261,7 +263,7 @@ const HomeScreen = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <AppSvg SvgSrc={AppIcons.play} size={30} fill="black" />
+              <AppSvg SvgSrc={AppIconsSVG.play} size={30} fill="black" />
               <Text
                 style={{
                   fontFamily: AppFonts.medium,
@@ -277,7 +279,7 @@ const HomeScreen = () => {
               onPress={() => {
                 dispatch(AppActions.increment());
               }}>
-              <AppIcons.info height={30} width={30} fill="white" />
+              <ImageIcon source={AppIcons.warning_circle} />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 Info
               </Text>
