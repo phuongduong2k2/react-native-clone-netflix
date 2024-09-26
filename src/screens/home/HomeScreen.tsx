@@ -1,4 +1,5 @@
 import {
+  Button,
   Image,
   StatusBar,
   StyleSheet,
@@ -481,6 +482,7 @@ const HomeScreen = () => {
           style={{}}
           onScroll={scrollHandler}
           showsVerticalScrollIndicator={false}>
+          <Button title="Display notification" onPress={() => {}} />
           {renderMainFilm()}
           {/* <View>{renderContiWatch()}</View>
           <View style={{marginTop: AppDimention.mainPadding}}>

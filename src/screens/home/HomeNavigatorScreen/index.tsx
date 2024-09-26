@@ -1,4 +1,4 @@
-import {Text, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import React, {useEffect} from 'react';
 import {
   BottomTabBarProps,
@@ -11,7 +11,7 @@ import ComingSoonScreen from '../../coming';
 import DownloadsScreen from '../../downloads';
 import MoreScreen from '../../more';
 import ScreenNames from '../../../constants/ScreenNames';
-import {AppIcons, AppIconsSVG} from '../../../constants/AppIcons';
+import {AppIcons} from '../../../constants/AppIcons';
 
 import {AppFonts} from '../../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
@@ -26,7 +26,6 @@ import Animated, {
   useSharedValue,
   withTiming,
   interpolate,
-  interpolateColor,
 } from 'react-native-reanimated';
 
 const listTab = [
@@ -111,7 +110,6 @@ const ItemTabAnim = (props: ItemTabAnimProps) => {
 
   useEffect(() => {
     if (state.index === index) {
-      console.log(state.index);
       anim.value = withTiming(1);
     } else {
       anim.value = withTiming(0);
