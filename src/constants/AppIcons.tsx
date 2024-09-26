@@ -19,7 +19,6 @@ export const AppIconsSVG = {
   play: Play,
   home: Home,
   search: Search,
-  comingSoon: ComingSoon,
   downloads: Downloads,
   more_circle: MoreCircle,
   closeCircle: CloseCircle,

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "173336764272",
+    "project_id": "react-native-da5e3",
+    "storage_bucket": "react-native-da5e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:173336764272:android:2e918477222a4cd327b9b5",
+        "android_client_info": {
+          "package_name": "com.clonenetflix"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCocchu0c-elfAoOpTha_Bcj6j4nViNIwE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

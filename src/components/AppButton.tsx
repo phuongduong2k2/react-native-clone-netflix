@@ -9,18 +9,14 @@ import {
 } from 'react-native';
 import React, {memo} from 'react';
 import {ActivityIndicator, MD2Colors} from 'react-native-paper';
+import FastImage, {Source} from 'react-native-fast-image';
 
 type Props = {
   style?: ViewStyle;
   isLoading?: boolean;
   textStyle?: TextStyle;
   onPress?: () => void;
-  Icon?: any;
-  iconStyles?: {
-    height?: DimensionValue;
-    width?: DimensionValue;
-    fill?: ColorValue;
-  };
+  icon?: number | Source | undefined;
   text?: String;
   disable?: Boolean;
 };
@@ -32,12 +28,8 @@ const AppButton = (props: Props) => {
     },
     isLoading = false,
     onPress = () => {},
-    Icon = null,
+    icon,
     text = '',
-    iconStyles = {
-      height: 10,
-      width: 10,
-    },
     disable = false,
     textStyle = {},
   } = props;
@@ -62,13 +54,7 @@ const AppButton = (props: Props) => {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        {Icon && (
-          <Icon
-            height={iconStyles.height}
-            width={iconStyles.width}
-            fill={disable ? '#737373' : iconStyles.fill}
-          />
-        )}
+        <FastImage source={icon} />
         <Text
           style={{...textStyle, color: disable ? '#737373' : textStyle?.color}}>
           {text}
