@@ -12,6 +12,8 @@ import AppColors from '../../constants/AppColors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import ImageIcon from '../../components/ImageIcon';
 import AppImages from '../../constants/AppImages';
+import {API} from '../../api/api';
+import {GlobalHUDUtils} from '../../components/GlobalHUD';
 
 const LoginScreen = () => {
   const navigation = useAppNavigation();
@@ -104,8 +106,16 @@ const LoginScreen = () => {
               borderStyle={{borderWidth: 0}}
             />
             <AppButton
-              onPress={() => {
-                navigation.replace('HomeScreen');
+              onPress={async () => {
+                // navigation.replace('HomeScreen');
+                const data = {
+                  email,
+                  password,
+                };
+                GlobalHUDUtils.showHUD();
+                const res = await API.login(data);
+                GlobalHUDUtils.hideHUD();
+                console.log(res);
               }}
               text={'Sign In'}
               textStyle={{

@@ -1,9 +1,5 @@
 import {
-  View,
-  Text,
   TextInput,
-  Keyboard,
-  Button,
   ViewStyle,
   NativeSyntheticEvent,
   TextInputEndEditingEventData,
@@ -13,8 +9,6 @@ import {
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {AppDimention, AppFonts} from '../constants/constants';
 import Animated, {
-  Easing,
-  Extrapolation,
   interpolate,
   interpolateColor,
   useAnimatedStyle,
@@ -128,8 +122,6 @@ const AppTextInput = (props: Props) => {
     onBlur();
   };
 
-  console.log('render [CusteomTextInput]', placeholder);
-
   const [visiblePassword, setVisiblePassword] = useState(false);
 
   const togglePassword = () => {
@@ -189,7 +181,7 @@ const AppTextInput = (props: Props) => {
           fontSize: 16,
           ...textStyle,
         }}
-        secureTextEntry={!visiblePassword}
+        secureTextEntry={isPassword && !visiblePassword}
         onChangeText={e => {
           setText(e);
           onChangeText(e);

@@ -34,7 +34,7 @@ const AppButton = (props: Props) => {
     textStyle = {},
   } = props;
 
-  const onPressing = () => (disable ? {} : onPress);
+  const onPressing = () => (disable ? {} : onPress());
 
   return (
     <TouchableOpacity

@@ -10,6 +10,7 @@ import store from './src/redux/store';
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RNNotification from './src/services/RNNotification';
+import GlobalHUD from './src/components/GlobalHUD';
 
 function App(): React.JSX.Element {
   const onChangeColoNavigationBar = async () => {
@@ -29,6 +30,7 @@ function App(): React.JSX.Element {
       <SafeAreaProvider style={{backgroundColor: 'black'}}>
         <GestureHandlerRootView>
           <RNNotification />
+          <GlobalHUD />
           <StatusBar barStyle={'light-content'} backgroundColor={'black'} />
           <MainNavigation />
         </GestureHandlerRootView>
