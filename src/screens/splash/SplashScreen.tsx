@@ -21,7 +21,7 @@ const SplashScreen = (props: Props) => {
           console.log('Loading');
         }}
         onEnd={() => {
-          navigation.replace('HomeNavigatorScreen');
+          navigation.replace('HomeNavigator');
         }}
       />
     </View>

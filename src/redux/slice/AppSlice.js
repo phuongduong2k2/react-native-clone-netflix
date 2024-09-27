@@ -4,7 +4,9 @@ const AppSlice = createSlice({
   name: 'app',
   initialState: {
     value: 0,
-    userInfo: null,
+    userInfo: {
+      avatar: '',
+    },
     token: null,
   },
   reducers: {

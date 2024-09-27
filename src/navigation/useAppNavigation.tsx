@@ -8,7 +8,7 @@ export type RootStackParamList = {
   StartedScreen: {} | undefined;
   CreateAccountScreen: {} | undefined;
   HomeScreen: {} | undefined;
-  HomeNavigatorScreen: {} | undefined;
+  HomeNavigator: {} | undefined;
   WatchingScreen: MovieItemProps;
   ProfileScreen: {} | undefined;
 };

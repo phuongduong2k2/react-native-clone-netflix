@@ -4,7 +4,7 @@ const ScreenNames = {
   StartedScreen: 'StartedScreen',
   CreateAccountScreen: 'CreateAccountScreen',
   HomeScreen: 'HomeScreen',
-  HomeNavigatorScreen: 'HomeNavigatorScreen',
+  HomeNavigator: 'HomeNavigator',
   SearchScreen: 'SearchScreen',
   ComingSoonScreen: 'ComingSoonScreen',
   DownloadsScreen: 'DownloadsScreen',

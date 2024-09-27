@@ -5,22 +5,22 @@ import {
   BottomTabNavigationEventMap,
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
-import HomeScreen from '../HomeScreen';
-import SearchScreen from '../../search';
-import ComingSoonScreen from '../../coming';
-import DownloadsScreen from '../../downloads';
-import MoreScreen from '../../more';
-import ScreenNames from '../../../constants/ScreenNames';
-import {AppIcons} from '../../../constants/AppIcons';
+import HomeScreen from '../screens/home/HomeScreen';
+import SearchScreen from '../screens/search';
+import ComingSoonScreen from '../screens/coming';
+import DownloadsScreen from '../screens/downloads';
+import MoreScreen from '../screens/more';
+import ScreenNames from '../constants/ScreenNames';
+import {AppIcons} from '../constants/AppIcons';
 
-import {AppFonts} from '../../../constants/constants';
+import {AppFonts} from '../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import {
   NavigationHelpers,
   ParamListBase,
   TabNavigationState,
 } from '@react-navigation/native';
-import ImageIcon from '../../../components/ImageIcon';
+import ImageIcon from '../components/ImageIcon';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -158,7 +158,7 @@ const ItemTabAnim = (props: ItemTabAnimProps) => {
   );
 };
 
-const HomeNavigatorScreen = () => {
+const HomeNavigator = () => {
   const customTabBar = (props: BottomTabBarProps) => {
     const {navigation, state} = props;
     return (
@@ -240,4 +240,4 @@ const HomeNavigatorScreen = () => {
   );
 };
 
-export default HomeNavigatorScreen;
+export default HomeNavigator;

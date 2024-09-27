@@ -4,18 +4,14 @@ import ScreenNames from '../constants/ScreenNames';
 import LoginScreen from '../screens/login';
 import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
-
-import HomeNavigatorScreen from '../screens/home/HomeNavigatorScreen';
 import WatchingScreen from '../screens/watching/WatchingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
 import ProfileScreen from '../screens/profile/ProfileScreen';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {View} from 'react-native';
 import SplashScreen from '../screens/splash/SplashScreen';
-import {
-  StackCardStyleInterpolator,
-  TransitionSpec,
-} from '@react-navigation/stack/lib/typescript/src/types';
+import {StackCardStyleInterpolator} from '@react-navigation/stack/lib/typescript/src/types';
+import HomeNavigator from './HomeNavigator';
 
 const Stack = createStackNavigator();
 
@@ -48,8 +44,8 @@ const MainNavigation: React.FC = () => {
             }}
           />
           <Stack.Screen
-            name={ScreenNames.HomeNavigatorScreen}
-            component={HomeNavigatorScreen}
+            name={ScreenNames.HomeNavigator}
+            component={HomeNavigator}
             options={{
               headerShown: false,
               gestureEnabled: false,
