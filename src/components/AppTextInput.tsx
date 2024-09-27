@@ -38,6 +38,7 @@ type Props = {
   focusPlaceholder?: string;
   blurPlaceholder?: string;
   isPassword?: boolean;
+  iconTheme?: 'dark' | 'light';
 };
 
 const AppTextInput = (props: Props) => {
@@ -58,6 +59,7 @@ const AppTextInput = (props: Props) => {
     focusPlaceholder = AppColors.mainText,
     blurPlaceholder = AppColors.mainText,
     isPassword = false,
+    iconTheme = 'light',
   } = props;
   const textInputRef = useRef<TextInput>(null);
 
@@ -85,6 +87,11 @@ const AppTextInput = (props: Props) => {
     ),
   }));
 
+  const IconTheme = {
+    eye: iconTheme === 'light' ? AppIcons.eye : AppIcons.dark_eye,
+    eye_slash:
+      iconTheme === 'light' ? AppIcons.eye_slash : AppIcons.dark_eye_slash,
+  };
   const animBackgroundColor = useAnimatedStyle(() => ({
     backgroundColor: interpolateColor(
       animValue.value,
@@ -198,7 +205,7 @@ const AppTextInput = (props: Props) => {
             paddingHorizontal: AppDimention.secondPadding,
           }}>
           <ImageIcon
-            source={visiblePassword ? AppIcons.eye_slash : AppIcons.eye}
+            source={visiblePassword ? IconTheme.eye_slash : IconTheme.eye}
           />
         </TouchableOpacity>
       )}

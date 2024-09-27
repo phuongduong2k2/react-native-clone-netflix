@@ -50,4 +50,6 @@ export const AppIcons = {
   media_active: require('../../assets/icons/media/active.png'),
   eye: require('../../assets/icons/eye/eye.png'),
   eye_slash: require('../../assets/icons/eye_slash/eye_slash.png'),
+  dark_eye: require('../../assets/icons/eye/dark/eye.png'),
+  dark_eye_slash: require('../../assets/icons/eye_slash/dark/eye_slash.png'),
 };

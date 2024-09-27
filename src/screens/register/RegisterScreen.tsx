@@ -6,11 +6,12 @@ import AppHeader from '../../components/AppHeader';
 import AppSvg from '../../components/AppSvg';
 import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
-import CustomTextInput from '../../components/AppTextInput';
+
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import AppButton from '../../components/AppButton';
 import AppColors from '../../constants/AppColors';
 import useAppNavigation from '../../navigation/useAppNavigation';
+import AppTextInput from '../../components/AppTextInput';
 
 const RegisterScreen = () => {
   const insets = useSafeAreaInsets();
@@ -33,6 +34,7 @@ const RegisterScreen = () => {
       <View
         style={{
           flex: 1,
+          marginTop: insets.top,
         }}>
         <AppHeader title="">
           <View
@@ -94,12 +96,14 @@ const RegisterScreen = () => {
               Create an account and we'll send you an email with everything you
               need to know about Netflix.
             </Text>
-            <CustomTextInput
+            <AppTextInput
               placeholder="Email"
               onChangeText={handleChangeEmail}
               textStyle={{fontSize: 16}}
             />
-            <CustomTextInput
+            <AppTextInput
+              isPassword={true}
+              iconTheme="dark"
               containerStyle={{marginTop: AppDimention.secondPadding}}
               placeholder="Password"
               onChangeText={handleChangePassword}
@@ -151,7 +155,7 @@ const RegisterScreen = () => {
                 alignItems: 'center',
               }}
               onPress={() => {
-                navigation.replace('HomeNavigatorScreen');
+                navigation.replace('HomeNavigator');
               }}
             />
           </ScrollView>
