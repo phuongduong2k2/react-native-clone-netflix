@@ -13,10 +13,11 @@ import FastImage from 'react-native-fast-image';
 type Props = {
   source: string;
   styles?: ViewStyle;
+  useSkeleton?: boolean;
 };
 
 const LazyImage = (props: Props) => {
-  const {source = '', styles = {}} = props;
+  const {source = '', styles = {}, useSkeleton = true} = props;
   const [loading, setLoading] = useState(true);
 
   const onLoadDone = () => {
@@ -30,7 +31,7 @@ const LazyImage = (props: Props) => {
   const opacity = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => ({
-    opacity: opacity.value,
+    opacity: useSkeleton ? opacity.value : 1,
   }));
 
   useEffect(() => {
@@ -45,7 +46,7 @@ const LazyImage = (props: Props) => {
 
   return (
     <View style={styles}>
-      {loading && (
+      {loading && useSkeleton && (
         <SkeletonPlaceholder
           backgroundColor="rgb(65, 65, 65)"
           highlightColor="rgb(134, 134, 134)"

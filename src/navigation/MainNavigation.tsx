@@ -1,8 +1,6 @@
 import React from 'react';
 import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
 import ScreenNames from '../constants/ScreenNames';
-import LoginScreen from '../screens/login';
-import RegisterScreen from '../screens/register';
 import StartedScreen from '../screens/started';
 import WatchingScreen from '../screens/watching/WatchingScreen';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -12,6 +10,8 @@ import {View} from 'react-native';
 import SplashScreen from '../screens/splash/SplashScreen';
 import {StackCardStyleInterpolator} from '@react-navigation/stack/lib/typescript/src/types';
 import HomeNavigator from './HomeNavigator';
+import LoginScreen from '../screens/login/LoginScreen';
+import RegisterScreen from '../screens/register/RegisterScreen';
 
 const Stack = createStackNavigator();
 

@@ -8,6 +8,7 @@ import {
   NativeSyntheticEvent,
   TextInputEndEditingEventData,
   TextStyle,
+  TouchableOpacity,
 } from 'react-native';
 import React, {memo, useEffect, useRef, useState} from 'react';
 import {AppDimention, AppFonts} from '../constants/constants';
@@ -21,6 +22,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import AppColors from '../constants/AppColors';
+import ImageIcon from './ImageIcon';
+import {AppIcons} from '../constants/AppIcons';
 
 type Props = {
   containerStyle?: ViewStyle;
@@ -40,6 +43,7 @@ type Props = {
   blurColor?: string;
   focusPlaceholder?: string;
   blurPlaceholder?: string;
+  isPassword?: boolean;
 };
 
 const AppTextInput = (props: Props) => {
@@ -59,6 +63,7 @@ const AppTextInput = (props: Props) => {
     blurColor = 'transparent',
     focusPlaceholder = AppColors.mainText,
     blurPlaceholder = AppColors.mainText,
+    isPassword = false,
   } = props;
   const textInputRef = useRef<TextInput>(null);
 
@@ -125,10 +130,21 @@ const AppTextInput = (props: Props) => {
 
   console.log('render [CusteomTextInput]', placeholder);
 
+  const [visiblePassword, setVisiblePassword] = useState(false);
+
+  const togglePassword = () => {
+    setVisiblePassword(!visiblePassword);
+  };
+
   return (
     <Animated.View
       style={[
-        {justifyContent: 'center', height: 64, ...containerStyle},
+        {
+          justifyContent: 'space-between',
+          height: 64,
+          flexDirection: 'row',
+          ...containerStyle,
+        },
         animBackgroundColor,
       ]}
       onLayout={e => {
@@ -164,13 +180,16 @@ const AppTextInput = (props: Props) => {
         ref={textInputRef}
         style={{
           zIndex: 1,
+          flex: 1,
           height: '100%',
+          margin: 0,
           paddingLeft: AppDimention.secondPadding,
           borderRadius: 4,
           fontFamily: AppFonts.regular,
           fontSize: 16,
           ...textStyle,
         }}
+        secureTextEntry={!visiblePassword}
         onChangeText={e => {
           setText(e);
           onChangeText(e);
@@ -179,6 +198,18 @@ const AppTextInput = (props: Props) => {
         onBlur={blur}
         onEndEditing={onEndEditing}
       />
+      {isPassword && text.length > 0 && (
+        <TouchableOpacity
+          onPress={togglePassword}
+          style={{
+            justifyContent: 'center',
+            paddingHorizontal: AppDimention.secondPadding,
+          }}>
+          <ImageIcon
+            source={visiblePassword ? AppIcons.eye_slash : AppIcons.eye}
+          />
+        </TouchableOpacity>
+      )}
       <Animated.View
         style={[
           {

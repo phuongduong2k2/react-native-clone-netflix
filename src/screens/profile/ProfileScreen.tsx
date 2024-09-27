@@ -19,7 +19,7 @@ type Props = {};
 const ProfileScreen = (props: Props) => {
   const {} = props;
   const insets = useSafeAreaInsets();
-  const [listUser, setListUser] = useState([-1]);
+  const [listUser, setListUser] = useState<any>([]);
   const [isVisible, setVisible] = useState(false);
   const [selectedEmail, setSelectedEmail] = useState('');
   const [editMode, setEditMode] = useState(false);
@@ -27,7 +27,7 @@ const ProfileScreen = (props: Props) => {
   const navigation = useAppNavigation();
 
   const getUserLogged = async () => {
-    const data = await AsyncStorage.getItem('userId');
+    const data = await AsyncStorage.getItem('listUser');
     if (data) {
       const dataPar = JSON.parse(data);
       console.log(dataPar);
@@ -51,22 +51,22 @@ const ProfileScreen = (props: Props) => {
         editMode={editMode}
         id={Number(item)}
         onPress={async data => {
-          console.log(data);
-          if (editMode) {
-            const userId = await AsyncStorage.getItem('userId');
-            if (userId) {
-              const newUserId = JSON.parse(userId).filter(
-                (ite: any) => Number(ite) !== data.id,
-              );
-              AsyncStorage.setItem('userId', JSON.stringify(newUserId));
-              setListUser([...newUserId, -1]);
-            }
-          } else {
-            if (data?.id >= 0) {
-              setSelectedEmail(data.email);
-            }
-            setVisible(true);
-          }
+          // console.log(data);
+          // if (editMode) {
+          //   const userId = await AsyncStorage.getItem('userId');
+          //   if (userId) {
+          //     const newUserId = JSON.parse(userId).filter(
+          //       (ite: any) => Number(ite) !== data.id,
+          //     );
+          //     AsyncStorage.setItem('userId', JSON.stringify(newUserId));
+          //     setListUser([...newUserId, -1]);
+          //   }
+          // } else {
+          //   if (data?.id >= 0) {
+          //     setSelectedEmail(data.email);
+          //   }
+          //   setVisible(true);
+          // }
         }}
       />
     );
@@ -101,7 +101,7 @@ const ProfileScreen = (props: Props) => {
             onPress={() => {
               if (navigation.canGoBack()) {
                 navigation.goBack();
-              } else navigation.navigate('HomeNavigatorScreen');
+              } else navigation.navigate('HomeNavigator');
             }}>
             <ImageIcon source={AppIcons.arrow_left} />
           </TouchableOpacity>
@@ -133,12 +133,35 @@ const ProfileScreen = (props: Props) => {
             style={{
               width: '60%',
               height: 440,
+              borderWidth: 1,
+              borderColor: 'white',
             }}>
             <FlashList
               data={listUser}
               numColumns={2}
-              key={editMode.toString()}
+              // key={editMode.toString()}
               renderItem={renderItem}
+              ListFooterComponent={() => (
+                <ProfileItem
+                  style={{
+                    width: '50%',
+                    alignSelf: listUser.length === 0 ? 'center' : undefined,
+                  }}
+                  useSkeleton={false}
+                  onPress={() => {
+                    navigation.navigate('LoginScreen');
+                  }}>
+                  <View
+                    style={{
+                      width: '100%',
+                      height: undefined,
+                      borderRadius: 10000,
+                      aspectRatio: 1,
+                      backgroundColor: 'white',
+                    }}
+                  />
+                </ProfileItem>
+              )}
               estimatedItemSize={100}
             />
           </View>

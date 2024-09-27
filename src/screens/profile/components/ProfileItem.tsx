@@ -1,15 +1,19 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {View, Text, TouchableOpacity, Image, ViewStyle} from 'react-native';
+import React, {ReactNode, useEffect, useState} from 'react';
 import LazyImage from '../../../components/LazyImage';
 import AppImages from '../../../constants/AppImages';
 import {API} from '../../../api/api';
 import {AppIcons} from '../../../constants/AppIcons';
+import ImageIcon from '../../../components/ImageIcon';
 
 type Props = {
   type?: boolean;
   id?: number;
   onPress?: (data: any) => void;
   editMode?: boolean;
+  style?: ViewStyle;
+  useSkeleton?: boolean;
+  children?: ReactNode;
 };
 
 type DataProps = {
@@ -20,7 +24,15 @@ type DataProps = {
 };
 
 const ProfileItem = (props: Props) => {
-  const {type, onPress = () => {}, id = null, editMode = false} = props;
+  const {
+    type,
+    onPress = () => {},
+    id = null,
+    editMode = false,
+    style,
+    useSkeleton = true,
+    children = null,
+  } = props;
 
   const [data, setData] = useState<DataProps>();
 
@@ -47,6 +59,7 @@ const ProfileItem = (props: Props) => {
         width: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+        ...style,
       }}>
       <TouchableOpacity
         style={{
@@ -71,21 +84,14 @@ const ProfileItem = (props: Props) => {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <AppIconsSVG.close fill="white" height={50} width={50} />
+            <ImageIcon source={AppIcons.x} style={{height: 50, width: 50}} />
           </View>
         )}
-        {type ? (
-          <Image
-            source={AppImages.addProfile}
-            style={{
-              resizeMode: 'contain',
-              width: '100%',
-              height: undefined,
-              aspectRatio: 1,
-            }}
-          />
+        {children ? (
+          children
         ) : (
           <LazyImage
+            useSkeleton={useSkeleton}
             source={data ? data.avatar : ''}
             styles={{height: '100%', width: '100%'}}
           />
