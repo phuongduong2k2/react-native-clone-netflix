@@ -12,7 +12,7 @@ import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons} from '../../constants/AppIcons';
+
 import {AppDimention, AppFonts} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
@@ -36,6 +36,7 @@ import ImageIcon from '../../components/ImageIcon';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {openPhotoPicker, PERMISSIONS, request} from 'react-native-permissions';
 import axios from 'axios';
+import AppIcons from '../../constants/AppIcons';
 var RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
@@ -316,7 +317,7 @@ const HomeScreen = () => {
                   }
                 });
               }}>
-              {/* <AppSvg SvgSrc={AppIconsSVG.play} size={30} fill="black" /> */}
+              <ImageIcon source={AppIcons.play} />
               <Text
                 style={{
                   fontFamily: AppFonts.medium,
@@ -502,7 +503,6 @@ const HomeScreen = () => {
 
   return (
     <AppContainer>
-      <StatusBar translucent backgroundColor={'transparent'} />
       <View style={styles.container}>
         <View style={styles.linearHeaderPoster}>
           <LinearGradient

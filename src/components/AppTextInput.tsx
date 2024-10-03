@@ -17,7 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import AppColors from '../constants/AppColors';
 import ImageIcon from './ImageIcon';
-import {AppIcons} from '../constants/AppIcons';
+import AppIcons from '../constants/AppIcons';
 
 type Props = {
   containerStyle?: ViewStyle;
@@ -39,6 +39,7 @@ type Props = {
   blurPlaceholder?: string;
   isPassword?: boolean;
   iconTheme?: 'dark' | 'light';
+  heightContainer?: number;
 };
 
 const AppTextInput = (props: Props) => {
@@ -60,6 +61,7 @@ const AppTextInput = (props: Props) => {
     blurPlaceholder = AppColors.mainText,
     isPassword = false,
     iconTheme = 'light',
+    heightContainer = 64,
   } = props;
   const textInputRef = useRef<TextInput>(null);
 
@@ -100,16 +102,13 @@ const AppTextInput = (props: Props) => {
     ),
   }));
 
-  const animContainer = useAnimatedStyle(
-    () => ({
-      top: interpolate(
-        animValue.value,
-        [0, 1],
-        [(height.value - 20 - 9) / 2, 4],
-      ),
-    }),
-    [height],
-  );
+  const animContainer = useAnimatedStyle(() => ({
+    top: interpolate(
+      animValue.value,
+      [0, 1],
+      [(heightContainer - 20 - 9) / 2, 4],
+    ),
+  }));
 
   useEffect(() => {
     if (isFocus) {
@@ -140,20 +139,21 @@ const AppTextInput = (props: Props) => {
       style={[
         {
           justifyContent: 'space-between',
-          height: 64,
           flexDirection: 'row',
           ...containerStyle,
+          height: heightContainer,
         },
         animBackgroundColor,
       ]}
-      onLayout={e => {
-        if (
-          e.nativeEvent.layout.height > 0 &&
-          height.value !== e.nativeEvent.layout.height
-        ) {
-          height.value = e.nativeEvent.layout.height;
-        }
-      }}>
+      // onLayout={e => {
+      //   if (
+      //     e.nativeEvent.layout.height > 0 &&
+      //     height.value !== e.nativeEvent.layout.height
+      //   ) {
+      //     height.value = e.nativeEvent.layout.height;
+      //   }
+      // }}
+    >
       <Animated.View
         style={[
           {

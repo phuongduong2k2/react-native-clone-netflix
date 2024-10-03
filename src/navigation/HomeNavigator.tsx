@@ -6,12 +6,11 @@ import {
   createBottomTabNavigator,
 } from '@react-navigation/bottom-tabs';
 import HomeScreen from '../screens/home/HomeScreen';
-import SearchScreen from '../screens/search';
+
 import ComingSoonScreen from '../screens/coming';
 import DownloadsScreen from '../screens/downloads';
 import MoreScreen from '../screens/more';
 import ScreenNames from '../constants/ScreenNames';
-import {AppIcons} from '../constants/AppIcons';
 
 import {AppFonts} from '../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
@@ -27,6 +26,8 @@ import Animated, {
   withTiming,
   interpolate,
 } from 'react-native-reanimated';
+import SearchScreen from '../screens/search/SearchScreen';
+import AppIcons from '../constants/AppIcons';
 
 const listTab = [
   {

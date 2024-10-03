@@ -32,7 +32,7 @@ import moment from 'moment';
 import Space from '../../components/Space';
 import {Source} from 'react-native-fast-image';
 import ImageIcon from '../../components/ImageIcon';
-import {AppIcons} from '../../constants/AppIcons';
+import AppIcons from '../../constants/AppIcons';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;

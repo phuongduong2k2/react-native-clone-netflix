@@ -3,7 +3,7 @@ import React, {useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import AppHeader from '../../components/AppHeader';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
+
 import AppTextInput from '../../components/AppTextInput';
 import AppButton from '../../components/AppButton';
 import {AppDimention, AppFonts} from '../../constants/constants';
@@ -14,6 +14,7 @@ import ImageIcon from '../../components/ImageIcon';
 import AppImages from '../../constants/AppImages';
 import {API} from '../../api/api';
 import {GlobalHUDUtils} from '../../components/GlobalHUD';
+import AppIcons from '../../constants/AppIcons';
 
 const LoginScreen = () => {
   const navigation = useAppNavigation();

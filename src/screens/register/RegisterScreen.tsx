@@ -4,7 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppContainer from '../../components/AppContainer';
 import AppHeader from '../../components/AppHeader';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons} from '../../constants/AppIcons';
+
 import {AppDimention, AppFonts} from '../../constants/constants';
 
 import BouncyCheckbox from 'react-native-bouncy-checkbox';

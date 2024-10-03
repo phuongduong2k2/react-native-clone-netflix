@@ -2,11 +2,12 @@ import {View, Text, TouchableOpacity, TextInput, Image} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {AppIconsSVG} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import AppImages from '../../constants/AppImages';
 import {FlashList, ListRenderItem} from '@shopify/flash-list';
 import {MovieItemProps} from '../../types';
+import ImageIcon from '../../components/ImageIcon';
+import AppIcons from '../../constants/AppIcons';
 
 // const listFilmDefault = [
 //   {
@@ -148,15 +149,7 @@ const SearchScreen = () => {
               flexDirection: 'row',
             }}>
             <View style={{height: '100%', paddingVertical: 4}}>
-              <AppIconsSVG.search
-                height={'100%'}
-                width={undefined}
-                style={{
-                  aspectRatio: 1,
-                  marginHorizontal: AppDimention.secondPadding / 2,
-                }}
-                fill="#737373"
-              />
+              <ImageIcon source={AppIcons.search} />
             </View>
             <TextInput
               placeholder="Search for a show, movie, genre, e.t.c."
@@ -185,14 +178,7 @@ const SearchScreen = () => {
                 marginHorizontal: AppDimention.secondPadding / 2,
               }}
               onPress={onClearSearching}>
-              <AppIconsSVG.closeCircle
-                height={'100%'}
-                width={undefined}
-                style={{
-                  aspectRatio: 1,
-                }}
-                fill="#737373"
-              />
+              <ImageIcon source={AppIcons.x_circle} />
             </TouchableOpacity>
           )}
         </View>
@@ -244,12 +230,7 @@ const SearchScreen = () => {
             alignItems: 'center',
             marginRight: AppDimention.secondPadding,
           }}>
-          <AppIconsSVG.play
-            fill="white"
-            height={'30%'}
-            width={undefined}
-            style={{aspectRatio: 1, margin: 4}}
-          />
+          <ImageIcon source={AppIcons.screen_cast} />
         </TouchableOpacity>
       </View>
     );

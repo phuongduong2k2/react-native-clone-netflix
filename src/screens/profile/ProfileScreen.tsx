@@ -4,7 +4,7 @@ import AppContainer from '../../components/AppContainer';
 import AppImages from '../../constants/AppImages';
 import FastImage from 'react-native-fast-image';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
+
 import {AppDimention} from '../../constants/constants';
 import {FlashList} from '@shopify/flash-list';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,6 +13,7 @@ import ProfileItem from './components/ProfileItem';
 import {useNavigation} from '@react-navigation/native';
 import useAppNavigation from '../../navigation/useAppNavigation';
 import ImageIcon from '../../components/ImageIcon';
+import AppIcons from '../../constants/AppIcons';
 
 type Props = {};
 
