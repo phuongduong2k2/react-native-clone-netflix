@@ -12,7 +12,7 @@ import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
 import AppSvg from '../../components/AppSvg';
-import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
+import {AppIcons} from '../../constants/AppIcons';
 import {AppDimention, AppFonts} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
@@ -33,6 +33,10 @@ import {API} from '../../api/api';
 import {useSelector} from 'react-redux';
 import LazyImage from '../../components/LazyImage';
 import ImageIcon from '../../components/ImageIcon';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import {openPhotoPicker, PERMISSIONS, request} from 'react-native-permissions';
+import axios from 'axios';
+var RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
   container: {width: '100%', position: 'absolute', zIndex: 0},
@@ -192,6 +196,19 @@ const HomeScreen = () => {
     );
   };
 
+  const testUpload = async (data: any) => {
+    try {
+      const res = await axios.post('http://192.168.1.4:8000/api/upload', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log('upload failed');
+    }
+  };
+
   const renderMainFilm = () => {
     return (
       <View
@@ -246,7 +263,8 @@ const HomeScreen = () => {
             <TouchableOpacity
               style={{alignItems: 'center', width: 56}}
               onPress={() => {
-                dispatch(AppActions.decrement());
+                // dispatch(AppActions.decrement());
+                console.log(popularMovies);
               }}>
               <ImageIcon source={AppIcons.plus} />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
@@ -263,8 +281,42 @@ const HomeScreen = () => {
                 paddingHorizontal: AppDimention.secondPadding,
                 alignItems: 'center',
                 justifyContent: 'center',
+              }}
+              onPress={() => {
+                let options = {
+                  title: 'Select Image',
+                  customButtons: [
+                    {
+                      name: 'customOptionKey',
+                      title: 'Choose Photo from Custom Option',
+                    },
+                  ],
+                  storageOptions: {
+                    skipBackup: true,
+                    path: 'images',
+                  },
+                };
+                // launchImageLibrary(options, res => {
+                //   console.log(res);
+                // });
+                launchImageLibrary({mediaType: 'photo'}, async response => {
+                  if (response.didCancel) {
+                    console.log('User cancelled image picker');
+                  } else if (response.errorMessage) {
+                    console.log('ImagePicker Error: ', response.errorMessage);
+                  } else if (response.assets && response.assets.length > 0) {
+                    const data = new FormData();
+                    data.append('image', {
+                      name: response.assets[0].fileName,
+                      type: response.assets[0].type,
+                      uri: response.assets[0].uri,
+                    });
+                    console.log(data);
+                    await testUpload(data);
+                  }
+                });
               }}>
-              <AppSvg SvgSrc={AppIconsSVG.play} size={30} fill="black" />
+              {/* <AppSvg SvgSrc={AppIconsSVG.play} size={30} fill="black" /> */}
               <Text
                 style={{
                   fontFamily: AppFonts.medium,

@@ -1,31 +1,31 @@
-import Netflix from '../../assets/icons/netflix.svg';
-import NNetflix from '../../assets/icons/nnetflix.svg';
-import MoreStick from '../../assets/icons/more_stick.svg';
-import Play from '../../assets/icons/play.svg';
-import Search from '../../assets/icons/search.svg';
-import ComingSoon from '../../assets/icons/coming_soon.svg';
-import Downloads from '../../assets/icons/downloads.svg';
-import Home from '../../assets/icons/home.svg';
-import MoreCircle from '../../assets/icons/more_circle.svg';
-import CloseCircle from '../../assets/icons/close_circle.svg';
-import BadgeHd from '../../assets/icons/badge_hd.svg';
-import BadgeVision from '../../assets/icons/badge_vision.svg';
-import BadgeAd from '../../assets/icons/badge_ad.svg';
+// import Netflix from '../../assets/icons/netflix.svg';
+// import NNetflix from '../../assets/icons/nnetflix.svg';
+// import MoreStick from '../../assets/icons/more_stick.svg';
+// import Play from '../../assets/icons/play.svg';
+// import Search from '../../assets/icons/search.svg';
+// import ComingSoon from '../../assets/icons/coming_soon.svg';
+// import Downloads from '../../assets/icons/downloads.svg';
+// import Home from '../../assets/icons/home.svg';
+// import MoreCircle from '../../assets/icons/more_circle.svg';
+// import CloseCircle from '../../assets/icons/close_circle.svg';
+// import BadgeHd from '../../assets/icons/badge_hd.svg';
+// import BadgeVision from '../../assets/icons/badge_vision.svg';
+// import BadgeAd from '../../assets/icons/badge_ad.svg';
 
-export const AppIconsSVG = {
-  netflix: Netflix,
-  nnetflix: NNetflix,
-  more_stick: MoreStick,
-  play: Play,
-  home: Home,
-  search: Search,
-  downloads: Downloads,
-  more_circle: MoreCircle,
-  closeCircle: CloseCircle,
-  badge_hd: BadgeHd,
-  badge_ad: BadgeAd,
-  badge_vision: BadgeVision,
-};
+// export const AppIconsSVG = {
+//   netflix: Netflix,
+//   nnetflix: NNetflix,
+//   more_stick: MoreStick,
+//   play: Play,
+//   home: Home,
+//   search: Search,
+//   downloads: Downloads,
+//   more_circle: MoreCircle,
+//   closeCircle: CloseCircle,
+//   badge_hd: BadgeHd,
+//   badge_ad: BadgeAd,
+//   badge_vision: BadgeVision,
+// };
 
 export const AppIcons = {
   plus: require('../../assets/icons/plus/plus.png'),

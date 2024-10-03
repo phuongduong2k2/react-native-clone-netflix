@@ -32,7 +32,7 @@ import moment from 'moment';
 import Space from '../../components/Space';
 import {Source} from 'react-native-fast-image';
 import ImageIcon from '../../components/ImageIcon';
-import {AppIcons, AppIconsSVG} from '../../constants/AppIcons';
+import {AppIcons} from '../../constants/AppIcons';
 
 interface Props {}
 type WatchingScreenProps = RouteProp<RootStackParamList, 'WatchingScreen'>;
@@ -238,11 +238,11 @@ const WatchingScreen = (props: Props) => {
                 {moment(movie.releasedYear).format('MMM YYYY')}
               </Text>
               <Space width={4} />
-              <AppIconsSVG.badge_vision />
+              {/* <AppIconsSVG.badge_vision /> */}
               <Space width={4} />
-              <AppIconsSVG.badge_hd />
+              {/* <AppIconsSVG.badge_hd /> */}
               <Space width={4} />
-              <AppIconsSVG.badge_ad />
+              {/* <AppIconsSVG.badge_ad /> */}
             </View>
             <CustomSpace />
             {/* <AppButton
