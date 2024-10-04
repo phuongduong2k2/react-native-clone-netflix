@@ -8,19 +8,17 @@ const AppSlice = createSlice({
       avatar: '',
     },
     token: null,
+    movies: [],
   },
   reducers: {
-    increment: state => {
-      state.value += 1;
-    },
-    decrement: state => {
-      state.value -= 1;
-    },
     setUserInfo: (state, actions) => {
       state.userInfo = actions.payload;
     },
     setToken: (state, actions) => {
       state.token = actions.payload;
+    },
+    setMovies: () => {
+      state.movies = actions.payload;
     },
   },
 });

@@ -110,6 +110,11 @@ const HomeScreen = () => {
     }
   };
 
+  const getAllMovies = async () => {
+    const res: any = await API.getAllMovies(token ?? '');
+    console.log(res);
+  };
+
   const getTrendingMovies = async () => {
     const res: any = await API.getTrendingMovies(token ?? '');
     if (res?.status === 200) {
@@ -120,6 +125,7 @@ const HomeScreen = () => {
   useEffect(() => {
     getPopularMovies();
     getTrendingMovies();
+    getAllMovies();
   }, [userInfo, token]);
 
   const renderHeader = () => {
@@ -264,7 +270,6 @@ const HomeScreen = () => {
             <TouchableOpacity
               style={{alignItems: 'center', width: 56}}
               onPress={() => {
-                // dispatch(AppActions.decrement());
                 console.log(popularMovies);
               }}>
               <ImageIcon source={AppIcons.plus} />
@@ -330,9 +335,7 @@ const HomeScreen = () => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{alignItems: 'center', width: 56}}
-              onPress={() => {
-                dispatch(AppActions.increment());
-              }}>
+              onPress={() => {}}>
               <ImageIcon source={AppIcons.warning_circle} />
               <Text style={{color: 'white', fontFamily: AppFonts.regular}}>
                 Info

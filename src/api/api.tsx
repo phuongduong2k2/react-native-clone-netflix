@@ -31,6 +31,19 @@ const getTrendingMovies = async (token: string) => {
   }
 };
 
+const getAllMovies = async (token: string) => {
+  try {
+    const res = await axios.get(`${apiUrl}/movies/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
 const login = async (data: any) => {
   try {
     const res = await axios.post(`${apiUrl}/users/login`, data);
@@ -64,4 +77,5 @@ export const API = {
   login,
   getUserById,
   register,
+  getAllMovies,
 };
