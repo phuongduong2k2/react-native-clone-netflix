@@ -19,7 +19,6 @@ type Props = {
 const LazyImage = (props: Props) => {
   const {source = '', styles = {}, useSkeleton = true} = props;
   const [loading, setLoading] = useState(true);
-
   const onLoadDone = () => {
     setLoading(false);
   };

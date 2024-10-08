@@ -128,80 +128,11 @@ const HomeScreen = () => {
     getAllMovies();
   }, [userInfo, token]);
 
-  const renderHeader = () => {
-    return (
-      <View
-        style={{
-          width: '100%',
-        }}>
-        <View style={styles.containHeader}>
-          <View style={styles.containNNetflix}>
-            <Image source={AppImages.nNetflix} style={styles.imgNNetflix} />
-          </View>
-          <View
-            style={{
-              height: '100%',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginRight: AppDimention.secondPadding / 2,
-            }}>
-            <TouchableOpacity
-              style={{
-                padding: AppDimention.secondPadding / 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                console.log(userInfo);
-              }}>
-              <ImageIcon source={AppIcons.screen_cast} />
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                padding: AppDimention.secondPadding / 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                navigation.navigate('ProfileScreen');
-              }}>
-              <LazyImage
-                source={
-                  userInfo && userInfo?.avatar.length
-                    ? userInfo?.avatar
-                    : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'
-                }
-                styles={{height: '60%', width: undefined, aspectRatio: 1}}
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={{flexDirection: 'row', alignSelf: 'center'}}>
-          <TouchableOpacity style={styles.touchCategory}>
-            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
-              TV Shows
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.touchCategory}>
-            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
-              Movies
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.touchCategory}>
-            <Text style={{color: 'white', fontFamily: AppFonts.light}}>
-              Categories
-            </Text>
-            <View style={{height: '80%', aspectRatio: 1, width: undefined}}>
-              <ImageIcon
-                source={AppIcons.caret_down}
-                style={{height: '100%', width: undefined, aspectRatio: 1}}
-              />
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
-  };
+  // const renderHeader = () => {
+  //   return (
+
+  //   );
+  // };
 
   const testUpload = async (data: any) => {
     try {
@@ -419,76 +350,21 @@ const HomeScreen = () => {
     return <MovieCard data={item} onPress={onPressMovie} />;
   };
 
-  const renderPopular = () => {
-    return (
-      popularMovies?.length > 0 && (
-        <View style={{backgroundColor: ''}}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: AppFonts.medium,
-              fontSize: 20,
-              marginLeft: 8,
-            }}>
-            Popular on Netflix
-          </Text>
-          <View style={{marginTop: AppDimention.secondPadding}}>
-            <FlashList
-              data={popularMovies}
-              keyExtractor={item => item.name}
-              contentContainerStyle={{
-                paddingHorizontal: 8,
-              }}
-              ItemSeparatorComponent={SpaceLine}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={renderPopularItem}
-              estimatedItemSize={106}
-            />
-          </View>
-        </View>
-      )
-    );
-  };
+  // const renderPopular = () => {
+  //   return (
+
+  //   );
+  // };
 
   const renderTrendingItem: ListRenderItem<MovieItemProps> = ({item}) => {
     return <MovieCard data={item} onPress={onPressMovie} />;
   };
 
-  const renderTrending = () => {
-    return (
-      trendingMovies?.length > 0 && (
-        <View style={{backgroundColor: ''}}>
-          <Text
-            style={{
-              color: 'white',
-              fontFamily: AppFonts.medium,
-              fontSize: 20,
-              marginLeft: 8,
-            }}>
-            Trending Now
-          </Text>
-          <View
-            style={{
-              marginTop: AppDimention.secondPadding,
-            }}>
-            <FlashList
-              data={trendingMovies}
-              keyExtractor={item => item.name}
-              contentContainerStyle={{
-                paddingHorizontal: 8,
-              }}
-              ItemSeparatorComponent={SpaceLine}
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              renderItem={renderTrendingItem}
-              estimatedItemSize={106}
-            />
-          </View>
-        </View>
-      )
-    );
-  };
+  // const renderTrending = () => {
+  //   return (
+
+  //   );
+  // };
 
   const animPoster = useSharedValue(0);
 
@@ -527,12 +403,85 @@ const HomeScreen = () => {
           </View>
         </Animated.View>
       </View>
+
+      {/* header */}
       <View
         style={{
           flex: 1,
           marginTop: insets.top,
         }}>
-        {renderHeader()}
+        <View
+          style={{
+            width: '100%',
+          }}>
+          <View style={styles.containHeader}>
+            <View style={styles.containNNetflix}>
+              <Image source={AppImages.nNetflix} style={styles.imgNNetflix} />
+            </View>
+            <View
+              style={{
+                height: '100%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginRight: AppDimention.secondPadding / 2,
+              }}>
+              <TouchableOpacity
+                style={{
+                  padding: AppDimention.secondPadding / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  console.log(userInfo);
+                }}>
+                <ImageIcon source={AppIcons.screen_cast} />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  padding: AppDimention.secondPadding / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  navigation.navigate('ProfileScreen');
+                }}>
+                <LazyImage
+                  source={
+                    userInfo && userInfo?.avatar.length
+                      ? userInfo?.avatar
+                      : 'https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png'
+                  }
+                  styles={{height: '60%', width: undefined, aspectRatio: 1}}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{flexDirection: 'row', alignSelf: 'center'}}>
+            <TouchableOpacity style={styles.touchCategory}>
+              <Text style={{color: 'white', fontFamily: AppFonts.light}}>
+                TV Shows
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.touchCategory}>
+              <Text style={{color: 'white', fontFamily: AppFonts.light}}>
+                Movies
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.touchCategory}>
+              <Text style={{color: 'white', fontFamily: AppFonts.light}}>
+                Categories
+              </Text>
+              <View style={{height: '80%', aspectRatio: 1, width: undefined}}>
+                <ImageIcon
+                  source={AppIcons.caret_down}
+                  style={{height: '100%', width: undefined, aspectRatio: 1}}
+                />
+              </View>
+            </TouchableOpacity>
+          </View>
+        </View>
+        {/* header */}
+
         <Animated.ScrollView
           style={{}}
           onScroll={scrollHandler}
@@ -543,10 +492,65 @@ const HomeScreen = () => {
             {renderPreview()}
           </View> */}
           <View style={{marginTop: AppDimention.mainPadding}}>
-            {renderPopular()}
+            {popularMovies?.length > 0 && (
+              <View style={{backgroundColor: ''}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontFamily: AppFonts.medium,
+                    fontSize: 20,
+                    marginLeft: 8,
+                  }}>
+                  Popular on Netflix
+                </Text>
+                <View style={{marginTop: AppDimention.secondPadding}}>
+                  <FlashList
+                    data={popularMovies}
+                    keyExtractor={item => item.name}
+                    contentContainerStyle={{
+                      paddingHorizontal: 8,
+                    }}
+                    ItemSeparatorComponent={SpaceLine}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={renderPopularItem}
+                    estimatedItemSize={106}
+                  />
+                </View>
+              </View>
+            )}
           </View>
           <View style={{marginVertical: AppDimention.mainPadding}}>
-            {renderTrending()}
+            {trendingMovies?.length > 0 && (
+              <View style={{backgroundColor: ''}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontFamily: AppFonts.medium,
+                    fontSize: 20,
+                    marginLeft: 8,
+                  }}>
+                  Trending Now
+                </Text>
+                <View
+                  style={{
+                    marginTop: AppDimention.secondPadding,
+                  }}>
+                  <FlashList
+                    data={trendingMovies}
+                    keyExtractor={item => item.name}
+                    contentContainerStyle={{
+                      paddingHorizontal: 8,
+                    }}
+                    ItemSeparatorComponent={SpaceLine}
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    renderItem={renderTrendingItem}
+                    estimatedItemSize={106}
+                  />
+                </View>
+              </View>
+            )}
           </View>
         </Animated.ScrollView>
       </View>

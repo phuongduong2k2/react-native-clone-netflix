@@ -9,7 +9,7 @@ import HomeScreen from '../screens/home/HomeScreen';
 
 import ComingSoonScreen from '../screens/coming';
 import DownloadsScreen from '../screens/downloads';
-import MoreScreen from '../screens/more';
+
 import ScreenNames from '../constants/ScreenNames';
 
 import {AppFonts} from '../constants/constants';
@@ -28,6 +28,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import SearchScreen from '../screens/search/SearchScreen';
 import AppIcons from '../constants/AppIcons';
+import MoreScreen from '../screens/more/MoreScreen';
 
 const listTab = [
   {
