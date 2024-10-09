@@ -11,7 +11,7 @@ import ReactNativeModal from 'react-native-modal';
 import {AppDimention} from '../../../constants/constants';
 import {API} from '../../../api/api';
 import {useDispatch} from 'react-redux';
-import {AppActions} from '../../../redux/slice/AppSlice';
+import {AppActions} from '../../../controllers/slice/AppSlice';
 import useAppNavigation from '../../../navigation/useAppNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 

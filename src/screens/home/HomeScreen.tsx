@@ -21,8 +21,8 @@ import ContiWatchItem from '../components/ContiWatchItem';
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
 import {MovieItemProps} from '../../types';
-import {useAppDispatch, useAppSelector} from '../../hooks';
-import {AppActions} from '../../redux/slice/AppSlice';
+
+import {AppActions} from '../../controllers/slice/AppSlice';
 import Animated, {
   useAnimatedScrollHandler,
   useAnimatedStyle,
@@ -37,6 +37,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {openPhotoPicker, PERMISSIONS, request} from 'react-native-permissions';
 import axios from 'axios';
 import AppIcons from '../../constants/AppIcons';
+import {useAppDispatch, useAppSelector} from '../../controllers/hooks';
 var RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({

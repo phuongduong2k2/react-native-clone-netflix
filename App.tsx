@@ -6,11 +6,12 @@ import {Alert, Button, StatusBar} from 'react-native';
 import MainNavigation from './src/navigation/MainNavigation';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {Provider} from 'react-redux';
-import store from './src/redux/store';
+
 import changeNavigationBarColor from 'react-native-navigation-bar-color';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import RNNotification from './src/services/RNNotification';
 import GlobalHUD from './src/components/GlobalHUD';
+import store from './src/controllers/redux/AppStore';
 
 function App(): React.JSX.Element {
   const onChangeColoNavigationBar = async () => {
