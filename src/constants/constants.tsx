@@ -10,4 +10,10 @@ const AppFonts = {
   medium: 'NetflixSans-Medium',
 };
 
-export {AppDimention, AppFonts};
+const LoadingState = {
+  loading: 'loading',
+  success: 'success',
+  failed: 'failed',
+};
+
+export {AppDimention, AppFonts, LoadingState};

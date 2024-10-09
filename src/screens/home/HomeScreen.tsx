@@ -1,22 +1,25 @@
 import {
   Button,
+  FlatList,
   Image,
+  ListRenderItem,
+  RefreshControl,
   StatusBar,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import AppContainer from '../../components/AppContainer';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import AppImages from '../../constants/AppImages';
 import AppSvg from '../../components/AppSvg';
 
-import {AppDimention, AppFonts} from '../../constants/constants';
+import {AppDimention, AppFonts, LoadingState} from '../../constants/constants';
 import LinearGradient from 'react-native-linear-gradient';
 import TagAge from '../../components/TagAge';
-import {FlashList, ListRenderItem} from '@shopify/flash-list';
+import {FlashList} from '@shopify/flash-list';
 import ContiWatchItem from '../components/ContiWatchItem';
 import PreviewItem from '../components/PreviewItem';
 import MovieCard from '../components/MovieCard';
@@ -37,7 +40,14 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {openPhotoPicker, PERMISSIONS, request} from 'react-native-permissions';
 import axios from 'axios';
 import AppIcons from '../../constants/AppIcons';
-import {useAppDispatch, useAppSelector} from '../../controllers/hooks';
+import {
+  useAppDispatch,
+  useAppSelector,
+  useMovies,
+} from '../../controllers/hooks';
+import {MovieActions} from '../../controllers/slice/MovieSlice';
+import _ from 'lodash';
+import Indicator from '../../components/Indicator';
 var RNFS = require('react-native-fs');
 
 const styles = StyleSheet.create({
@@ -97,6 +107,7 @@ const HomeScreen = () => {
   const [popularMovies, setPopularMovies] = useState<MovieItemProps[]>([]);
   const [trendingMovies, setTrendingMovies] = useState<MovieItemProps[]>([]);
   const {userInfo, token} = useAppSelector(state => state.app);
+  const allMovie = useMovies();
 
   const mainFilmPoster = AppImages.posters.dune;
 
@@ -111,11 +122,6 @@ const HomeScreen = () => {
     }
   };
 
-  const getAllMovies = async () => {
-    const res: any = await API.getAllMovies(token ?? '');
-    console.log(res);
-  };
-
   const getTrendingMovies = async () => {
     const res: any = await API.getTrendingMovies(token ?? '');
     if (res?.status === 200) {
@@ -124,29 +130,24 @@ const HomeScreen = () => {
   };
 
   useEffect(() => {
-    getPopularMovies();
-    getTrendingMovies();
-    getAllMovies();
+    // getPopularMovies();
+    // getTrendingMovies();
+    // getAllMovies();
+    dispatch(MovieActions.getAllMovies());
   }, [userInfo, token]);
 
-  // const renderHeader = () => {
-  //   return (
-
-  //   );
+  // const testUpload = async (data: any) => {
+  //   try {
+  //     const res = await axios.post('http://192.168.1.4:8000/api/upload', data, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //       },
+  //     });
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.log('upload failed');
+  //   }
   // };
-
-  const testUpload = async (data: any) => {
-    try {
-      const res = await axios.post('http://192.168.1.4:8000/api/upload', data, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(res);
-    } catch (error) {
-      console.log('upload failed');
-    }
-  };
 
   const renderMainFilm = () => {
     return (
@@ -221,38 +222,35 @@ const HomeScreen = () => {
                 justifyContent: 'center',
               }}
               onPress={() => {
-                let options = {
-                  title: 'Select Image',
-                  customButtons: [
-                    {
-                      name: 'customOptionKey',
-                      title: 'Choose Photo from Custom Option',
-                    },
-                  ],
-                  storageOptions: {
-                    skipBackup: true,
-                    path: 'images',
-                  },
-                };
-                // launchImageLibrary(options, res => {
-                //   console.log(res);
+                // let options = {
+                //   title: 'Select Image',
+                //   customButtons: [
+                //     {
+                //       name: 'customOptionKey',
+                //       title: 'Choose Photo from Custom Option',
+                //     },
+                //   ],
+                //   storageOptions: {
+                //     skipBackup: true,
+                //     path: 'images',
+                //   },
+                // };
+                // launchImageLibrary({mediaType: 'photo'}, async response => {
+                //   if (response.didCancel) {
+                //     console.log('User cancelled image picker');
+                //   } else if (response.errorMessage) {
+                //     console.log('ImagePicker Error: ', response.errorMessage);
+                //   } else if (response.assets && response.assets.length > 0) {
+                //     const data = new FormData();
+                //     data.append('image', {
+                //       name: response.assets[0].fileName,
+                //       type: response.assets[0].type,
+                //       uri: response.assets[0].uri,
+                //     });
+                //     console.log(data);
+                //     await testUpload(data);
+                //   }
                 // });
-                launchImageLibrary({mediaType: 'photo'}, async response => {
-                  if (response.didCancel) {
-                    console.log('User cancelled image picker');
-                  } else if (response.errorMessage) {
-                    console.log('ImagePicker Error: ', response.errorMessage);
-                  } else if (response.assets && response.assets.length > 0) {
-                    const data = new FormData();
-                    data.append('image', {
-                      name: response.assets[0].fileName,
-                      type: response.assets[0].type,
-                      uri: response.assets[0].uri,
-                    });
-                    console.log(data);
-                    await testUpload(data);
-                  }
-                });
               }}>
               <ImageIcon source={AppIcons.play} />
               <Text
@@ -296,7 +294,7 @@ const HomeScreen = () => {
           Continue Watching for Ellie
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
-          <FlashList
+          <FlatList
             data={[]}
             keyExtractor={item => item.name}
             contentContainerStyle={{
@@ -306,7 +304,6 @@ const HomeScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderContiWatchItem}
-            estimatedItemSize={106}
           />
         </View>
       </View>
@@ -330,7 +327,7 @@ const HomeScreen = () => {
           Previews
         </Text>
         <View style={{marginTop: AppDimention.secondPadding}}>
-          <FlashList
+          <FlatList
             data={[]}
             keyExtractor={item => item.name}
             contentContainerStyle={{
@@ -340,7 +337,6 @@ const HomeScreen = () => {
             horizontal
             showsHorizontalScrollIndicator={false}
             renderItem={renderPreviewItem}
-            estimatedItemSize={106}
           />
         </View>
       </View>
@@ -351,21 +347,9 @@ const HomeScreen = () => {
     return <MovieCard data={item} onPress={onPressMovie} />;
   };
 
-  // const renderPopular = () => {
-  //   return (
-
-  //   );
-  // };
-
   const renderTrendingItem: ListRenderItem<MovieItemProps> = ({item}) => {
     return <MovieCard data={item} onPress={onPressMovie} />;
   };
-
-  // const renderTrending = () => {
-  //   return (
-
-  //   );
-  // };
 
   const animPoster = useSharedValue(0);
 
@@ -380,6 +364,39 @@ const HomeScreen = () => {
   const scrollHandler = useAnimatedScrollHandler(event => {
     animPoster.value = event.contentOffset.y;
   });
+
+  const renderEmptyComponent = () => {
+    return (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+        }}>
+        {allMovie.status === LoadingState.loading ? (
+          <>
+            <Indicator />
+            <Text style={{color: 'white'}}>Loading...</Text>
+          </>
+        ) : (
+          <Text style={{color: 'white'}}>
+            {allMovie.status === LoadingState.failed
+              ? 'Get data failed'
+              : "Don't have data"}
+          </Text>
+        )}
+      </View>
+    );
+  };
+
+  const flatListRef = useRef<FlatList>(null);
+
+  const refresh = useCallback(() => {
+    dispatch(MovieActions.getAllMovies());
+    if (flatListRef.current) {
+      flatListRef.current.scrollToOffset({offset: 0, animated: true});
+    }
+  }, [dispatch]);
 
   return (
     <AppContainer>
@@ -405,12 +422,12 @@ const HomeScreen = () => {
         </Animated.View>
       </View>
 
-      {/* header */}
       <View
         style={{
           flex: 1,
           marginTop: insets.top,
         }}>
+        {/* header */}
         <View
           style={{
             width: '100%',
@@ -486,41 +503,57 @@ const HomeScreen = () => {
         <Animated.ScrollView
           style={{}}
           onScroll={scrollHandler}
+          refreshControl={
+            <RefreshControl
+              refreshing={allMovie.status === LoadingState.loading}
+              onRefresh={refresh}
+            />
+          }
           showsVerticalScrollIndicator={false}>
           {renderMainFilm()}
           {/* <View>{renderContiWatch()}</View>
           <View style={{marginTop: AppDimention.mainPadding}}>
             {renderPreview()}
           </View> */}
+
+          {/* popular movies */}
           <View style={{marginTop: AppDimention.mainPadding}}>
-            {popularMovies?.length > 0 && (
-              <View style={{backgroundColor: ''}}>
-                <Text
-                  style={{
-                    color: 'white',
-                    fontFamily: AppFonts.medium,
-                    fontSize: 20,
-                    marginLeft: 8,
-                  }}>
-                  Popular on Netflix
-                </Text>
-                <View style={{marginTop: AppDimention.secondPadding}}>
-                  <FlashList
-                    data={popularMovies}
-                    keyExtractor={item => item.name}
-                    contentContainerStyle={{
-                      paddingHorizontal: 8,
-                    }}
-                    ItemSeparatorComponent={SpaceLine}
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    renderItem={renderPopularItem}
-                    estimatedItemSize={106}
-                  />
-                </View>
+            <View style={{backgroundColor: ''}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontFamily: AppFonts.medium,
+                  fontSize: 20,
+                  marginLeft: 8,
+                }}>
+                Popular on Netflix
+              </Text>
+              <View
+                style={{
+                  marginTop: AppDimention.secondPadding,
+                  height: (106 * 466) / 324,
+                }}>
+                <FlatList
+                  data={allMovie.movies}
+                  keyExtractor={item => item.name}
+                  ref={flatListRef}
+                  contentContainerStyle={{
+                    paddingHorizontal: 8,
+                    width: _.isEmpty(allMovie.movies) ? '100%' : undefined,
+                  }}
+                  ListEmptyComponent={renderEmptyComponent}
+                  ItemSeparatorComponent={SpaceLine}
+                  horizontal
+                  renderItem={renderPopularItem}
+                  initialNumToRender={6}
+                  maxToRenderPerBatch={6}
+                  showsHorizontalScrollIndicator={false}
+                />
               </View>
-            )}
+            </View>
           </View>
+          {/* popular movies */}
+
           <View style={{marginVertical: AppDimention.mainPadding}}>
             {trendingMovies?.length > 0 && (
               <View style={{backgroundColor: ''}}>
@@ -537,17 +570,16 @@ const HomeScreen = () => {
                   style={{
                     marginTop: AppDimention.secondPadding,
                   }}>
-                  <FlashList
+                  <FlatList
                     data={trendingMovies}
                     keyExtractor={item => item.name}
-                    contentContainerStyle={{
-                      paddingHorizontal: 8,
-                    }}
+                    contentContainerStyle={{paddingHorizontal: 8}}
+                    ListEmptyComponent={renderEmptyComponent}
                     ItemSeparatorComponent={SpaceLine}
                     horizontal
-                    showsHorizontalScrollIndicator={false}
                     renderItem={renderTrendingItem}
-                    estimatedItemSize={106}
+                    initialNumToRender={6}
+                    maxToRenderPerBatch={6}
                   />
                 </View>
               </View>

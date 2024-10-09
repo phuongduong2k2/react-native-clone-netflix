@@ -1,5 +1,5 @@
 import {TouchableOpacity} from 'react-native';
-import React from 'react';
+import React, {memo} from 'react';
 import {MovieItemProps} from '../../../types';
 import LazyImage from '../../../components/LazyImage';
 import {HOST} from '../../../api/api';
@@ -33,4 +33,4 @@ const MovieCard = (props: Props) => {
   );
 };
 
-export default MovieCard;
+export default memo(MovieCard);
